@@ -113,12 +113,56 @@ footer a{color:var(--cream);text-underline-offset:3px}
 footer p{margin:0}
 .links{display:flex;gap:18px;flex-wrap:wrap}
 
+
+/* ---- Oct 24 revision: full width photos ---- */
+.nowrap{white-space:nowrap}
+.bleed{position:relative;margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)))}
+.fullphoto{position:relative;overflow:hidden;background:var(--plum-shade)}
+.fullphoto>img{display:block;width:100%;height:100%;object-fit:cover}
+.hero2 .fullphoto{aspect-ratio:4/5}
+.hero2 .fullphoto>img{object-position:72% 30%}
+.hero2 .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(60,25,50,.62) 0%,rgba(60,25,50,0) 30%,rgba(60,25,50,0) 58%,rgba(60,25,50,.78) 100%)}
+.hero2 .line1,.hero2 .line2{position:absolute;left:0;right:0;padding:0 max(16px, env(safe-area-inset-left, 0px));margin:0;font-family:var(--display);font-weight:400;line-height:1.08;color:var(--cream);text-wrap:balance;text-shadow:0 2px 14px rgba(30,10,25,.45)}
+.hero2 .line1{top:22px;font-size:clamp(32px,7vw,64px)}
+.hero2 .line2{bottom:24px;font-size:clamp(30px,6.4vw,60px);color:var(--blush)}
+.hero2 .below{padding:22px 16px 8px}
+.hero2 .thread,.night2 .card{position:static;width:auto;max-width:420px;margin:0 auto}
+.ctaM{text-align:center;padding:24px 0 48px}
+.night2 .fullphoto{aspect-ratio:4/5}
+.night2 .fullphoto>img{object-position:35% 50%}
+.night2 .shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(40,15,35,.8) 0%,rgba(40,15,35,0) 45%)}
+.night2 .caption{position:absolute;left:0;right:0;bottom:22px;padding:0 max(16px, env(safe-area-inset-left, 0px))}
+.night2 .caption .note{margin:0;color:var(--cream);text-shadow:0 2px 12px rgba(20,5,15,.5)}
+.night2 .below{padding:22px 16px 56px}
+.moments2{padding-block:56px 40px;border-top:0}
+@media (min-width:860px){
+  .hero2 .fullphoto{aspect-ratio:auto;height:min(calc(100vh - 88px),980px);min-height:780px}
+  .hero2 .fullphoto>img{object-position:60% 30%}
+  .hero2 .shade{background:linear-gradient(90deg,rgba(60,25,50,.74) 0%,rgba(60,25,50,.4) 38%,rgba(60,25,50,0) 60%)}
+  .hero2 .line1,.hero2 .line2{padding:0 6vw;max-width:880px}
+  .hero2 .line1{top:44px;font-size:clamp(44px,4.6vw,66px)}
+  .hero2 .line2{bottom:112px;font-size:clamp(38px,3.8vw,56px)}
+  .hero2 .ctaD{position:absolute;left:6vw;bottom:40px}
+  .hero2 .below{position:absolute;left:6vw;top:212px;padding:0;width:min(330px,28vw)}
+  .hero2 .thread{max-width:none;font-size:13.5px;gap:4px}
+  .hero2 .thread .b{padding:7px 11px}
+  .ctaM{display:none}
+  .night2 .fullphoto{aspect-ratio:auto;height:min(94vh,940px);min-height:720px}
+  .night2 .fullphoto>img{object-position:20% 45%}
+  .night2 .shade{background:linear-gradient(90deg,rgba(40,15,35,.55) 0%,rgba(40,15,35,0) 38%,rgba(40,15,35,0) 55%,rgba(40,15,35,.45) 100%)}
+  .night2 .caption{bottom:auto;top:7%;left:6vw;right:auto;padding:0;max-width:440px}
+  .night2 .below{position:absolute;right:5vw;top:50%;transform:translateY(-50%);padding:0;width:370px}
+  .night2 .card{max-width:none;font-size:14px;padding:16px 13px;gap:5px;box-shadow:0 18px 50px rgba(20,5,15,.45);background:rgba(251,246,243,.96)}
+}
+@media (max-width:859px){.hero2 .ctaD{display:none}}
+.footer-mail{color:var(--cream)}
+
 @media (prefers-reduced-motion:no-preference){
-  .hero .thread .b{animation:rise .5s ease both}
-  .hero .thread .b:nth-child(2){animation-delay:.5s}
-  .hero .thread .b:nth-child(3){animation-delay:1.1s}
-  .hero .thread .b:nth-child(4){animation-delay:1.8s}
-  .hero .thread .b:nth-child(6){animation-delay:2.4s}
+  .hero2 .thread .b{animation:rise .5s ease both}
+  .hero2 .thread .b:nth-child(2){animation-delay:.5s}
+  .hero2 .thread .b:nth-child(3){animation-delay:1.1s}
+  .hero2 .thread .b:nth-child(4){animation-delay:1.8s}
+  .hero2 .thread .b:nth-child(6){animation-delay:2.4s}
   @keyframes rise{from{transform:translateY(8px)}to{transform:none}}
 }
 </style>
@@ -128,35 +172,41 @@ footer p{margin:0}
     <div class="mark">My Coach <span>Kaj</span></div>
     <div class="say">(Kaj rhymes with sky)</div>
   </header>
+</div>
 
-  <section class="hero">
-    <figure class="photo">
+  <section class="hero2 bleed">
+    <div class="fullphoto">
       <img src="img/morning.jpg" alt="A woman leans against her kitchen counter in morning light, reading a text on her phone.">
-      <div class="thread t-morning" aria-label="Sample text exchange with Coach Kaj">
-        <div class="who her">Audrey</div>
-        <div class="b her">You there?</div>
-        <div class="who kaj">Coach Kaj</div>
-        <div class="b kaj">Right here, Audrey. What is going on?</div>
-        <div class="who her">Audrey</div>
-        <div class="b her">Two weeks left on my medication. I'm scared all the weight will come back.</div>
-        <div class="who kaj">Coach Kaj</div>
-        <div class="b kaj">That fear makes sense. Most women feel it and never say it out loud.</div>
-        <div class="b kaj">You're not starting over. You're not the same woman who started this.</div>
-        <div class="b kaj">So what's working right now that the medication can't take credit for?</div>
-      </div>
-    </figure>
-    <div class="copy">
-      <h1>Your GLP-1 changes your body. <em>Kaj helps you make it last.</em></h1>
-      <a class="btn" href="#moments">Meet Kaj</a>
+      <div class="shade"></div>
+      <h1 class="line1">Your <span class="nowrap">GLP&#8209;1</span> changes your body.</h1>
+      <p class="line2">Kaj helps you make it last.</p>
+      <a class="btn ctaD" href="#moments">Meet Kaj</a>
     </div>
+      <div class="below">
+      <div class="thread t-morning" aria-label="Sample text exchange with Coach Kaj">
+          <div class="who her">Audrey</div>
+          <div class="b her">You there?</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">Right here, Audrey. What is going on?</div>
+          <div class="who her">Audrey</div>
+          <div class="b her">Two weeks left on my medication. I'm scared all the weight will come back.</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">That fear makes sense. Most women feel it and never say it out loud.</div>
+          <div class="b kaj">You're not starting over. You're not the same woman who started this.</div>
+          <div class="b kaj">So what's working right now that the medication can't take credit for?</div>
+        </div>
+      </div>
+  
   </section>
+  <div class="cta ctaM"><a class="btn" href="#moments">Meet Kaj</a></div>
+<div class="wrap">
 </div>
 
 <div class="wrap">
-  <section class="moments" id="moments">
+  <section class="moments moments2" id="moments">
     <p class="eyebrow">A coach in your text messages</p>
     <h2>Kaj shows up in the ordinary moments of your day.</h2>
-    <div class="row">
+    <div class="row flip">
       <div class="photo">
         <img src="img/midday.jpg" alt="A woman at a restaurant table smiles as she looks over a menu, her phone beside her.">
         <div class="thread t-midday" aria-label="Sample text exchange with Coach Kaj">
@@ -176,14 +226,20 @@ footer p{margin:0}
       </div>
     </div>
 
-    <div class="row flip">
-      <div class="photo">
-        <img src="img/night.jpg" alt="Evening on the couch with a sleeping dog, reading the day's messages.">
-      </div>
-      <div class="side">
-        <p class="eyebrow">Night</p>
-        <p class="note">Getting to know the woman everyone else already sees.</p>
-        <div class="card" aria-label="Sample evening conversation with Coach Kaj">
+  </section>
+</div>
+
+<section class="night2 bleed">
+  <div class="fullphoto">
+    <img src="img/night.jpg" alt="Evening on the couch with a sleeping dog, reading the day's messages.">
+    <div class="shade"></div>
+    <div class="caption">
+      <p class="eyebrow">Night</p>
+      <p class="note">Getting to know the woman everyone else already sees.</p>
+    </div>
+  </div>
+    <div class="below">
+      <div class="card" aria-label="Sample evening conversation with Coach Kaj">
           <div class="hd card-hd"><span class="av">K</span><span>Coach Kaj</span></div>
           <div class="who her">Claire</div>
           <div class="b her">Weird day. Someone at work said I look great.</div>
@@ -204,9 +260,12 @@ footer p{margin:0}
           <div class="b kaj">That is who she saw, Claire.</div>
           <div class="b kaj">Next time, just say thank you.</div>
         </div>
-      </div>
     </div>
-  </section>
+  
+</section>
+
+<div class="wrap">
+
 
   <section class="close">
     <p class="lead">Kaj gets to know who you are. You discover who you are becoming.</p>
@@ -225,7 +284,7 @@ footer p{margin:0}
 <footer>
   <div class="wrap">
     <p>My Coach Kaj. Kaj is AI, not a medical provider. In crisis, call or text 988.</p>
-    <div class="links"><a href="privacy.html">Privacy</a><a href="texting-terms.html">Texting terms</a><a href="mailto:support@mycoachkaj.com">Contact</a></div>
+    <div class="links"><a href="privacy.html">Privacy</a><a href="texting-terms.html">Texting terms</a><a href="mailto:support@mycoachkaj.com">support@mycoachkaj.com</a></div>
     <p>Images are illustrative. My Coach Kaj is a business name of Next 10 Capital LLC.</p>
   </div>
 </footer>
