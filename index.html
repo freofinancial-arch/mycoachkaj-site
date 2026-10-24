@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My Coach Kaj</title>
+<meta name="description" content="My Coach Kaj is an AI text message coach for women on, or coming off, a GLP-1 medication.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600&display=swap">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+/* Layout: one photo, one line, one button up top; then three daily moments, each a photo with a real text exchange floating over it. */
+:root{
+  --plum:#86587A;
+  --plum-deep:#5E3350;
+  --plum-shade:#77496B;
+  --cream:#FBF6F3;
+  --cream-soft:#EBDDE5;
+  --blush:#F2C6CF;
+  --ink:#4A2340;
+  --sms-green:#34C759;
+  --sms-gray:#E9E9EB;
+  --display:"Gloock", "Iowan Old Style", Georgia, serif;
+  --body:"Figtree", -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sms:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  color-scheme:light;
+}
+html{background:var(--plum)}
+body{background:var(--plum);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));}
+.wrap{max-width:1060px;margin:0 auto}
+header{padding-block:20px 8px;display:flex;justify-content:space-between;align-items:center}
+.mark{font-family:var(--display);font-size:22px;letter-spacing:.01em;color:var(--cream)}
+.mark span{color:var(--blush)}
+.btn{display:inline-block;background:var(--blush);color:var(--ink);font-family:var(--body);font-weight:600;font-size:17px;
+  padding:14px 30px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease, background .15s ease}
+.btn:hover{background:#F7D4DB}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+
+.hero{display:grid;gap:28px;padding-block:12px 56px;align-items:center}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(34px, 7vw, 56px);line-height:1.08;margin:0 0 26px;text-wrap:balance;color:var(--cream)}
+.hero h1 em{font-style:normal;color:var(--blush)}
+.hero .copy{text-align:center}
+@media (min-width:860px){.hero{grid-template-columns:1.05fr .95fr;gap:56px}.hero .copy{text-align:left}}
+
+.photo{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5;max-width:100%;background:var(--plum-shade)}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.thread{position:absolute;display:flex;flex-direction:column;gap:6px;font-family:var(--sms);font-size:15px;line-height:1.35;width:min(74%, 300px)}
+.b{padding:9px 13px;border-radius:19px;max-width:88%;box-shadow:0 2px 10px rgba(40,10,30,.18)}
+.b.her{align-self:flex-end;background:var(--sms-green);color:#fff;border-bottom-right-radius:6px}
+.b.kaj{align-self:flex-start;background:var(--sms-gray);color:#111;border-bottom-left-radius:6px}
+.who{font-family:var(--sms);font-size:11px;color:#fff;opacity:.9;margin:0 0 -2px 10px;text-shadow:0 1px 3px rgba(0,0,0,.45);align-self:flex-start}
+
+.t-morning{left:3%;top:3%;width:62%}
+.t-midday{left:3%;bottom:3%;width:47%;font-size:13px}
+.t-midday .b{max-width:100%;padding:7px 11px}
+.t-night{left:4%;bottom:4%}
+
+.moments{padding-block:24px 64px;border-top:1px solid rgba(251,246,243,.18)}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);margin:0 0 14px;font-weight:500}
+.moments h2{font-family:var(--display);font-weight:400;font-size:clamp(28px, 5vw, 40px);line-height:1.15;margin:0 0 32px;text-wrap:balance}
+.grid{display:grid;gap:40px}
+@media (min-width:860px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}.grid .thread{width:76%}
+@media (min-width:860px){.t-midday{font-size:14px}}}
+.m figcaption{margin-top:14px;font-size:15px;color:var(--cream-soft)}
+.m figcaption b{color:var(--cream);font-weight:600}
+figure{margin:0}
+header{flex-direction:column;align-items:flex-start;gap:2px}
+.say{font-family:var(--display);font-style:italic;font-size:14px;color:var(--blush);white-space:nowrap;letter-spacing:.01em}
+.who{font-family:var(--sms);font-size:11px;font-weight:600;letter-spacing:.02em;margin:4px 6px -2px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55)}
+.who.kaj{align-self:flex-start}
+.who.her{align-self:flex-end}
+.card .who{color:#6E6E73;text-shadow:none}
+.hero .t-morning{font-size:13px;gap:3px}
+@media (max-width:859px){.hero .photo{aspect-ratio:3/4.3}.hero .photo img{object-position:70% 50%}}
+.hero .t-morning .b{padding:6px 11px}
+@media (min-width:860px){.hero .t-morning{font-size:15px;gap:6px}}
+
+.hd{display:flex;align-items:center;gap:7px;align-self:flex-start;background:rgba(255,255,255,.88);color:#1d1d1f;font-family:var(--sms);font-size:12px;font-weight:600;padding:4px 10px 4px 4px;border-radius:999px;margin-bottom:2px;box-shadow:0 2px 8px rgba(40,10,30,.15)}
+.av{width:20px;height:20px;border-radius:50%;background:var(--plum);color:var(--cream);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.card-hd{align-self:center;background:transparent;box-shadow:none;flex-direction:column;gap:4px;padding:0 0 10px;font-size:13px;font-weight:500}
+.card-hd .av{width:40px;height:40px;font-size:18px}
+
+.row{display:grid;gap:22px;margin-bottom:56px;align-items:start}
+.row .side{min-width:0}
+.note{font-family:var(--display);font-size:clamp(22px, 3.6vw, 30px);line-height:1.2;margin:0 0 18px;text-wrap:balance}
+.card{background:var(--cream);border-radius:22px;padding:18px 14px;display:flex;flex-direction:column;gap:6px;font-family:var(--sms);font-size:15px;line-height:1.35}
+.card .b{box-shadow:none;max-width:82%}
+.who.dark{color:#6E6E73;text-shadow:none;opacity:1}
+@media (min-width:860px){.row{grid-template-columns:1fr 1fr;gap:48px;align-items:center}.row.flip .photo{order:2}}
+
+.close{padding-block:56px;text-align:center;border-top:1px solid rgba(251,246,243,.18)}
+.close p.lead{font-family:var(--display);font-size:clamp(26px, 4.4vw, 36px);line-height:1.2;margin:0 auto 14px;max-width:22ch;text-wrap:balance}
+.close p.sub{max-width:46ch;margin:0 auto 28px;color:var(--cream-soft)}
+.price{margin:22px auto 0;font-size:15px;color:var(--cream-soft);max-width:46ch}
+.price strong{color:var(--cream);font-weight:600}
+.soon{display:block;margin-top:12px;font-size:14px;color:var(--blush)}
+.pricebox{margin:8px auto 36px;padding-bottom:30px;border-bottom:1px solid rgba(251,246,243,.18);max-width:320px}
+.big{font-family:var(--display);font-size:56px;line-height:1;margin:0;color:var(--cream)}
+.big span{font-family:var(--body);font-size:16px;margin-left:8px;color:var(--cream-soft)}
+.std{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blush);margin:10px 0 0}
+.insider-h{font-family:var(--display);font-size:clamp(24px, 4vw, 30px);line-height:1.2;margin:0 0 10px;text-wrap:balance}
+.insider{color:var(--cream-soft);margin:0 auto 24px;max-width:40ch}
+
+footer{background:var(--plum-deep);margin-left:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));margin-right:calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 36px;font-size:13px;color:var(--cream-soft)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+footer a{color:var(--cream);text-underline-offset:3px}
+footer p{margin:0}
+.links{display:flex;gap:18px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:no-preference){
+  .hero .thread .b{animation:rise .5s ease both}
+  .hero .thread .b:nth-child(2){animation-delay:.5s}
+  .hero .thread .b:nth-child(3){animation-delay:1.1s}
+  .hero .thread .b:nth-child(4){animation-delay:1.8s}
+  .hero .thread .b:nth-child(6){animation-delay:2.4s}
+  @keyframes rise{from{transform:translateY(8px)}to{transform:none}}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="mark">My Coach <span>Kaj</span></div>
+    <div class="say">(Kaj rhymes with sky)</div>
+  </header>
+
+  <section class="hero">
+    <figure class="photo">
+      <img src="img/morning.jpg" alt="A woman leans against her kitchen counter in morning light, reading a text on her phone.">
+      <div class="thread t-morning" aria-label="Sample text exchange with Coach Kaj">
+        <div class="who her">Audrey</div>
+        <div class="b her">You there?</div>
+        <div class="who kaj">Coach Kaj</div>
+        <div class="b kaj">Right here, Audrey. What is going on?</div>
+        <div class="who her">Audrey</div>
+        <div class="b her">Two weeks left on my medication. I'm scared all the weight will come back.</div>
+        <div class="who kaj">Coach Kaj</div>
+        <div class="b kaj">That fear makes sense. Most women feel it and never say it out loud.</div>
+        <div class="b kaj">You're not starting over. You're not the same woman who started this.</div>
+        <div class="b kaj">So what's working right now that the medication can't take credit for?</div>
+      </div>
+    </figure>
+    <div class="copy">
+      <h1>Your GLP-1 changes your body. <em>Kaj helps you make it last.</em></h1>
+      <a class="btn" href="#moments">Meet Kaj</a>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="moments" id="moments">
+    <p class="eyebrow">A coach in your text messages</p>
+    <h2>Kaj shows up in the ordinary moments of your day.</h2>
+    <div class="row">
+      <div class="photo">
+        <img src="img/midday.jpg" alt="A woman at a restaurant table smiles as she looks over a menu, her phone beside her.">
+        <div class="thread t-midday" aria-label="Sample text exchange with Coach Kaj">
+          <div class="who her">Simone</div>
+          <div class="b her">Lunch break. Can I get the dressing or is that cheating?</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">Get the dressing. This is a real meal, not a negotiation.</div>
+          <div class="who her">Simone</div>
+          <div class="b her">Ha. Okay. Dressing on the side.</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">Remember, Simone. Food isn't a test. And guilt is not on the menu.</div>
+        </div>
+      </div>
+      <div class="side">
+        <p class="eyebrow">Midday</p>
+        <p class="note">The calm voice in your pocket when the old one gets loud.</p>
+      </div>
+    </div>
+
+    <div class="row flip">
+      <div class="photo">
+        <img src="img/night.jpg" alt="Evening on the couch with a sleeping dog, reading the day's messages.">
+      </div>
+      <div class="side">
+        <p class="eyebrow">Night</p>
+        <p class="note">Getting to know the woman everyone else already sees.</p>
+        <div class="card" aria-label="Sample evening conversation with Coach Kaj">
+          <div class="hd card-hd"><span class="av">K</span><span>Coach Kaj</span></div>
+          <div class="who her">Claire</div>
+          <div class="b her">Weird day. Someone at work said I look great.</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">What did you say?</div>
+          <div class="who her">Claire</div>
+          <div class="b her">That it was probably the lighting. The scale hasn't moved in weeks.</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">Ha. You deflected. Most women do.</div>
+          <div class="b kaj">The scale measures one thing. She saw something else.</div>
+          <div class="who her">Claire</div>
+          <div class="b her">What did she see?</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">You tell me. What has changed that a scale can't weigh?</div>
+          <div class="who her">Claire</div>
+          <div class="b her">I stand up straighter. I laugh more. I said yes to dinner with friends.</div>
+          <div class="who kaj">Coach Kaj</div>
+          <div class="b kaj">That is who she saw, Claire.</div>
+          <div class="b kaj">Next time, just say thank you.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="close">
+    <p class="lead">Kaj gets to know who you are. You discover who you are becoming.</p>
+    <p class="sub">Kaj is an AI coach for women on a GLP-1. No app. No logging. Just your text messages.</p>
+    <div class="pricebox">
+      <p class="big">$47<span>a month</span></p>
+      <p class="std">Standard membership</p>
+    </div>
+    <p class="insider-h">Now is the time to become an Insider.</p>
+    <p class="insider">Selected Insiders join at $27 a month.</p>
+    <a class="btn" href="mailto:support@mycoachkaj.com?subject=Insider%20list">Join the Insider list</a>
+    <span class="soon">The Insider survey opens soon.</span>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>My Coach Kaj. Kaj is AI, not a medical provider. In crisis, call or text 988.</p>
+    <div class="links"><a href="privacy.html">Privacy</a><a href="texting-terms.html">Texting terms</a><a href="mailto:support@mycoachkaj.com">Contact</a></div>
+    <p>Images are illustrative. My Coach Kaj is a business name of Next 10 Capital LLC.</p>
+  </div>
+</footer>
+
+</body>
+</html>
