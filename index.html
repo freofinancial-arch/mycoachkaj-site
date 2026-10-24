@@ -81,13 +81,20 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
   border-radius:999px;padding:8px 16px;cursor:pointer;transition:background .2s ease,color .2s ease,border-color .2s ease}
 .tab:hover{border-color:var(--cream);color:var(--cream)}
 .tab[aria-selected="true"]{background:var(--cream);color:var(--ink);border-color:var(--cream)}
-.arrows{display:none;gap:8px}
-.arrow{width:44px;height:44px;border-radius:50%;border:1px solid rgba(251,246,243,.45);background:transparent;color:var(--cream);font-size:20px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
-.arrow:hover{background:rgba(251,246,243,.12)}
-.arrow:disabled{opacity:.3;cursor:default}
-@media (min-width:860px){.arrows{display:flex}}
+.tab{font-size:16px;padding:10px 18px}
+.tab .nm{display:none}
+.hint{margin:0;font-size:14px;color:var(--cream-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+.slider{position:relative}
+.arrow{display:none;position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:56px;height:56px;border-radius:50%;border:0;
+  background:rgba(251,246,243,.92);color:var(--ink);font-size:24px;line-height:1;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(20,5,15,.35);transition:opacity .2s ease,transform .15s ease}
+.arrow:hover{transform:translateY(-50%) scale(1.06)}
+.arrow.prev{left:max(18px, env(safe-area-inset-left, 0px))}
+.arrow.next{right:max(18px, env(safe-area-inset-right, 0px))}
+.arrow:disabled{opacity:0;pointer-events:none}
+@media (min-width:860px){.arrow{display:inline-flex}.tab .nm{display:inline;font-weight:400;opacity:.75}.hint .swipe{display:none}
+  .slide .panel{left:calc(6vw + 40px)}.slide.right .panel{right:calc(6vw + 40px)}}
 
-.track{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;transition:height .35s ease;overscroll-behavior-x:contain}
+.track{position:relative;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;transition:height .35s ease;overscroll-behavior-x:contain}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative}
 .slide .pic{position:relative;overflow:hidden;background:var(--plum-shade);aspect-ratio:4/5;max-width:100%}
@@ -130,7 +137,12 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
   .slide .panel{display:contents}
   .slide .pic{grid-area:pic}
   .slide .caption{grid-area:pic;position:relative;align-self:end;bottom:auto;padding-bottom:22px;z-index:1}
-  .slide .chat{grid-area:chat}
+  .slide .chat{grid-area:chat;padding:16px 0 32px}
+  .track{gap:10px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);scroll-padding-left:var(--gutter-l)}
+  .slide{flex:0 0 calc(100% - 40px)}
+  .slide .pic{border-radius:18px}
+  .slide .caption{padding-left:16px;padding-right:16px}
+  .controls{flex-wrap:wrap}
 }
 
 /* ---------- Close ---------- */
@@ -180,19 +192,19 @@ footer p{margin:0}
     <h2>Kaj shows up in the ordinary moments of your day.</h2>
     <div class="controls">
       <div class="tabs" role="tablist" aria-label="Moments with Kaj">
-        <button class="tab" role="tab" id="tab-0" aria-controls="slide-0" aria-selected="true">Morning</button>
-        <button class="tab" role="tab" id="tab-1" aria-controls="slide-1" aria-selected="false" tabindex="-1">Midday</button>
-        <button class="tab" role="tab" id="tab-2" aria-controls="slide-2" aria-selected="false" tabindex="-1">Night</button>
+        <button class="tab" role="tab" id="tab-0" aria-controls="slide-0" aria-selected="true">Morning <span class="nm">with Audrey</span></button>
+        <button class="tab" role="tab" id="tab-1" aria-controls="slide-1" aria-selected="false" tabindex="-1">Midday <span class="nm">with Simone</span></button>
+        <button class="tab" role="tab" id="tab-2" aria-controls="slide-2" aria-selected="false" tabindex="-1">Night <span class="nm">with Claire</span></button>
       </div>
-      <div class="arrows">
-        <button class="arrow" id="prev" aria-label="Previous moment">&#8592;</button>
-        <button class="arrow" id="next" aria-label="Next moment">&#8594;</button>
-      </div>
+      <p class="hint" id="hint" aria-live="polite"><span id="count">1 of 3</span><span class="swipe"> &middot; swipe &#8594;</span></p>
     </div>
   </section>
 </div>
 
-<div class="track bleed" id="track">
+<div class="slider bleed">
+<button class="arrow prev" id="prev" aria-label="Previous moment">&#8592;</button>
+<button class="arrow next" id="next" aria-label="Next moment">&#8594;</button>
+<div class="track" id="track">
 
   <article class="slide s-morning" id="slide-0" role="tabpanel" aria-labelledby="tab-0">
     <div class="pic">
@@ -285,6 +297,7 @@ footer p{margin:0}
   </article>
 
 </div>
+</div>
 
 <div class="wrap">
   <section class="close">
@@ -323,11 +336,12 @@ footer p{margin:0}
     current=i;
     tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; });
     prev.disabled=i===0; next.disabled=i===slides.length-1;
+    document.getElementById('count').textContent=(i+1)+' of '+slides.length;
     fit();
   }
   function go(i){
     i=Math.max(0,Math.min(slides.length-1,i));
-    track.scrollTo({left:i*track.clientWidth,behavior:reduce?'auto':'smooth'});
+    track.scrollTo({left:slides[i].offsetLeft-slides[0].offsetLeft,behavior:reduce?'auto':'smooth'});
     mark(i);
   }
   tabs.forEach(function(t,k){
@@ -344,12 +358,13 @@ footer p{margin:0}
   track.addEventListener('scroll',function(){
     clearTimeout(timer);
     timer=setTimeout(function(){
-      var i=Math.round(track.scrollLeft/track.clientWidth);
+      var x=track.scrollLeft, i=0, best=1e9;
+      slides.forEach(function(sl,k){ var d=Math.abs(sl.offsetLeft-slides[0].offsetLeft-x); if(d<best){best=d;i=k;} });
       if(i!==current) mark(i);
     },80);
   },{passive:true});
   window.addEventListener('resize',function(){
-    track.scrollLeft=current*track.clientWidth; fit();
+    track.scrollLeft=slides[current].offsetLeft-slides[0].offsetLeft; fit();
   });
   slides.forEach(function(s){ var img=s.querySelector('img'); if(img && !img.complete) img.addEventListener('load',fit); });
   mark(0);
