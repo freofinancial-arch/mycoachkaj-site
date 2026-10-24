@@ -123,7 +123,10 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
   .slide.right .pic .shade{background:linear-gradient(270deg,rgba(40,15,35,.72) 0%,rgba(40,15,35,.35) 34%,rgba(40,15,35,0) 52%)}
   .slide .panel{position:absolute;top:50%;transform:translateY(-50%);left:6vw;width:min(380px,32vw);display:flex;flex-direction:column;gap:18px}
   .slide.right .panel{left:auto;right:6vw}
-  .slide .caption,.slide .chat{position:static;padding:0}
+  .slide .chat{position:static;padding:0}
+  .slide .caption{left:auto;right:calc(6vw + 40px);bottom:56px;padding:0;width:min(440px,34vw);text-align:right}
+  .slide.right .caption{right:auto;left:calc(6vw + 40px);text-align:left}
+  .slide .pic::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(0deg,rgba(40,15,35,.7) 0%,rgba(40,15,35,0) 100%);pointer-events:none}
   .card{max-width:none;margin:0;font-size:14px;padding:16px 13px;gap:5px;background:rgba(251,246,243,.96);box-shadow:0 18px 50px rgba(20,5,15,.45)}
   .s-morning .pic>img{object-position:60% 32%}
   .s-midday .pic>img{object-position:50% 42%}
@@ -211,11 +214,11 @@ footer p{margin:0}
       <img src="img/morning.jpg" alt="A woman leans against her kitchen counter in morning light, reading a text on her phone.">
       <div class="shade"></div>
     </div>
+    <div class="caption">
+      <p class="eyebrow">Morning</p>
+      <p class="note">For the fear most women never say out loud.</p>
+    </div>
     <div class="panel">
-      <div class="caption">
-        <p class="eyebrow">Morning</p>
-        <p class="note">For the fear most women never say out loud.</p>
-      </div>
       <div class="chat">
         <div class="card" aria-label="Sample morning conversation with Coach Kaj">
           <div class="hd"><span class="av">K</span><span>Coach Kaj</span></div>
@@ -239,11 +242,11 @@ footer p{margin:0}
       <img src="img/midday.jpg" alt="A woman at a restaurant table smiles as she looks over a menu, her phone beside her." loading="lazy">
       <div class="shade"></div>
     </div>
+    <div class="caption">
+      <p class="eyebrow">Midday</p>
+      <p class="note">The calm voice in your pocket when the old one gets loud.</p>
+    </div>
     <div class="panel">
-      <div class="caption">
-        <p class="eyebrow">Midday</p>
-        <p class="note">The calm voice in your pocket when the old one gets loud.</p>
-      </div>
       <div class="chat">
         <div class="card" aria-label="Sample midday conversation with Coach Kaj">
           <div class="hd"><span class="av">K</span><span>Coach Kaj</span></div>
@@ -265,11 +268,11 @@ footer p{margin:0}
       <img src="img/night.jpg" alt="Evening on the couch with a sleeping dog, reading the day's messages." loading="lazy">
       <div class="shade"></div>
     </div>
+    <div class="caption">
+      <p class="eyebrow">Night</p>
+      <p class="note">Getting to know the woman everyone else already sees.</p>
+    </div>
     <div class="panel">
-      <div class="caption">
-        <p class="eyebrow">Night</p>
-        <p class="note">Getting to know the woman everyone else already sees.</p>
-      </div>
       <div class="chat">
         <div class="card" aria-label="Sample evening conversation with Coach Kaj">
           <div class="hd"><span class="av">K</span><span>Coach Kaj</span></div>
