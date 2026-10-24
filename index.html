@@ -148,6 +148,8 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
 .std{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blush);margin:10px 0 0}
 .insider-h{font-family:var(--display);font-size:clamp(24px, 4vw, 30px);line-height:1.2;margin:0 0 10px;text-wrap:balance}
 .insider{color:var(--cream-soft);margin:0 auto 24px;max-width:40ch}
+.big.ins{color:var(--blush);font-size:64px;margin-top:6px}
+.gap{height:26px}
 
 footer{background:var(--plum-deep);margin-left:calc(-1 * var(--gutter-l));margin-right:calc(-1 * var(--gutter-r));
   padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:28px 36px;font-size:13px;color:var(--cream-soft)}
@@ -230,13 +232,13 @@ footer p{margin:0}
         <div class="card" aria-label="Sample midday conversation with Coach Kaj">
           <div class="hd"><span class="av">K</span><span>Coach Kaj</span></div>
           <div class="who her">Simone</div>
-          <div class="b her">Lunch break. Can I get the dressing or is that cheating?</div>
+          <div class="b her">Work lunch. Everyone's getting the pasta. I want it so bad. Would that be cheating?</div>
           <div class="who kaj">Coach Kaj</div>
-          <div class="b kaj">Get the dressing. This is a real meal, not a negotiation.</div>
+          <div class="b kaj">Cheating on what, Simone? Guilt is not on the menu.</div>
           <div class="who her">Simone</div>
-          <div class="b her">Ha. Okay. Dressing on the side.</div>
+          <div class="b her">Ha. Okay. I'm getting the pasta.</div>
           <div class="who kaj">Coach Kaj</div>
-          <div class="b kaj">Remember, Simone. Food isn't a test. And guilt is not on the menu.</div>
+          <div class="b kaj">Enjoy every bite you want. Box the rest. Pasta is better the next day anyway.</div>
         </div>
       </div>
     </div>
@@ -285,7 +287,9 @@ footer p{margin:0}
       <p class="std">Standard membership</p>
     </div>
     <p class="insider-h">Now is the time to become an Insider.</p>
-    <p class="insider">Selected Insiders join at $27 a month.</p>
+    <p class="big ins">$27<span>a month</span></p>
+    <p class="std">Selected Insiders</p>
+    <div class="gap"></div>
     <a class="btn" href="mailto:support@mycoachkaj.com?subject=Insider%20list">Join the Insider list</a>
     <span class="soon">The Insider survey opens soon.</span>
   </section>
