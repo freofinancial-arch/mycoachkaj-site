@@ -39,14 +39,17 @@ body{background:var(--plum);color:var(--cream);font-family:var(--body);font-size
 .nowrap{white-space:nowrap}
 figure{margin:0}
 
-header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
-.mark{font-family:var(--display);font-size:22px;letter-spacing:.01em;color:var(--cream)}
+header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.mark{font-family:var(--display);font-size:clamp(34px,8.5vw,48px);line-height:1.05;letter-spacing:.005em;color:var(--cream)}
 .mark span{color:var(--blush)}
-.say{font-family:var(--display);font-style:italic;font-size:14px;color:var(--blush);white-space:nowrap;letter-spacing:.01em}
+.say{font-family:var(--display);font-style:italic;font-size:clamp(17px,4.2vw,21px);color:var(--blush);white-space:nowrap;letter-spacing:.01em}
 
 .btn{display:inline-block;background:var(--blush);color:var(--ink);font-family:var(--body);font-weight:600;font-size:17px;
   padding:14px 30px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease, background .15s ease}
 .btn:hover{background:#F7D4DB}
+.btn-lg{font-size:20px;padding:18px 44px}
+@media (min-width:860px){.topwrap{max-width:none;margin:0;padding-left:calc(6vw + 40px - var(--gutter-l))}}
+@media (min-width:860px){.btn-lg{font-size:22px;padding:20px 52px}}
 .btn:active{transform:scale(.98)}
 .btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
 
@@ -55,7 +58,7 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
 
 /* ---------- Top slider: welcome slide plus three moments ---------- */
 .slider{position:relative}
-.hero{position:relative;overflow:hidden;background:var(--plum-shade);height:min(calc(100svh - 88px), 640px);min-height:520px}
+.hero{position:relative;overflow:hidden;background:var(--plum-shade);height:min(calc(100svh - 124px), 640px);min-height:520px}
 .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 35%}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(60,25,50,.62) 0%,rgba(60,25,50,0) 32%,rgba(60,25,50,0) 48%,rgba(60,25,50,.86) 100%)}
 .hero .line1,.hero .line2{position:absolute;left:0;right:0;margin:0;padding-left:var(--gutter-l);padding-right:var(--gutter-r);
@@ -78,7 +81,7 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
 @media (min-width:860px){
   .arrow{display:inline-flex}
   .dots{top:auto;bottom:20px}
-  .hero{height:max(640px, min(calc(100vh - 88px), 820px));min-height:0}
+  .hero{height:max(640px, min(calc(100vh - 124px), 820px));min-height:0}
   .hero>img{object-position:60% 30%}
   .hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.78) 0%,rgba(60,25,50,.45) 36%,rgba(60,25,50,0) 58%)}
   .hero .copy{position:absolute;left:calc(6vw + 40px);top:50%;transform:translateY(-50%);max-width:min(620px,48vw);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
@@ -112,7 +115,7 @@ header{padding-block:20px 8px;display:flex;flex-direction:column;align-items:fle
 .who.her{align-self:flex-end}
 
 @media (min-width:860px){
-  .slide .pic{aspect-ratio:auto;height:max(640px, min(calc(100vh - 88px), 820px))}
+  .slide .pic{aspect-ratio:auto;height:max(640px, min(calc(100vh - 124px), 820px))}
   .slide .pic .shade{background:linear-gradient(90deg,rgba(40,15,35,.72) 0%,rgba(40,15,35,.35) 34%,rgba(40,15,35,0) 52%)}
   .slide.right .pic .shade{background:linear-gradient(270deg,rgba(40,15,35,.72) 0%,rgba(40,15,35,.35) 34%,rgba(40,15,35,0) 52%)}
   .slide .panel{position:absolute;top:50%;transform:translateY(-50%);left:6vw;width:min(380px,32vw);display:flex;flex-direction:column;gap:18px}
@@ -162,7 +165,7 @@ footer p{margin:0}
 @media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}}
 </style>
 
-<div class="wrap">
+<div class="wrap topwrap">
   <header>
     <div class="mark">My Coach <span>Kaj</span></div>
     <div class="say">(Kaj rhymes with sky)</div>
@@ -186,7 +189,7 @@ footer p{margin:0}
     <h1 class="line1">Your <span class="nowrap">GLP&#8209;1</span> changes your body.</h1>
     <div class="foot">
       <p class="line2">Kaj helps you make it last.</p>
-      <a class="btn" href="#slide-1" data-go="1">Meet Kaj</a>
+      <a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj</a>
     </div>
   </div>
 </article>
