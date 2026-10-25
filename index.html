@@ -219,7 +219,12 @@ footer p{margin:0}
 .std-note{margin:20px 0 0;font-size:19px;color:var(--cream)}
 .std-note b{font-family:var(--display);font-weight:400;font-size:24px;margin:0 2px}
 @media (min-width:1200px){.hero .copy{max-width:none}.hero .line1,.hero .line2{white-space:nowrap}.hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.8) 0%,rgba(60,25,50,.5) 42%,rgba(60,25,50,0) 66%)}}
-@media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}.joinbar{transition:none}}
+/* Swipe hint (Oct 25): Meet Kaj points sideways; one gentle nudge shows the next moment's edge. */
+.btn .go{display:inline-block;margin-left:6px;transition:transform .2s ease}
+.btn:hover .go{transform:translateX(3px)}
+@keyframes nudge{0%,100%{transform:none}35%,55%{transform:translateX(-64px)}}
+.track.nudge .slide{animation:nudge 1.3s ease-in-out 1}
+@media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}.joinbar{transition:none}.track.nudge .slide{animation:none}}
 </style>
 
 <div class="wrap topwrap">
@@ -246,7 +251,7 @@ footer p{margin:0}
     <div class="foot">
       <p class="line2">Kaj helps you make it last.</p>
       <p class="what"><span>AI coach by text</span><span>No app</span><span>No food tracking</span></p>
-      <div class="cta-wrap"><a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj</a><span class="say say-btn">Kaj rhymes with sky</span></div>
+      <div class="cta-wrap"><a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj <span class="go" aria-hidden="true">&#8594;</span></a><span class="say say-btn">Kaj rhymes with sky</span></div>
     </div>
   </div>
 </article>
@@ -475,6 +480,18 @@ footer p{margin:0}
     window.addEventListener('scroll',update,{passive:true});
     track.addEventListener('scroll',function(){ setTimeout(update,120); },{passive:true});
     window.__joinbarUpdate=update; update();
+  })();
+  // Swipe hint: once, on phones, if she has not moved past the welcome after a few seconds.
+  (function(){
+    if(reduce || window.matchMedia('(min-width:860px)').matches) return;
+    var touched=false; function t(){ touched=true; }
+    track.addEventListener('touchstart',t,{passive:true}); track.addEventListener('scroll',t,{passive:true});
+    document.addEventListener('click',t,true);
+    setTimeout(function(){
+      if(touched || current!==0) return;
+      track.classList.add('nudge');
+      setTimeout(function(){ track.classList.remove('nudge'); },1400);
+    },3200);
   })();
   mark(0);
 })();
