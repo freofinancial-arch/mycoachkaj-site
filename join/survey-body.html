@@ -104,6 +104,8 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);l
 .hero .ov{position:absolute;left:var(--gl);right:var(--gr);bottom:14px;z-index:1;display:flex;flex-direction:column;gap:8px}
 .hero .ov h1{font-size:clamp(30px,8.4vw,40px);line-height:1.08;text-shadow:0 2px 14px rgba(30,10,25,.5)}
 .hero .ov .eyebrow{text-shadow:0 1px 8px rgba(30,10,25,.6)}
+.hero .ov .sub{margin:0;font-size:clamp(19px,5.2vw,22px);color:var(--blush);text-shadow:0 1px 10px rgba(30,10,25,.6)}
+.hero.full .ov h1{font-size:clamp(44px,13vw,60px)}
 .lede{margin:-4px 0 0;font-size:18px;color:var(--cream)}
 .lede2{margin:-8px 0 0;font-size:16px;color:var(--cream-soft)}
 .quote{margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--blush)}
@@ -366,7 +368,7 @@ var R = {};
 R.intro = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<div class="hero full"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
-    '<div class="ov"><p class="eyebrow">Welcome</p><h1>Meet the woman you’re becoming.</h1></div></div>');
+    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p></div></div>');
   el.classList.add("welcome");
   cta("Let’s begin", function(){ track("welcome_next"); next(); });
 };
