@@ -347,13 +347,13 @@ footer p{margin:0}
       <p class="invite-note">Available while invitations are open.</p>
       <p class="big ins">$27<span>a month</span></p>
       <p class="std">Selected Insiders</p>
-      <a class="btn btn-lg" href="mailto:support@mycoachkaj.com?subject=Insider%20invitation">Request my invitation</a>
+      <a class="btn btn-lg" href="join/" data-join>Request my invitation</a>
       <p class="std-note">Standard membership: <b>$47</b> a month</p>
     </div>
   </section>
 </div>
 
-<div class="joinbar" id="joinbar" aria-hidden="true"><a class="btn" href="#offer" tabindex="-1">Request my invitation</a></div>
+<div class="joinbar" id="joinbar" aria-hidden="true"><a class="btn" href="join/" data-join tabindex="-1">Request my invitation</a></div>
 
 <footer>
   <div class="wrap">
@@ -451,6 +451,10 @@ footer p{margin:0}
     track.scrollLeft=slides[current].offsetLeft-slides[0].offsetLeft; fit();
   });
   slides.forEach(function(s){ var img=s.querySelector('img'); if(img && !img.complete) img.addEventListener('load',fit); });
+
+  // Survey links carry the ad tag from the visit, so each ad is measured to the finish.
+  (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); if(!m) return;
+    [].forEach.call(document.querySelectorAll('[data-join]'),function(a){ a.href='join/?ad='+encodeURIComponent(m[1].toLowerCase()); }); }catch(e){} })();
 
   // Pinned join bar: shows after the welcome slide, hides at the offer and footer.
   (function(){

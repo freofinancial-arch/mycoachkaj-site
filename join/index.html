@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta property="og:title" content="Join the Insider list. My Coach Kaj">
+<meta property="og:image" content="https://mycoachkaj.com/img/share.jpg">
+<style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<title>Join the Insider list. My Coach Kaj</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#86587A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one question per screen in a narrow phone column. Sticky top bar holds back, progress, and the brand mark. Sticky bottom bar holds Continue. Single look: the site's plum, by choice, in every theme. */
+:root{
+  --plum:#86587A;
+  --plum-deep:#5E3350;
+  --plum-shade:#77496B;
+  --cream:#FBF6F3;
+  --cream-soft:#EBDDE5;
+  --blush:#F2C6CF;
+  --blush-hi:#F7D4DB;
+  --ink:#4A2340;
+  --line:rgba(251,246,243,.32);
+  --tint:rgba(251,246,243,.07);
+  --err:#FFE1A8;
+  --display:"Gloock","Iowan Old Style",Georgia,serif;
+  --body:"Figtree",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --gl:max(16px, env(safe-area-inset-left, 0px));
+  --gr:max(16px, env(safe-area-inset-right, 0px));
+  --page:#86587A;
+  --page-clear:rgba(134,88,122,0);
+  --field:#FBF6F3;
+  --field-ink:#4A2340;
+  --field-line:transparent;
+  --panel:rgba(94,51,80,.45);
+  color-scheme:dark;
+}
+/* Question screens: the site's colors flipped. Soft blush ground, deep plum text. Welcome screens keep the plum. */
+html.light{
+  --page:#FAEFF2;
+  --page-clear:rgba(250,239,242,0);
+  --cream:#4A2340;
+  --cream-soft:#6A4A60;
+  --blush:#86587A;
+  --blush-hi:#77496B;
+  --ink:#FBF6F3;
+  --line:rgba(74,35,64,.2);
+  --tint:#FFFFFF;
+  --err:#A3304F;
+  --field:#FFFFFF;
+  --field-line:rgba(74,35,64,.22);
+  --panel:#FFFFFF;
+  color-scheme:light;
+}
+html.light .opt{box-shadow:0 1px 2px rgba(74,35,64,.06)}
+html.light .mark span{color:#86587A}
+.sheet{--cream:#FBF6F3;--cream-soft:#EBDDE5;--blush:#F2C6CF;--blush-hi:#F7D4DB;--ink:#4A2340;--line:rgba(251,246,243,.32);--tint:rgba(251,246,243,.07);color:var(--cream)}
+html.light .tpill{background:#5E3350;color:#F2C6CF;border-color:#5E3350}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--page);height:100%;transition:background .3s ease}
+body{margin:0;min-height:100%;background:var(--page);transition:background .3s ease,color .3s ease;color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--page)}
+.app{min-height:100%;display:flex;flex-direction:column}
+.col{width:100%;max-width:540px;margin:0 auto;padding-left:var(--gl);padding-right:var(--gr)}
+
+/* Top bar */
+.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:var(--page)}
+.top .col{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding-block:10px 8px}
+.mark{font-family:var(--display);font-size:22px;text-align:center;line-height:1.1;white-space:nowrap;min-width:0}
+.mark span{color:var(--blush)}
+.iconbtn{width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--cream);font-size:22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.iconbtn:hover{background:var(--tint)}
+.iconbtn[hidden]{display:none!important}
+.bar{height:4px;background:rgba(251,246,243,.18);border-radius:999px;overflow:hidden;margin-bottom:2px}
+.bar i{display:block;height:100%;width:0;background:var(--blush);border-radius:999px;transition:width .35s ease}
+
+/* Step */
+main{flex:1}
+.step{padding-block:16px 20px;display:flex;flex-direction:column;gap:16px}
+.step.enter{animation:rise .32s ease both}
+@keyframes rise{from{opacity:.0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);font-weight:500;margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);line-height:1.15;margin:0;text-wrap:balance;outline:none}
+.hint{margin:-6px 0 0;color:var(--cream-soft);font-size:16px}
+.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--cream-soft)}
+.list li{display:flex;gap:10px;align-items:baseline}
+.list li::before{content:"";flex:0 0 7px;height:7px;border-radius:50%;background:var(--blush);transform:translateY(-2px)}
+
+/* Choices */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;font-size:17px;color:var(--cream);background:var(--tint);
+  border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;min-height:54px;transition:background .15s ease,border-color .15s ease,transform .1s ease}
+.opt:hover{border-color:var(--cream-soft)}
+.opt:active{transform:scale(.99)}
+.opt[aria-checked="true"],.opt[aria-pressed="true"]{background:var(--blush);border-color:var(--blush);color:var(--ink)}
+.tick{flex:0 0 22px;height:22px;border-radius:7px;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1}
+.opt[aria-pressed="true"] .tick{background:var(--ink);border-color:var(--ink);color:var(--blush)}
+.opt[aria-pressed="true"] .tick::before{content:"\2713"}
+.opt.dim{opacity:.45}
+.opts.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9.5em),1fr));gap:8px}
+.opts.two .opt{font-size:15px;line-height:1.25;padding:10px 12px;min-height:58px;border-radius:14px;gap:9px}
+.opts.two .tick{flex-basis:18px;height:18px;border-radius:6px;font-size:12px}
+.other{margin-top:-4px}
+/* Welcome */
+.welcome{padding-block:0 8px}
+.hero{position:relative;margin-left:calc(-1 * var(--gl));margin-right:calc(-1 * var(--gr));height:min(60svh,600px);min-height:360px;overflow:hidden;background:var(--plum-shade)}
+.hero img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(60,25,50,0) 30%,rgba(60,25,50,.55) 62%,rgba(134,88,122,.92) 90%,var(--plum) 100%)}
+.hero .ov{position:absolute;left:var(--gl);right:var(--gr);bottom:14px;z-index:1;display:flex;flex-direction:column;gap:8px}
+.hero .ov h1{font-size:clamp(30px,8.4vw,40px);line-height:1.08;text-shadow:0 2px 14px rgba(30,10,25,.5)}
+.hero .ov .eyebrow{text-shadow:0 1px 8px rgba(30,10,25,.6)}
+.hero .ov .sub{margin:0;font-family:var(--display);font-style:italic;letter-spacing:.01em;font-size:clamp(22px,6vw,26px);line-height:1.2;color:var(--blush);text-shadow:0 1px 10px rgba(30,10,25,.6)}
+.hero.full .ov h1{font-size:clamp(44px,13vw,60px)}
+.lede{margin:-4px 0 0;font-size:18px;color:var(--cream)}
+.lede2{margin:-8px 0 0;font-size:16px;color:var(--cream-soft)}
+.quote{margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--blush)}
+.quote blockquote{margin:0;font-family:var(--display);font-style:italic;font-size:21px;line-height:1.3;color:var(--blush)}
+.quote figcaption{margin-top:4px;font-size:14px;color:var(--cream-soft)}
+.join{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--tint)}
+.join h2{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
+.hero.full{height:calc(100svh - 160px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));max-height:820px;min-height:420px}
+.welcome2{padding-top:28px}
+.welcome2 h1{font-size:clamp(28px,7.6vw,36px)}
+.welcome2 .lede2{margin:2px 0 6px;font-family:var(--display);font-style:italic;font-size:clamp(23px,6.2vw,28px);line-height:1.22;color:var(--blush);text-wrap:balance}
+@media (min-width:560px){.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:8px}.hero .ov{left:22px;right:22px}}
+.count{font-size:14px;color:var(--blush);margin:-8px 0 0}
+
+/* Fields */
+label.fl{display:block;font-size:15px;font-weight:500;color:var(--cream-soft);margin-bottom:6px}
+.field{display:flex;flex-direction:column;gap:6px}
+input.in,select.in,textarea.in{width:100%;font:inherit;font-size:18px;color:var(--field-ink);background:var(--field);border:2px solid var(--field-line);border-radius:14px;padding:14px 16px;outline:none}
+textarea.in{min-height:140px;resize:vertical;line-height:1.45;font-size:17px}
+input.in:focus,select.in:focus,textarea.in:focus{border-color:var(--blush);box-shadow:0 0 0 3px rgba(242,198,207,.35)}
+select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--field-ink) 50%),linear-gradient(135deg,var(--field-ink) 50%,transparent 50%);
+  background-position:calc(100% - 22px) 52%,calc(100% - 16px) 52%;background-size:6px 6px;background-repeat:no-repeat;padding-right:44px}
+.unit{display:flex;align-items:center;gap:10px}.unit .in{max-width:160px}.unit span{color:var(--cream-soft)}
+.err{color:var(--err);font-size:15px;margin:0;min-height:0}
+.err:empty{display:none}
+.opt-group{display:flex;flex-direction:column;gap:14px;padding-top:6px;border-top:1px solid var(--line)}
+.opt-group h2{font-family:var(--display);font-weight:400;font-size:22px;margin:6px 0 0}
+.opt-group .hint{margin:0}
+
+/* Consent */
+.check{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1.5px solid var(--line);border-radius:16px;background:var(--tint);cursor:pointer;font-size:15px;line-height:1.45;color:var(--cream-soft)}
+.check input{flex:0 0 22px;width:22px;height:22px;margin:1px 0 0;accent-color:var(--blush)}
+.check b{color:var(--cream);font-weight:600}
+.check a,.prose a{color:var(--blush);text-underline-offset:3px}
+.req{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blush);display:block;margin-bottom:4px}
+
+/* Buttons */
+.dock{position:sticky;bottom:0;z-index:4;background:linear-gradient(180deg,var(--page-clear),var(--page) 28%)}
+.dock .col{padding-block:18px calc(14px + env(safe-area-inset-bottom, 0px))}
+.btn{display:block;width:100%;text-align:center;background:var(--blush);color:var(--ink);font:inherit;font-weight:600;font-size:18px;padding:16px 22px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:background .15s ease,transform .1s ease}
+.btn:hover{background:var(--blush-hi)}
+.btn:active{transform:scale(.99)}
+.btn.ghost{background:transparent;color:var(--cream);border:1.5px solid var(--cream-soft)}
+.btn.ghost:hover{background:var(--tint)}
+.btn:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+.small{font-size:14px;color:var(--cream-soft);text-align:center;margin:10px 0 0}
+
+/* End and call screens */
+.prose{display:flex;flex-direction:column;gap:14px;color:var(--cream-soft)}
+.prose p{margin:0}
+.prose .phone{font-family:var(--display);font-size:24px;color:var(--cream);letter-spacing:.01em}
+.founding{border:1.5px solid var(--blush);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
+.founding h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.15;margin:0;color:var(--cream);text-wrap:balance}
+.founding p{margin:0;color:var(--cream-soft)}
+.alt{display:flex;flex-direction:column;gap:6px;text-align:center;padding-top:6px}
+.alt h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.alt p{margin:0;color:var(--cream-soft);font-size:15px}
+.big{font-family:var(--display);font-size:56px;line-height:1;color:var(--blush);margin:4px 0 0}
+.big span{font-family:var(--body);font-size:16px;color:var(--cream-soft);margin-left:8px}
+
+/* Preview test panel (only when no live endpoint is set) */
+.tpill{position:fixed;z-index:30;right:calc(10px + env(safe-area-inset-right, 0px));top:calc(64px + env(safe-area-inset-top, 0px));font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;
+  background:var(--plum-deep);color:var(--blush);border:1px solid var(--blush);border-radius:999px;padding:7px 11px;cursor:pointer}
+.panel{position:fixed;inset:0;z-index:40;background:rgba(30,10,25,.6);display:flex;align-items:flex-end;justify-content:center}
+.panel[hidden]{display:none!important}
+.sheet{width:100%;max-width:640px;max-height:88%;overflow:auto;background:var(--plum-deep);border-radius:22px 22px 0 0;
+  padding:18px var(--gr) calc(18px + env(safe-area-inset-bottom, 0px)) var(--gl);display:flex;flex-direction:column;gap:14px;font-size:15px}
+.sheet h3{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.sheet h4{margin:4px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpi{background:var(--tint);border-radius:12px;padding:10px}
+.kpi b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--cream-soft)}
+.tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tbl td{padding:5px 0;border-bottom:1px solid rgba(251,246,243,.12)}
+.tbl td+td{text-align:right;color:var(--cream-soft)}
+pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;overflow-x:auto;font-size:12px;line-height:1.45;color:var(--cream-soft);white-space:pre}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:transparent;color:var(--cream);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--blush);color:var(--ink);border-color:var(--blush)}
+.row{display:flex;gap:8px}.row .btn{font-size:15px;padding:11px 14px}
+.muted{color:var(--cream-soft);margin:0}
+.testnote{margin:8px 0 0;padding:12px 14px;border-radius:12px;background:var(--tint);border:1px dashed var(--line);font-size:14px;color:var(--cream-soft)}
+
+@media (prefers-reduced-motion:reduce){.step.enter{animation:none}.bar i{transition:none}}
+</style>
+
+<div class="app">
+  <div class="top">
+    <div class="col">
+      <button class="iconbtn" id="back" aria-label="Back" hidden>&#8592;</button>
+      <div class="mark">My Coach <span>Kaj</span></div>
+      <span></span>
+    </div>
+    <div class="col"><div class="bar" aria-hidden="true"><i id="prog"></i></div></div>
+  </div>
+  <main><div class="col" id="stage" aria-live="polite"></div></main>
+  <div class="dock" id="dock"><div class="col" id="dockin"></div></div>
+</div>
+
+<button class="tpill" id="tpill" hidden>Test panel</button>
+<div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===== Settings =====
+   endpoint: the Caerus server address that receives a finished survey and the funnel counts.
+   While it is empty, the page runs as a preview: nothing leaves the phone, and the test panel shows what would be sent. */
+var CONFIG = {
+  endpoint: "",
+  bookingUrl: "",            // Zoom booking page for founder calls
+  metaLead: false,           // one generic Lead signal on finish; stays off until the lawyer approves
+  launchDate: "November 30",
+  version: "survey_v1_2026-10-25",
+  smsConsentVersion: "sms_consent_v1_2026-10-24",
+  researchConsentVersion: "research_consent_v1_2026-10-24",
+  site: "https://mycoachkaj.com"
+};
+var PREVIEW = !CONFIG.endpoint;
+/* Welcome photo: coffee shop. Live site uses img/coffee.jpg. */
+var HERO = "/img/coffee.jpg";
+
+/* ===== Choices. Keys never change; wording can. ===== */
+var C = {
+  age:[["under_18","Under 18"],["18_39","18 to 39"],["40_49","40 to 49"],["50_59","50 to 59"],["60_69","60 to 69"],["70_plus","70 or older"]],
+  tz:[["eastern","Eastern"],["central","Central"],["mountain","Mountain"],["arizona","Arizona"],["pacific","Pacific"],["alaska","Alaska"],["hawaii","Hawaii"]],
+  safety:[["pregnant","I am pregnant."],["eating_disorder","I am being treated for an eating disorder, or have been in the last year."],["none","None of these."]],
+  stage:[["not_started","Haven't started yet"],["taking","Taking it now"],["planning_stop","Planning to stop soon"],["stopped","Stopped taking it"]],
+  months:(function(){var a=[["lt_1m","Less than a month"]];for(var i=1;i<=11;i++)a.push(["m"+i,i+(i===1?" month":" months")]);a.push(["y1","1 year"],["gt_1y","More than 1 year"],["gt_2y","More than 2 years"]);return a;})(),
+  start:[["this_week","This week"],["two_weeks","Within two weeks"],["month","Within a month"],["not_sure","Not sure yet"]],
+  med:[["wegovy","Wegovy"],["zepbound","Zepbound"],["ozempic","Ozempic"],["mounjaro","Mounjaro"],["compounded","A compounded version"],["pill","A pill"],["other","Other"],["not_sure","Not sure"]],
+  day:[["mon","Monday"],["tue","Tuesday"],["wed","Wednesday"],["thu","Thursday"],["fri","Friday"],["sat","Saturday"],["sun","Sunday"],["varies","It changes week to week"]],
+  side:[["nausea","Nausea"],["tiredness","Tiredness"],["stomach","Stomach trouble"],["low_appetite","Little or no appetite"],["heartburn","Heartburn"],["headaches","Headaches"],["hair_thinning","Hair thinning"],["none","None of these"]],
+  struggle:[["regain_fear","Fear the weight comes back"],["guilt_voice","The old guilt voice around food"],["mirror","Getting used to the woman in the mirror"],["side_effect_days","Getting through side effect days"],["eating_enough","Eating enough when I'm not hungry"],["habits","Building habits that actually stick"],["strength","Getting stronger and more active"],["social","Eating out and social plans"],["alone","Feeling alone in this"],["other","Something else"]],
+  noise:[["rarely","Rarely"],["some_days","Some days"],["most_days","Most days"],["almost_always","Almost all the time"]],
+  trigger:[["sight_smell","Seeing or smelling food"],["stress","Stress or big feelings"],["tired","Being tired"],["boredom","Boredom"],["others_eating","Being around others eating"],["time_of_day","Certain times of day"],["nothing","Nothing much"]],
+  win:[["energy","More energy"],["sleep","Better sleep"],["strong","Feeling strong in my body"],["muscle","Keeping my muscle"],["confidence","Confidence in how I look"],["calm_food","Calm around food"],["keep_up","Keeping up with the people I love"],["myself","Feeling like myself again"]],
+  help:[["kind_word","A kind word first"],["straight","A straight answer, no fluff"],["small_step","A small next step I can take now"],["why","A reminder of why I started"],["vent","Room to vent before any advice"]],
+  checkin:[["early_morning","Early morning, 6 to 8 a.m."],["morning","Morning, 8 to 11 a.m."],["midday","Midday, 11 a.m. to 2 p.m."],["afternoon","Afternoon, 2 to 5 p.m."],["evening","Evening, 5 to 8 p.m."]],
+  bg:[["black","Black or African American"],["hispanic","Hispanic or Latina"],["white","White"],["asian","Asian"],["native_american","Native American or Alaska Native"],["pacific_islander","Native Hawaiian or Pacific Islander"],["mena","Middle Eastern or North African"],["describe","Let me describe it"],["prefer_not","Prefer not to say"]],
+  heard:[["instagram","Instagram"],["facebook","Facebook"],["tiktok","TikTok"],["google","Google search"],["other","Something else"],["referral","Someone referred me"]]
+};
+var SMS_TEXT = "Yes, text me. I agree to receive coaching texts from My Coach Kaj, including automated texts, at the mobile number above. Message frequency varies. Message and data rates may apply. Reply STOP to stop or HELP for help. Consent is not a condition of any purchase. See our Texting Terms and Privacy Policy.";
+var RESEARCH_TEXT = "I understand that My Coach Kaj may use my survey answers and coaching conversations, with my name and number removed, for research. Findings are only ever shared as group results, never individual ones. See our Privacy Policy.";
+
+/* ===== State. Lives only in this page until she finishes. ===== */
+var A = {}, P = {};          // A: survey answers. P: optional company data, kept apart.
+function blank(){ A = {}; P = {}; }
+function has(k){ return A[k] != null && A[k] !== "" && !(Array.isArray(A[k]) && !A[k].length); }
+var stageIs = function(){ var s=[].slice.call(arguments); return s.indexOf(A.stage) > -1; };
+
+/* ===== Steps, in screen order ===== */
+var STEPS = [
+  {id:"intro", kind:"intro"},
+  {id:"intro2", kind:"intro2"},
+  {id:"first_name", part:"About you", kind:"text", q:"What's your first name?", key:"first_name", ac:"given-name", req:true, max:40},
+  {id:"phone", part:"About you", kind:"phone", q:"What's your mobile number?", hint:"Kaj coaches by text. US numbers only.", key:"phone"},
+  {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"For your invitation and launch news.", key:"email"},
+  {id:"age", part:"About you", kind:"single", q:"What's your age range?", key:"age_range", opts:C.age},
+  {id:"tz", part:"About you", kind:"single", q:"What's your time zone?", key:"time_zone", opts:C.tz},
+  {id:"safety", part:"A quick check", kind:"multi", q:"Do any of these apply to you right now?", key:"safety", opts:C.safety, only:["none"], noun:"any that apply"},
+  {id:"stage", part:"Where you are", kind:"single", q:"Where are you in your GLP‑1 journey?", key:"stage", opts:C.stage},
+  {id:"duration", part:"Where you are", kind:"select", key:"duration",
+    q:function(){ return stageIs("stopped") ? "How long ago did you stop?" : stageIs("not_started") ? "When do you expect to start?" : "How long have you been taking it?"; },
+    opts:function(){ return stageIs("not_started") ? C.start : C.months; }},
+  {id:"medication", part:"Where you are", kind:"single", other:{k:"other", key:"medication_other", label:"Which one?"}, q:function(){ return stageIs("not_started") ? "Which medication will you take?" : "Which medication?"; }, key:"medication", opts:C.med},
+  {id:"shot_day", part:"Where you are", kind:"single", q:"Which day do you usually take your shot?", key:"shot_day", opts:C.day,
+    show:function(){ return stageIs("taking","planning_stop") && A.medication !== "pill"; }},
+  {id:"side_effects", part:"Where you are", kind:"multi", q:"Which of these have you felt this past week?", hint:"Pick any that apply.", key:"side_effects", opts:C.side, only:["none"],
+    show:function(){ return stageIs("taking","planning_stop"); }},
+  {id:"struggles", part:"What's hard", kind:"multi", q:"What feels hardest right now?", hint:"Pick up to two.", key:"struggles", opts:C.struggle, max:2},
+  {id:"noise_freq", part:"What's hard", kind:"single", q:"How often do thoughts about food pull at you, even when you're not hungry?", key:"food_noise_freq", opts:C.noise},
+  {id:"noise_trig", part:"What's hard", kind:"multi", q:"What sets those thoughts off most?", hint:"Pick up to two.", key:"food_noise_triggers", opts:C.trigger, max:2, only:["nothing"]},
+  {id:"wins", part:"What you want", kind:"multi", q:"Beyond the scale, what would you most love to feel better about?", hint:"Pick up to two.", key:"win_areas", opts:C.win, max:2},
+  {id:"help", part:"What you want", kind:"single", q:"When a day gets hard, what helps you most?", key:"hard_day_help", opts:C.help},
+  {id:"checkin", part:"Your rhythm", kind:"single", q:"When is the best time for Kaj to check in?", hint:"Kaj sends nothing after 8 p.m.", key:"checkin_time", opts:C.checkin},
+  {id:"culture", part:"Your words", kind:"long", q:"Are there foods or traditions that matter to you?", optional:true, key:"culture_food",
+    hint:"Optional. Kaj helps you keep the foods you love in your life.", list:["Family recipes","Holiday meals","Foods from your culture"], max:600},
+  {id:"about", part:"Your words", kind:"long", q:"What do you want Kaj to know about you?", req:true, key:"about_me", max:1200,
+    list:["Diets or programs you've tried before","What you hope will be different this time"]},
+  {id:"private", part:"Optional", kind:"private"},
+  {id:"background", part:"Optional", kind:"background"},
+  {id:"heard", part:"Almost done", kind:"heard", q:"How did you hear about Kaj?", key:"heard_from", opts:C.heard},
+  {id:"consent", part:"Last step", kind:"consent"}
+];
+function visible(){ return STEPS.filter(function(s){ return !s.show || s.show(); }); }
+function val(v){ return typeof v === "function" ? v() : v; }
+function label(list, key){ for(var i=0;i<list.length;i++) if(list[i][0]===key) return list[i][1]; return key; }
+
+/* ===== Funnel counts. No names, numbers, or answers. Ever. ===== */
+var SID = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+var AD = (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); return m?m[1].toLowerCase():null; }catch(e){ return null; } })();
+var LOG = [];
+var shownAt = 0, current = null, started = false, farthest = 0;
+function track(ev, extra){
+  var e = {sid:SID, ad:AD, event:ev, at:new Date().toISOString()};
+  if(extra) for(var k in extra) e[k]=extra[k];
+  LOG.push(e);
+  if(!PREVIEW){
+    try{ var body=JSON.stringify(e); if(!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.endpoint+"/funnel", new Blob([body],{type:"application/json"})))) fetch(CONFIG.endpoint+"/funnel",{method:"POST",headers:{"Content-Type":"application/json"},body:body,keepalive:true}); }catch(err){}
+  }
+  if(!panel.hidden) drawPanel();
+}
+function leaveStep(){
+  if(current && current.id.indexOf("intro")<0 && shownAt) track("step_time",{step:current.id, ms:Math.round(performance.now()-shownAt)});
+}
+
+/* ===== Rendering ===== */
+var stage = document.getElementById("stage"), dockin = document.getElementById("dockin"), dock=document.getElementById("dock");
+var backBtn = document.getElementById("back"), prog = document.getElementById("prog");
+var history = [];
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function name(){ return esc((A.first_name||"").trim()); }
+
+function show(step, isBack){
+  leaveStep();
+  current = step;
+  document.documentElement.classList.toggle("light", step.kind.indexOf("intro")<0);
+  var vs = visible(), idx = vs.indexOf(step);
+  prog.style.width = idx<=1 ? "0%" : Math.round((idx-1)/(vs.length-2)*100)+"%";
+  backBtn.hidden = history.length===0;
+  stage.innerHTML = ""; dockin.innerHTML = ""; dock.hidden = false;
+  var el = document.createElement("section"); el.className="step enter";
+  stage.appendChild(el);
+  R[step.kind](step, el);
+  window.scrollTo(0,0);
+  var h=el.querySelector("h1"); if(h){ h.tabIndex=-1; try{ h.focus({preventScroll:true}); }catch(e){} }
+  shownAt = performance.now();
+  if(step.id.indexOf("intro")<0){
+    if(idx>farthest){ farthest=idx; }
+    track("step_view",{step:step.id, n:idx});
+  }
+}
+function next(){
+  var vs = visible(), i = vs.indexOf(current);
+  history.push(current);
+  if(i+1<vs.length) show(vs[i+1]); else finish();
+}
+backBtn.addEventListener("click",function(){ if(history.length) show(history.pop(), true); });
+
+function head(el, s){
+  var h = "";
+  if(s.part) h += '<p class="eyebrow">'+esc(s.part)+'</p>';
+  h += '<h1>'+esc(val(s.q))+'</h1>';
+  if(s.hint) h += '<p class="hint">'+esc(val(s.hint))+'</p>';
+  if(s.list) h += '<ul class="list">'+s.list.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+'</ul>';
+  el.insertAdjacentHTML("beforeend", h);
+}
+function cta(text, fn, opts){
+  var b=document.createElement("button"); b.className="btn"+(opts&&opts.ghost?" ghost":""); b.type="button"; b.textContent=text;
+  b.addEventListener("click",fn); dockin.appendChild(b); return b;
+}
+function errEl(el){ var p=document.createElement("p"); p.className="err"; p.setAttribute("role","alert"); el.appendChild(p); return p; }
+
+var R = {};
+R.intro = function(s, el){
+  el.insertAdjacentHTML("beforeend",
+    '<div class="hero full"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
+    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p></div></div>');
+  el.classList.add("welcome");
+  cta("Let’s begin", function(){ track("welcome_next"); next(); });
+};
+R.intro2 = function(s, el){
+  el.insertAdjacentHTML("beforeend",
+    '<h1>Every part of you deserves support through this.</h1>'+
+    '<p class="lede2">You’re joining a select group of women who are shaping Kaj.</p>'+
+    '<div class="join"><h2>Join the Insider list.</h2>'+
+    '<ul class="list"><li>Takes about 4 minutes.</li><li>Insider rate: $27 a month, by invitation.</li><li>Nothing to pay today.</li></ul></div>');
+  el.classList.add("welcome2");
+  cta("Start", function(){ if(!started){ started=true; track("started"); } next(); });
+};
+R.text = function(s, el){
+  head(el, s);
+  el.insertAdjacentHTML("beforeend",'<div class="field"><input class="in" id="f_'+s.key+'" type="text" autocomplete="'+(s.ac||"off")+'" maxlength="'+(s.max||80)+'" value="'+esc(A[s.key])+'" enterkeyhint="next"></div>');
+  var inp=el.querySelector("input"), e=errEl(el);
+  function go(){ var v=inp.value.trim(); if(s.req && !v){ e.textContent="Please type your first name."; inp.focus(); return; } A[s.key]=v; next(); }
+  inp.addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+  cta("Continue", go);
+};
+function e164(raw){
+  var d=String(raw||"").replace(/\D/g,"");
+  if(d.length===11 && d[0]==="1") d=d.slice(1);
+  if(d.length!==10 || /[01]/.test(d[0]) || /[01]/.test(d[3])) return null;
+  return "+1"+d;
+}
+function pretty(v){ var d=String(v||"").replace(/\D/g,""); if(d.length===11&&d[0]==="1") d=d.slice(1); d=d.slice(0,10);
+  if(d.length<4) return d; if(d.length<7) return "("+d.slice(0,3)+") "+d.slice(3); return "("+d.slice(0,3)+") "+d.slice(3,6)+" "+d.slice(6); }
+function phoneField(id, value){
+  return '<input class="in" id="'+id+'" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(555) 555 5555" value="'+esc(value?pretty(value):"")+'" enterkeyhint="next">';
+}
+R.phone = function(s, el){
+  head(el, s);
+  el.insertAdjacentHTML("beforeend",'<div class="field">'+phoneField("f_phone",A.phone)+'</div>');
+  var inp=el.querySelector("input"), e=errEl(el);
+  inp.addEventListener("input",function(){ inp.value=pretty(inp.value); });
+  function go(){ var v=e164(inp.value); if(!v){ e.textContent="Please enter a 10 digit US mobile number."; inp.focus(); return; } A.phone=v; next(); }
+  inp.addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+  cta("Continue", go);
+};
+R.email = function(s, el){
+  head(el, s);
+  el.insertAdjacentHTML("beforeend",'<div class="field"><input class="in" id="f_email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" value="'+esc(A.email)+'" enterkeyhint="next"></div>');
+  var inp=el.querySelector("input"), e=errEl(el);
+  function go(){ var v=inp.value.trim().toLowerCase(); if(!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v)){ e.textContent="Please check your email address."; inp.focus(); return; } A.email=v; next(); }
+  inp.addEventListener("keydown",function(ev){ if(ev.key==="Enter"){ ev.preventDefault(); go(); } });
+  cta("Continue", go);
+};
+function optsBox(n){ var box=document.createElement("div"); box.className="opts"+(n>6?" two":""); return box; }
+R.single = function(s, el){
+  head(el, s);
+  var list=val(s.opts), box=optsBox(list.length); box.setAttribute("role","radiogroup"); el.appendChild(box);
+  var oth=null, e=null;
+  if(s.other){
+    oth=document.createElement("div"); oth.className="field other";
+    oth.innerHTML='<label class="fl" for="f_'+s.other.key+'">'+esc(s.other.label)+' (Optional)</label><input class="in" id="f_'+s.other.key+'" type="text" maxlength="60" value="'+esc(A[s.other.key])+'">';
+  }
+  function otherMode(on){
+    if(!oth) return;
+    oth.hidden=!on; dock.hidden=!on;
+    if(on && !dockin.children.length) cta("Continue", function(){ var v=oth.querySelector("input").value.trim(); if(v) A[s.other.key]=v; else delete A[s.other.key]; route(s); });
+  }
+  list.forEach(function(o){
+    var b=document.createElement("button"); b.type="button"; b.className="opt"; b.setAttribute("role","radio");
+    b.setAttribute("aria-checked", A[s.key]===o[0]?"true":"false"); b.textContent=o[1];
+    b.addEventListener("click",function(){
+      [].forEach.call(box.children,function(c){ c.setAttribute("aria-checked","false"); });
+      b.setAttribute("aria-checked","true"); A[s.key]=o[0];
+      if(s.other && o[0]===s.other.k){ otherMode(true); oth.querySelector("input").focus(); return; }
+      if(s.other) delete A[s.other.key];
+      otherMode(false);
+      setTimeout(function(){ route(s); }, 260);
+    });
+    box.appendChild(b);
+  });
+  if(oth){ el.appendChild(oth); }
+  dock.hidden = true;
+  otherMode(!!(s.other && A[s.key]===s.other.k));
+};
+function multiBox(el, list, cur, only, max, e){
+  var box=optsBox(list.length); el.appendChild(box);
+  function paint(){
+    [].forEach.call(box.children,function(b){
+      var k=b.getAttribute("data-k"), on=cur.indexOf(k)>-1;
+      b.setAttribute("aria-pressed", on?"true":"false");
+      b.classList.toggle("dim", !on && cur.length>=max && only.indexOf(k)<0);
+    });
+    if(box.onpaint) box.onpaint();
+  }
+  list.forEach(function(o){
+    var b=document.createElement("button"); b.type="button"; b.className="opt"; b.setAttribute("data-k",o[0]);
+    b.innerHTML='<span class="tick" aria-hidden="true"></span><span>'+esc(o[1])+'</span>';
+    b.addEventListener("click",function(){
+      if(e) e.textContent="";
+      var k=o[0], i=cur.indexOf(k);
+      if(i>-1){ cur.splice(i,1); }
+      else if(only.indexOf(k)>-1){ cur.length=0; cur.push(k); }
+      else {
+        for(var j=cur.length-1;j>=0;j--) if(only.indexOf(cur[j])>-1) cur.splice(j,1);
+        if(cur.length>=max){ if(e) e.textContent = max===2 ? "You can pick two. Tap one to change it." : "That's the most you can pick."; return; }
+        cur.push(k);
+      }
+      paint();
+    });
+    box.appendChild(b);
+  });
+  box.paint=paint; return box;
+}
+R.multi = function(s, el){
+  head(el, s);
+  var cur=(A[s.key]||[]).slice(), max=s.max||99;
+  var e=document.createElement("p"); e.className="err"; e.setAttribute("role","alert");
+  var box=multiBox(el, val(s.opts), cur, s.only||[], max, e);
+  el.appendChild(e); box.paint();
+  cta("Continue", function(){
+    if(!cur.length){ e.textContent = max<99 ? "Please pick at least one." : "Please pick "+(s.noun||"at least one")+"."; return; }
+    A[s.key]=cur.slice(); route(s);
+  });
+};
+R.select = function(s, el){
+  head(el, s);
+  var list = val(s.opts);
+  if(A[s.key] && !list.some(function(o){return o[0]===A[s.key];})) delete A[s.key];
+  el.insertAdjacentHTML("beforeend",'<div class="field"><select class="in" id="f_'+s.key+'"><option value="">Choose one</option>'+
+    list.map(function(o){ return '<option value="'+o[0]+'"'+(A[s.key]===o[0]?" selected":"")+'>'+esc(o[1])+'</option>'; }).join("")+'</select></div>');
+  var sel=el.querySelector("select"), e=errEl(el);
+  cta("Continue", function(){ if(!sel.value){ e.textContent="Please choose one."; return; } A[s.key]=sel.value; next(); });
+};
+R.long = function(s, el){
+  head(el, s);
+  el.insertAdjacentHTML("beforeend",'<div class="field"><textarea class="in" id="f_'+s.key+'" maxlength="'+s.max+'">'+esc(A[s.key])+'</textarea></div>');
+  var ta=el.querySelector("textarea"), e=errEl(el);
+  cta(s.optional?"Continue":"Continue", function(){
+    var v=ta.value.trim();
+    if(s.req && v.length<2){ e.textContent="Please share a little. Even one line helps Kaj."; ta.focus(); return; }
+    A[s.key]=v; next();
+  });
+  if(s.optional){ var sk=document.createElement("p"); sk.className="small"; sk.textContent="Leave it blank to skip."; dockin.appendChild(sk); }
+};
+R.private = function(s, el){
+  el.insertAdjacentHTML("beforeend",
+    '<p class="eyebrow">Optional</p><h1>A few optional questions</h1>'+
+    '<ul class="list"><li>For our research only</li><li>Skip any you like</li></ul>');
+  var g=document.createElement("div"); g.className="opt-group"; el.appendChild(g);
+  var w=[["weight_start","Your weight when you started your GLP‑1", !stageIs("not_started")],["weight_now","Your weight today",true],["weight_goal","Your goal weight",true]];
+  w.forEach(function(x){ if(!x[2]){ delete P[x[0]]; return; }
+    g.insertAdjacentHTML("beforeend",'<div class="field"><label class="fl" for="p_'+x[0]+'">'+x[1]+'</label><div class="unit"><input class="in" id="p_'+x[0]+'" type="text" inputmode="numeric" maxlength="3" value="'+esc(P[x[0]])+'"><span>pounds</span></div></div>');
+  });
+  var e=errEl(el);
+  cta("Continue", function(){
+    var bad=false;
+    w.forEach(function(x){ if(!x[2]) return; var i=document.getElementById("p_"+x[0]); var v=i.value.replace(/\D/g,"");
+      if(v && (+v<70 || +v>700)){ bad=true; i.focus(); } if(v) P[x[0]]=+v; else delete P[x[0]]; });
+    if(bad){ e.textContent="Please check the weights. Use pounds, from 70 to 700."; return; }
+    next();
+  });
+  var sk=document.createElement("p"); sk.className="small"; sk.textContent="Leave any blank to skip."; dockin.appendChild(sk);
+};
+R.background = function(s, el){
+  el.insertAdjacentHTML("beforeend",
+    '<p class="eyebrow">Optional</p><h1>Which best describes your race or ethnicity?</h1>'+
+    '<p class="hint">Pick any. This helps us check that Kaj works equally well for every woman.</p>');
+  var cur=(P.background||[]).slice();
+  var box=multiBox(el, C.bg, cur, ["prefer_not"], 99, null);
+  var desc=document.createElement("div"); desc.className="field";
+  desc.innerHTML='<label class="fl" for="p_bgtext">In your words</label><input class="in" id="p_bgtext" type="text" maxlength="80" value="'+esc(P.background_text)+'">';
+  el.appendChild(desc);
+  box.onpaint=function(){ desc.hidden = cur.indexOf("describe")<0; };
+  box.paint();
+  cta("Continue", function(){
+    P.background=cur.slice();
+    var t=document.getElementById("p_bgtext").value.trim();
+    if(cur.indexOf("describe")>-1 && t) P.background_text=t; else delete P.background_text;
+    next();
+  });
+  var sk=document.createElement("p"); sk.className="small"; sk.textContent="Leave it blank to skip."; dockin.appendChild(sk);
+};
+R.heard = function(s, el){
+  head(el, s);
+  var box=document.createElement("div"); box.className="opts"; box.setAttribute("role","radiogroup"); el.appendChild(box);
+  var ref=document.createElement("div"); ref.className="field";
+  ref.innerHTML='<label class="fl" for="f_ref">Who sent you our way? Share their mobile number so we can thank them. (Optional)</label>'+phoneField("f_ref",A.referrer_phone);
+  var e=errEl(el);
+  C.heard.forEach(function(o){
+    var b=document.createElement("button"); b.type="button"; b.className="opt"; b.setAttribute("role","radio");
+    b.setAttribute("aria-checked",A.heard_from===o[0]?"true":"false"); b.textContent=o[1];
+    b.addEventListener("click",function(){ [].forEach.call(box.children,function(c){c.setAttribute("aria-checked","false");}); b.setAttribute("aria-checked","true"); A.heard_from=o[0]; ref.hidden=o[0]!=="referral"; e.textContent=""; });
+    box.appendChild(b);
+  });
+  el.appendChild(ref); ref.hidden = A.heard_from!=="referral";
+  var ri=ref.querySelector("input"); ri.addEventListener("input",function(){ ri.value=pretty(ri.value); });
+  cta("Continue", function(){
+    if(!A.heard_from){ e.textContent="Please choose one."; return; }
+    if(A.heard_from==="referral" && ri.value.trim()){ var v=e164(ri.value); if(!v){ e.textContent="That number doesn't look right. Fix it or leave it blank."; return; } A.referrer_phone=v; }
+    else delete A.referrer_phone;
+    next();
+  });
+};
+R.consent = function(s, el){
+  var terms = CONFIG.site+"/texting-terms.html", priv = CONFIG.site+"/privacy.html";
+  el.insertAdjacentHTML("beforeend",
+    '<p class="eyebrow">Last step</p><h1>Two quick boxes.</h1>'+
+    '<label class="check" for="c_sms"><input type="checkbox" id="c_sms"'+(A.sms_consent?" checked":"")+'><span><span class="req">Optional</span><b>Yes, text me.</b> '+
+      esc(SMS_TEXT.replace("Yes, text me. ","").replace(" See our Texting Terms and Privacy Policy.",""))+' See our <a href="'+terms+'" target="_blank" rel="noopener">Texting Terms</a> and <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>'+
+    '<label class="check" for="c_res"><input type="checkbox" id="c_res"'+(A.research_consent?" checked":"")+'><span><span class="req">Required</span>'+
+      esc(RESEARCH_TEXT.replace(" See our Privacy Policy.",""))+' See our <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
+  var e=errEl(el);
+  cta("Join the Insider list", function(){
+    var sms=document.getElementById("c_sms").checked, res=document.getElementById("c_res").checked;
+    A.sms_consent=sms; A.research_consent=res;
+    if(!res){ e.textContent="Please check the research box to join."; return; }
+    history.push(current); finish();
+  });
+};
+
+/* ===== Branching ===== */
+function route(s){
+  if(s.id==="age" && A.age_range==="under_18") return endKind("under_18");
+  if(s.id==="safety"){
+    if(A.safety.indexOf("eating_disorder")>-1) return endKind("eating_disorder");
+    if(A.safety.indexOf("pregnant")>-1) return endKind("pregnant");
+  }
+  next();
+}
+function endKind(which){
+  var first = name() || "friend";
+  leaveStep();
+  track("ended_kind_screen", {step: current.id});   // no reason recorded
+  blank(); history=[]; current={id:"end"}; shownAt=0;
+  var html = {
+    pregnant:'<h1>Thank you for telling us, '+first+'.</h1><div class="prose"><p>Kaj isn’t built for pregnancy, and your prescriber is your best guide right now.</p><p>When this season passes, we would love to hear from you again.</p></div>',
+    eating_disorder:'<h1>Thank you for trusting us with that, '+first+'.</h1><div class="prose"><p>Kaj coaches around food and daily habits. Right now, that focus could work against your recovery, and your recovery matters more than anything we offer.</p>'+
+      '<p>If you would like support, the National Alliance for Eating Disorders has a free helpline staffed by licensed therapists:</p><p class="phone">(866) 662 1235</p><p>Weekdays, 9 a.m. to 7 p.m. Eastern.</p>'+
+      '<p>If you are in danger right now, call or text <b class="phone" style="font-size:20px">988</b>.</p></div>',
+    under_18:'<h1>Thank you for your interest, '+first+'.</h1><div class="prose"><p>Kaj is built for adults, so we can’t welcome you yet.</p><p>We’d love to hear from you after your 18th birthday.</p></div>'
+  }[which];
+  prog.style.width="100%"; backBtn.hidden=true; dock.hidden=true;
+  stage.innerHTML='<section class="step enter">'+html+'</section>';
+  window.scrollTo(0,0);
+}
+
+/* ===== Finish: the only moment anything is saved ===== */
+var LAST = null;
+function finish(){
+  leaveStep();
+  var now=new Date().toISOString();
+  LAST = {
+    survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
+    private_data: (P.weight_start||P.weight_now||P.weight_goal||(P.background&&P.background.length)) ? JSON.parse(JSON.stringify(P)) : null,
+    consents:[
+      {type:"sms", given:!!A.sms_consent, at:now, source:"survey", wording_version:CONFIG.smsConsentVersion, phone:A.phone},
+      {type:"research", given:true, at:now, source:"survey", wording_version:CONFIG.researchConsentVersion, phone:A.phone}
+    ]
+  };
+  track("finished");
+  if(!PREVIEW){
+    fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); })
+      .catch(function(){ track("submit_failed"); });
+  }
+  if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
+  callScreen();
+}
+function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent" && k!=="research_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
+
+function callScreen(){
+  current={id:"call"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
+  stage.innerHTML='<section class="step enter">'+
+    '<p class="eyebrow">You’re in</p><h1>You’re on the Insider list, '+name()+'. Kaj launches '+esc(CONFIG.launchDate)+'.</h1>'+
+    '<p class="hint">One last choice.</p>'+
+    '<div class="founding"><h2>Help shape Kaj. Become a Founding Insider.</h2>'+
+      '<p>Thirty minutes with Kaj’s founder. Your story shapes what Kaj becomes for every woman after you.</p>'+
+      '<p style="color:var(--cream);font-weight:600">Founding Insiders get:</p>'+
+      '<ul class="list"><li>The first invites to join</li><li>A direct line to the founder</li><li>A vote on new features</li><li>Invitations to Founding Insider gatherings</li></ul>'+
+      '<button class="btn" type="button" id="bookcall">Book my founder call</button></div>'+
+    '<div class="alt"><h2>I’m ready to start.</h2><p>No call needed. We’ll email you as launch gets close.</p></div>'+
+    '</section>';
+  dockin.innerHTML=""; dock.hidden=false;
+  cta("I’m ready to start", function(){ track("chose_ready"); doneScreen(false); }, {ghost:true});
+  document.getElementById("bookcall").addEventListener("click",function(){
+    track("chose_call");
+    if(CONFIG.bookingUrl){ window.open(CONFIG.bookingUrl,"_blank","noopener"); }
+    doneScreen(true);
+  });
+  window.scrollTo(0,0);
+}
+function doneScreen(call){
+  current={id:"done"}; dock.hidden=true;
+  var body = call
+    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it\u2019s ready.')+'</p><p>Watch your email for the details.</p></div>'
+    : '<h1>You’re all set, '+name()+'.</h1><div class="prose"><p>We’ll email you as launch gets close.</p></div>';
+  if(PREVIEW) body += '<p class="testnote">We\u2019re testing this page. Nothing you entered was saved.</p>';
+  stage.innerHTML='<section class="step enter">'+body+'</section>';
+  window.scrollTo(0,0);
+}
+
+/* ===== Preview test panel ===== */
+var pill=document.getElementById("tpill"), panel=document.getElementById("panel"), sheet=document.getElementById("sheet");
+var ON_SITE = /(^|\.)mycoachkaj\.com$/i.test(location.hostname);
+if(PREVIEW && (!ON_SITE || location.hash==="#test")){ pill.hidden=false; }
+pill.addEventListener("click",function(){ drawPanel(); panel.hidden=false; });
+panel.addEventListener("click",function(e){ if(e.target===panel) panel.hidden=true; });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape") panel.hidden=true; });
+function drawPanel(){
+  var n=function(ev){ return LOG.filter(function(e){return e.event===ev;}).length; };
+  var times={}; LOG.forEach(function(e){ if(e.event==="step_time"){ times[e.step]=(times[e.step]||0)+e.ms; } });
+  var last=null; LOG.forEach(function(e){ if(e.event==="step_view") last=e.step; });
+  var rows=Object.keys(times).map(function(k){ return '<tr><td>'+esc(k)+'</td><td>'+(times[k]/1000).toFixed(1)+' s</td></tr>'; }).join("") || '<tr><td colspan="2" class="muted">Answer a question to see times.</td></tr>';
+  sheet.innerHTML=
+    '<h3 id="ptitle">Test panel</h3>'+
+    '<p class="muted">Preview only. Nothing leaves this phone. Women never see this panel.</p>'+
+    '<h4>Ad tag for this visit</h4><div class="chips" id="adchips">'+
+      ["none","elena","simone","claire"].map(function(a){ var on=(AD||"none")===a; return '<button class="chip" type="button" data-ad="'+a+'" aria-pressed="'+on+'">'+a+'</button>'; }).join("")+'</div>'+
+    '<h4>Funnel counts, this visit</h4><div class="kpis">'+
+      '<div class="kpi"><b>'+n("started")+'</b><span>Started</span></div>'+
+      '<div class="kpi"><b>'+n("finished")+'</b><span>Finished</span></div>'+
+      '<div class="kpi"><b>'+(n("chose_call"))+'</b><span>Chose the call</span></div></div>'+
+    '<p class="muted">Last question reached: <b style="color:var(--cream)">'+esc(last||"none yet")+'</b></p>'+
+    '<h4>Time per question</h4><table class="tbl">'+rows+'</table>'+
+    '<h4>What our database would receive</h4>'+
+    (LAST?'<pre class="json">'+esc(JSON.stringify(LAST,null,2))+'</pre>':'<p class="muted">Finish the survey to see it. Kind end screens send nothing.</p>')+
+    '<h4>Funnel events sent ('+LOG.length+')</h4><pre class="json">'+esc(LOG.map(function(e){ return [e.event,e.step||"",e.ms!=null?e.ms+"ms":"",e.ad||""].join("  "); }).join("\n")||"none yet")+'</pre>'+
+    '<div class="row"><button class="btn ghost" type="button" id="restart">Start over</button><button class="btn" type="button" id="pclose">Close</button></div>';
+  [].forEach.call(sheet.querySelectorAll("[data-ad]"),function(b){ b.addEventListener("click",function(){ var a=b.getAttribute("data-ad"); AD = a==="none"?null:a; drawPanel(); }); });
+  document.getElementById("pclose").addEventListener("click",function(){ panel.hidden=true; });
+  document.getElementById("restart").addEventListener("click",function(){ blank(); history=[]; started=false; farthest=0; LAST=null; current=null; panel.hidden=true; show(STEPS[0]); track("survey_open"); });
+}
+
+/* ===== Go ===== */
+track("survey_open");
+show(STEPS[0]);
+})();
+</script>
+
+</body>
+</html>

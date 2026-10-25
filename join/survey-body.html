@@ -189,6 +189,7 @@ pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;ove
 .chip[aria-pressed="true"]{background:var(--blush);color:var(--ink);border-color:var(--blush)}
 .row{display:flex;gap:8px}.row .btn{font-size:15px;padding:11px 14px}
 .muted{color:var(--cream-soft);margin:0}
+.testnote{margin:8px 0 0;padding:12px 14px;border-radius:12px;background:var(--tint);border:1px dashed var(--line);font-size:14px;color:var(--cream-soft)}
 
 @media (prefers-reduced-motion:reduce){.step.enter{animation:none}.bar i{transition:none}}
 </style>
@@ -658,15 +659,17 @@ function callScreen(){
 function doneScreen(call){
   current={id:"done"}; dock.hidden=true;
   var body = call
-    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'<i>Preview:</i> the Zoom booking page opens here once its link is set.')+'</p><p>Watch your email for the details.</p></div>'
+    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it\u2019s ready.')+'</p><p>Watch your email for the details.</p></div>'
     : '<h1>You’re all set, '+name()+'.</h1><div class="prose"><p>We’ll email you as launch gets close.</p></div>';
+  if(PREVIEW) body += '<p class="testnote">We\u2019re testing this page. Nothing you entered was saved.</p>';
   stage.innerHTML='<section class="step enter">'+body+'</section>';
   window.scrollTo(0,0);
 }
 
 /* ===== Preview test panel ===== */
 var pill=document.getElementById("tpill"), panel=document.getElementById("panel"), sheet=document.getElementById("sheet");
-if(PREVIEW){ pill.hidden=false; }
+var ON_SITE = /(^|\.)mycoachkaj\.com$/i.test(location.hostname);
+if(PREVIEW && (!ON_SITE || location.hash==="#test")){ pill.hidden=false; }
 pill.addEventListener("click",function(){ drawPanel(); panel.hidden=false; });
 panel.addEventListener("click",function(e){ if(e.target===panel) panel.hidden=true; });
 document.addEventListener("keydown",function(e){ if(e.key==="Escape") panel.hidden=true; });
