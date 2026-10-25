@@ -209,6 +209,14 @@ footer p{margin:0}
   .joinbar.show{transform:none}
   .joinbar .btn{display:block;width:100%;text-align:center;padding:14px 20px;font-size:18px}
 }
+
+/* ---------- Offer (Oct 25): Insider first, standard price small ---------- */
+.close .offer{margin-top:40px;padding-top:36px;border-top:1px solid rgba(251,246,243,.18);display:flex;flex-direction:column;align-items:center}
+.close .insider-h{font-size:clamp(30px,6.4vw,42px);line-height:1.12;margin:0 0 10px;max-width:16ch}
+.close .big.ins{font-size:clamp(76px,20vw,104px);margin:14px 0 2px}
+.close .big.ins span{font-size:18px}
+.close .offer .btn{margin-top:26px}
+.std-note{margin:18px 0 0;font-size:15px;color:var(--cream-soft)}
 @media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}.joinbar{transition:none}}
 </style>
 
@@ -332,18 +340,15 @@ footer p{margin:0}
 <div class="wrap">
   <section class="close" id="offer">
     <p class="lead"><span>Kaj gets to know who you are.</span> <span>You discover who you are becoming.</span></p>
-    <p class="sub">Kaj is an AI coach for women on a GLP-1. No app. No logging. Just your text messages.</p>
-    <div class="pricebox">
-      <p class="big">$47<span>a month</span></p>
-      <p class="std">Standard membership</p>
+    <div class="offer">
+      <p class="insider-h">Now is the time to become an Insider.</p>
+      <p class="invite-note">Available while invitations are open.</p>
+      <p class="big ins">$27<span>a month</span></p>
+      <p class="std">Selected Insiders</p>
+      <a class="btn btn-lg" href="mailto:support@mycoachkaj.com?subject=Insider%20list">Join the Insider list</a>
+      <p class="std-note">Standard membership: $47 a month</p>
+      <span class="soon">The Insider survey opens soon.</span>
     </div>
-    <p class="insider-h">Now is the time to become an Insider.</p>
-    <p class="invite-note">Available while invitations are open.</p>
-    <p class="big ins">$27<span>a month</span></p>
-    <p class="std">Selected Insiders</p>
-    <div class="gap"></div>
-    <a class="btn" href="mailto:support@mycoachkaj.com?subject=Insider%20list">Join the Insider list</a>
-    <span class="soon">The Insider survey opens soon.</span>
   </section>
 </div>
 
