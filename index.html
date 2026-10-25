@@ -51,8 +51,9 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
 .hero .what{margin:0;display:flex;flex-wrap:wrap;gap:6px 0;font-family:var(--body);font-size:15px;font-weight:500;color:var(--cream);text-shadow:0 1px 8px rgba(30,10,25,.5)}
 .hero .what span{white-space:nowrap}
 .hero .what span+span::before{content:"\00B7";margin:0 10px;color:var(--blush)}
-.cta-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
-.say-btn{font-size:clamp(15px,3.8vw,18px);text-shadow:0 1px 8px rgba(30,10,25,.55)}
+.cta-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;align-self:flex-end}
+@media (min-width:860px){.cta-wrap{align-self:flex-start}}
+.say-btn{font-size:clamp(18px,4.6vw,22px);text-shadow:0 1px 8px rgba(30,10,25,.55)}
 @media (min-width:860px){.hero .what{font-size:18px}}
 
 @media (min-width:860px){.topwrap{max-width:none;margin:0;padding-left:calc(6vw + 40px - var(--gutter-l))}}
@@ -65,7 +66,7 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
 
 /* ---------- Top slider: welcome slide plus three moments ---------- */
 .slider{position:relative}
-.hero{position:relative;overflow:hidden;background:var(--plum-shade);height:min(calc(100svh - 124px), 640px);min-height:520px}
+.hero{position:relative;overflow:hidden;background:var(--plum-shade);height:min(calc(100svh - 80px), 640px);min-height:520px}
 .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 35%}
 .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(60,25,50,.62) 0%,rgba(60,25,50,0) 32%,rgba(60,25,50,0) 48%,rgba(60,25,50,.86) 100%)}
 .hero .line1,.hero .line2{position:absolute;left:0;right:0;margin:0;padding-left:var(--gutter-l);padding-right:var(--gutter-r);
@@ -88,10 +89,10 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
 @media (min-width:860px){
   .arrow{display:inline-flex}
   .dots{top:auto;bottom:20px}
-  .hero{height:max(640px, min(calc(100vh - 124px), 820px));min-height:0}
+  .hero{height:max(640px, min(calc(100vh - 80px), 820px));min-height:0}
   .hero>img{object-position:60% 30%}
   .hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.78) 0%,rgba(60,25,50,.45) 36%,rgba(60,25,50,0) 58%)}
-  .hero .copy{position:absolute;left:calc(6vw + 40px);top:50%;transform:translateY(-50%);max-width:min(620px,48vw);display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+  .hero .copy{position:absolute;left:calc(6vw + 40px);top:50%;transform:translateY(-50%);max-width:min(620px,48vw);display:flex;flex-direction:column;align-items:flex-start;gap:56px}
   .hero .line1,.hero .line2{position:static;padding:0}
   .hero .line1{font-size:clamp(46px,4.8vw,70px)}
   .hero .line2{font-size:clamp(40px,4vw,58px)}
@@ -122,7 +123,7 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
 .who.her{align-self:flex-end}
 
 @media (min-width:860px){
-  .slide .pic{aspect-ratio:auto;height:max(640px, min(calc(100vh - 124px), 820px))}
+  .slide .pic{aspect-ratio:auto;height:max(640px, min(calc(100vh - 80px), 820px))}
   .slide .pic .shade{background:linear-gradient(90deg,rgba(40,15,35,.72) 0%,rgba(40,15,35,.35) 34%,rgba(40,15,35,0) 52%)}
   .slide.right .pic .shade{background:linear-gradient(270deg,rgba(40,15,35,.72) 0%,rgba(40,15,35,.35) 34%,rgba(40,15,35,0) 52%)}
   .slide .panel{position:absolute;top:50%;transform:translateY(-50%);left:6vw;width:min(380px,32vw);display:flex;flex-direction:column;gap:18px}
