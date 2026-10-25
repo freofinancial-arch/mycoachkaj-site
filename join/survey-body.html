@@ -84,7 +84,10 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);l
 .quote figcaption{margin-top:4px;font-size:14px;color:var(--cream-soft)}
 .join{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--tint)}
 .join h2{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
-.welcome .lede{margin-top:-6px}
+.hero.full{height:calc(100svh - 160px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));max-height:820px;min-height:420px}
+.welcome2{padding-top:28px}
+.welcome2 h1{font-size:clamp(28px,7.6vw,36px)}
+.welcome2 .lede2{margin-top:-4px}
 @media (min-width:560px){.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:8px}.hero .ov{left:22px;right:22px}}
 .count{font-size:14px;color:var(--blush);margin:-8px 0 0}
 
@@ -232,6 +235,7 @@ var stageIs = function(){ var s=[].slice.call(arguments); return s.indexOf(A.sta
 /* ===== Steps, in screen order ===== */
 var STEPS = [
   {id:"intro", kind:"intro"},
+  {id:"intro2", kind:"intro2"},
   {id:"first_name", part:"About you", kind:"text", q:"What's your first name?", key:"first_name", ac:"given-name", req:true, max:40},
   {id:"phone", part:"About you", kind:"phone", q:"What's your mobile number?", hint:"Kaj coaches by text. US numbers only.", key:"phone"},
   {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"For your invitation and launch news.", key:"email"},
@@ -281,7 +285,7 @@ function track(ev, extra){
   if(!panel.hidden) drawPanel();
 }
 function leaveStep(){
-  if(current && current.id!=="intro" && shownAt) track("step_time",{step:current.id, ms:Math.round(performance.now()-shownAt)});
+  if(current && current.id.indexOf("intro")<0 && shownAt) track("step_time",{step:current.id, ms:Math.round(performance.now()-shownAt)});
 }
 
 /* ===== Rendering ===== */
@@ -295,7 +299,7 @@ function show(step, isBack){
   leaveStep();
   current = step;
   var vs = visible(), idx = vs.indexOf(step);
-  prog.style.width = idx<=0 ? "0%" : Math.round(idx/(vs.length-1)*100)+"%";
+  prog.style.width = idx<=1 ? "0%" : Math.round((idx-1)/(vs.length-2)*100)+"%";
   backBtn.hidden = history.length===0;
   stage.innerHTML = ""; dockin.innerHTML = ""; dock.hidden = false;
   var el = document.createElement("section"); el.className="step enter";
@@ -304,7 +308,7 @@ function show(step, isBack){
   window.scrollTo(0,0);
   var h=el.querySelector("h1"); if(h){ h.tabIndex=-1; try{ h.focus({preventScroll:true}); }catch(e){} }
   shownAt = performance.now();
-  if(step.id!=="intro"){
+  if(step.id.indexOf("intro")<0){
     if(idx>farthest){ farthest=idx; }
     track("step_view",{step:step.id, n:idx});
   }
@@ -333,15 +337,20 @@ function errEl(el){ var p=document.createElement("p"); p.className="err"; p.setA
 var R = {};
 R.intro = function(s, el){
   el.insertAdjacentHTML("beforeend",
-    '<div class="hero"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
-    '<div class="ov"><p class="eyebrow">Welcome</p><h1>Meet the woman you\u2019re becoming.</h1></div></div>'+
-    '<p class="lede">Every part of you deserves support through this.</p>'+
-    '<p class="lede2">You\u2019re joining a select group of women who are shaping Kaj from the start.</p>'+
-    '<figure class="quote"><blockquote>\u201cBeing on a GLP is weird in itself.\u201d</blockquote><figcaption>Brittany, on a GLP\u20111</figcaption></figure>'+
+    '<div class="hero full"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
+    '<div class="ov"><p class="eyebrow">Welcome</p><h1>Meet the woman you’re becoming.</h1></div></div>');
+  el.classList.add("welcome");
+  cta("Let’s begin", function(){ track("welcome_next"); next(); });
+};
+R.intro2 = function(s, el){
+  el.insertAdjacentHTML("beforeend",
+    '<h1>Every part of you deserves support through this.</h1>'+
+    '<p class="lede2">You’re joining a select group of women who are shaping Kaj from the start.</p>'+
+    '<figure class="quote"><blockquote>“Being on a GLP is weird in itself.”</blockquote><figcaption>Brittany, on a GLP‑1</figcaption></figure>'+
     '<div class="join"><h2>Join the Insider list.</h2>'+
     '<ul class="list"><li>Takes about 4 minutes.</li><li>Insider rate: $27 a month, by invitation.</li><li>Nothing to pay today.</li></ul></div>');
-  el.classList.add("welcome");
-  cta("Let\u2019s begin", function(){ if(!started){ started=true; track("started"); } next(); });
+  el.classList.add("welcome2");
+  cta("Start", function(){ if(!started){ started=true; track("started"); } next(); });
 };
 R.text = function(s, el){
   head(el, s);
