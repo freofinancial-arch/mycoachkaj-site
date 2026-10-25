@@ -109,8 +109,8 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
   .hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.78) 0%,rgba(60,25,50,.45) 36%,rgba(60,25,50,0) 58%)}
   .hero .copy{position:absolute;left:calc(6vw + 40px);top:50%;transform:translateY(-50%);max-width:min(620px,48vw);display:flex;flex-direction:column;align-items:flex-start;gap:56px}
   .hero .line1,.hero .line2{position:static;padding:0}
-  .hero .line1{font-size:clamp(46px,4.8vw,70px)}
-  .hero .line2{font-size:clamp(40px,4vw,58px)}
+  .hero .line1{font-size:clamp(40px,3.9vw,64px)}
+  .hero .line2{font-size:clamp(36px,3.4vw,54px)}
   .hero .foot{position:static;padding:0;gap:30px}
   .slide .panel{left:calc(6vw + 40px)}.slide.right .panel{right:calc(6vw + 40px)}
 }
@@ -218,6 +218,7 @@ footer p{margin:0}
 .close .offer .btn{margin-top:26px}
 .std-note{margin:20px 0 0;font-size:19px;color:var(--cream)}
 .std-note b{font-family:var(--display);font-weight:400;font-size:24px;margin:0 2px}
+@media (min-width:1200px){.hero .copy{max-width:none}.hero .line1,.hero .line2{white-space:nowrap}.hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.8) 0%,rgba(60,25,50,.5) 42%,rgba(60,25,50,0) 66%)}}
 @media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}.joinbar{transition:none}}
 </style>
 
