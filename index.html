@@ -484,14 +484,20 @@ footer p{margin:0}
   // Swipe hint: once, on phones, if she has not moved past the welcome after a few seconds.
   (function(){
     if(reduce || window.matchMedia('(min-width:860px)').matches) return;
-    var touched=false; function t(){ touched=true; }
-    track.addEventListener('touchstart',t,{passive:true}); track.addEventListener('scroll',t,{passive:true});
+    var touched=false, timer=null; function t(){ touched=true; }
+    track.addEventListener('touchstart',t,{passive:true});
     document.addEventListener('click',t,true);
-    setTimeout(function(){
-      if(touched || current!==0) return;
-      track.classList.add('nudge');
-      setTimeout(function(){ track.classList.remove('nudge'); },1400);
-    },3200);
+    function arm(){
+      clearTimeout(timer); touched=false;
+      timer=setTimeout(function(){
+        if(touched || current!==0) return;
+        track.classList.remove('nudge'); void track.offsetWidth; track.classList.add('nudge');
+        setTimeout(function(){ track.classList.remove('nudge'); },1400);
+      },3200);
+    }
+    arm();
+    // Safari restores a page frozen when she comes back with a swipe; give the hint another chance.
+    window.addEventListener('pageshow',function(e){ if(e.persisted) arm(); });
   })();
   mark(0);
 })();
