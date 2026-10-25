@@ -48,6 +48,13 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
   padding:14px 30px;border-radius:999px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease, background .15s ease}
 .btn:hover{background:#F7D4DB}
 .btn-lg{font-size:20px;padding:18px 44px}
+.hero .what{margin:0;display:flex;flex-wrap:wrap;gap:6px 0;font-family:var(--body);font-size:15px;font-weight:500;color:var(--cream);text-shadow:0 1px 8px rgba(30,10,25,.5)}
+.hero .what span{white-space:nowrap}
+.hero .what span+span::before{content:"\00B7";margin:0 10px;color:var(--blush)}
+.cta-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.say-btn{font-size:clamp(15px,3.8vw,18px);text-shadow:0 1px 8px rgba(30,10,25,.55)}
+@media (min-width:860px){.hero .what{font-size:18px}}
+
 @media (min-width:860px){.topwrap{max-width:none;margin:0;padding-left:calc(6vw + 40px - var(--gutter-l))}}
 @media (min-width:860px){.btn-lg{font-size:22px;padding:20px 52px}}
 .btn:active{transform:scale(.98)}
@@ -169,7 +176,6 @@ footer p{margin:0}
 <div class="wrap topwrap">
   <header>
     <div class="mark">My Coach <span>Kaj</span></div>
-    <div class="say">(Kaj rhymes with sky)</div>
   </header>
 </div>
 
@@ -190,7 +196,8 @@ footer p{margin:0}
     <h1 class="line1">Your <span class="nowrap">GLP&#8209;1</span> changes your body.</h1>
     <div class="foot">
       <p class="line2">Kaj helps you make it last.</p>
-      <a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj</a>
+      <p class="what"><span>AI coach by text</span><span>No app</span><span>No food tracking</span></p>
+      <div class="cta-wrap"><a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj</a><span class="say say-btn">Kaj rhymes with sky</span></div>
     </div>
   </div>
 </article>
