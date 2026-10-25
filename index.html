@@ -347,23 +347,26 @@ footer p{margin:0}
   function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
   function prime(card){ if(!reduce && card) card.classList.add('play'); }
   slides.forEach(function(sl){ prime(sl.querySelector('.card')); });
+  function readMs(el){ var w=(el.textContent||'').trim().split(/\s+/).length; return Math.max(1400, w*300); }
+  function typeMs(el){ var c=(el.textContent||'').length; return Math.min(2400, 1000+c*16); }
   function show(el){ el.classList.add('in'); void el.offsetWidth; el.classList.add('on'); fit(); }
   async function play(card){
     var items=[].slice.call(card.querySelectorAll('.who,.b'));
     var prevKaj=false;
     fit();
-    await sleep(350);
+    await sleep(700);
     for(var k=0;k<items.length;k++){
       var el=items[k];
       if(el.classList.contains('who')){ show(el); continue; }
       if(el.classList.contains('kaj')){
         var dots=document.createElement('span'); dots.className='tdots'; dots.innerHTML='<i></i><i></i><i></i>';
+        var wait=typeMs(el);
         el.classList.add('typing','in'); el.appendChild(dots); fit();
-        await sleep(prevKaj?600:900);
+        await sleep(prevKaj?Math.round(wait*0.7):wait);
         el.removeChild(dots); el.classList.remove('typing'); show(el);
-        prevKaj=true; await sleep(250);
+        prevKaj=true; await sleep(readMs(el));
       } else {
-        show(el); prevKaj=false; await sleep(650);
+        show(el); prevKaj=false; await sleep(readMs(el));
       }
     }
     card.classList.remove('play'); fit();
