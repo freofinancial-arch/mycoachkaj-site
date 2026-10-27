@@ -76,6 +76,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .top .col{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;padding-block:10px 8px}
 .mark{font-family:var(--display);font-size:22px;text-align:center;line-height:1.1;white-space:nowrap;min-width:0}
 .mark span{color:var(--blush)}
+.top .mark{grid-column:2;justify-self:center}
+a.mark{color:var(--cream);text-decoration:none}
+.next-h{font-family:var(--display);font-weight:400;font-size:22px;margin:8px 0 0;color:var(--cream)}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;counter-reset:n}
+.steps li{display:flex;gap:12px;align-items:flex-start;color:var(--cream-soft);counter-increment:n}
+.steps li::before{content:counter(n);flex:0 0 28px;height:28px;border-radius:50%;background:var(--blush);color:var(--ink);font-weight:600;font-size:15px;display:inline-flex;align-items:center;justify-content:center;margin-top:-1px}
+.steps b{color:var(--cream);font-weight:600}
+.homebtn{margin-top:8px}
+input.in:disabled{opacity:.45}
+.unknown{display:flex;gap:10px;align-items:center;font-size:15px;color:var(--cream-soft);cursor:pointer;margin-top:2px}
+.unknown input{width:20px;height:20px;margin:0;accent-color:var(--blush)}
 .iconbtn{width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--cream);font-size:22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
 .iconbtn:hover{background:var(--tint)}
 .iconbtn[hidden]{display:none!important}
@@ -211,7 +222,7 @@ pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;ove
   <div class="top">
     <div class="col">
       <button class="iconbtn" id="back" aria-label="Back" hidden>&#8592;</button>
-      <div class="mark">My Coach <span>Kaj</span></div>
+      <a class="mark" id="home" href="/" aria-label="My Coach Kaj home">My Coach <span>Kaj</span></a>
       <span></span>
     </div>
     <div class="col"><div class="bar" aria-hidden="true"><i id="prog"></i></div></div>
@@ -363,6 +374,11 @@ function next(){
   if(i+1<vs.length) show(vs[i+1]); else finish();
 }
 backBtn.addEventListener("click",function(){ if(history.length) show(history.pop(), true); });
+/* Oct 26 tester note: no way back to the site. The brand mark goes home; it asks first only if she has answers in progress. */
+document.getElementById("home").addEventListener("click",function(ev){
+  var done = current && ["end","call","done"].indexOf(current.id)>-1;
+  if(!done && Object.keys(A).length && !window.confirm("Leave the survey? Your answers so far won’t be saved.")) ev.preventDefault();
+});
 
 function head(el, s){
   var h = "";
@@ -525,15 +541,21 @@ R.long = function(s, el){
 R.private = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<p class="eyebrow">Optional</p><h1>A few optional questions</h1>'+
-    '<ul class="list"><li>For our research only</li><li>Skip any you like</li></ul>');
+    '<ul class="list"><li>For the company only. Kaj never sees these.</li><li>Skip any you like</li></ul>');
   var g=document.createElement("div"); g.className="opt-group"; el.appendChild(g);
   var w=[["weight_start","Your weight when you started your GLP‑1", !stageIs("not_started")],["weight_now","Your weight today",true],["weight_goal","Your goal weight",true]];
   w.forEach(function(x){ if(!x[2]){ delete P[x[0]]; return; }
-    g.insertAdjacentHTML("beforeend",'<div class="field"><label class="fl" for="p_'+x[0]+'">'+x[1]+'</label><div class="unit"><input class="in" id="p_'+x[0]+'" type="text" inputmode="numeric" maxlength="3" value="'+esc(P[x[0]])+'"><span>pounds</span></div></div>');
+    var dk = x[0]==="weight_start" ? '<label class="unknown" for="p_ws_unknown"><input type="checkbox" id="p_ws_unknown"'+(P.weight_start_unknown?" checked":"")+'><span>I didn’t weigh myself when I started</span></label>' : '';
+    g.insertAdjacentHTML("beforeend",'<div class="field"><label class="fl" for="p_'+x[0]+'">'+x[1]+'</label><div class="unit"><input class="in" id="p_'+x[0]+'" type="text" inputmode="numeric" maxlength="3" value="'+esc(P[x[0]])+'"><span>pounds</span></div>'+dk+'</div>');
   });
+  /* Oct 26 tester note: many women never weighed in before starting. Give them a clear answer instead of a blank. */
+  var wsU=document.getElementById("p_ws_unknown"), wsI=document.getElementById("p_weight_start");
+  function wsPaint(){ if(!wsU) return; wsI.disabled=wsU.checked; if(wsU.checked) wsI.value=""; }
+  if(wsU){ wsU.addEventListener("change",wsPaint); wsPaint(); }
   var e=errEl(el);
   cta("Continue", function(){
     var bad=false;
+    if(wsU && wsU.checked) P.weight_start_unknown=true; else delete P.weight_start_unknown;
     w.forEach(function(x){ if(!x[2]) return; var i=document.getElementById("p_"+x[0]); var v=i.value.replace(/\D/g,"");
       if(v && (+v<70 || +v>700)){ bad=true; i.focus(); } if(v) P[x[0]]=+v; else delete P[x[0]]; });
     if(bad){ e.textContent="Please check the weights. Use pounds, from 70 to 700."; return; }
@@ -620,7 +642,7 @@ function endKind(which){
     under_18:'<h1>Thank you for your interest, '+first+'.</h1><div class="prose"><p>Kaj is built for adults, so we can’t welcome you yet.</p><p>We’d love to hear from you after your 18th birthday.</p></div>'
   }[which];
   prog.style.width="100%"; backBtn.hidden=true; dock.hidden=true;
-  stage.innerHTML='<section class="step enter">'+html+'</section>';
+  stage.innerHTML='<section class="step enter">'+html+'<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a></section>';
   window.scrollTo(0,0);
 }
 
@@ -631,7 +653,7 @@ function finish(){
   var now=new Date().toISOString();
   LAST = {
     survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
-    private_data: (P.weight_start||P.weight_now||P.weight_goal||(P.background&&P.background.length)) ? JSON.parse(JSON.stringify(P)) : null,
+    private_data: (P.weight_start||P.weight_start_unknown||P.weight_now||P.weight_goal||(P.background&&P.background.length)) ? JSON.parse(JSON.stringify(P)) : null,
     consents:[
       {type:"sms", given:!!A.sms_consent, at:now, source:"survey", wording_version:CONFIG.smsConsentVersion, phone:A.phone},
       {type:"research", given:true, at:now, source:"survey", wording_version:CONFIG.researchConsentVersion, phone:A.phone}
@@ -656,7 +678,7 @@ function callScreen(){
     '<div class="founding"><h2>Help shape Kaj. Become a Founding Insider.</h2>'+
       '<p>Thirty minutes with Kaj’s founder. Your story shapes what Kaj becomes for every woman after you.</p>'+
       '<p style="color:var(--cream);font-weight:600">Founding Insiders get:</p>'+
-      '<ul class="list"><li>The first invites to join</li><li>A direct line to the founder</li><li>A vote on new features</li><li>Invitations to Founding Insider gatherings</li></ul>'+
+      '<ul class="list"><li>The first invites to join</li><li>A direct line to the founder for your ideas</li><li>A vote on new features</li><li>Invitations to Founding Insider gatherings</li></ul>'+
       '<button class="btn" type="button" id="bookcall">Book my founder call</button></div>'+
     '<div class="alt"><h2>I’m ready to start.</h2><p>No call needed. We’ll email you as launch gets close.</p></div>'+
     '</section>';
@@ -671,10 +693,21 @@ function callScreen(){
 }
 function doneScreen(call){
   current={id:"done"}; dock.hidden=true;
+  /* Oct 26: the confirmation tells her what happens next. Her first contact with Kaj is a text, not an email. */
+  var textLine = A.sms_consent
+    ? '<li><span>When you accept, <b>Kaj texts you first</b>, by name. Save the number to your contacts so Kaj never lands in filtered texts.</span></li>'
+    : '<li><span>Kaj coaches by text. Your invitation will ask you to say yes to texts, then <b>Kaj texts you first</b>, by name.</span></li>';
+  var nextSteps =
+    '<p class="next-h">What happens next</p><ol class="steps">'+
+      '<li><span>Your answers are with us. When you join, <b>Kaj already knows your story</b>. You never start from zero.</span></li>'+
+      '<li><span>Watch your email. <b>Your invitation arrives before Kaj launches '+esc(CONFIG.launchDate)+'</b>, with everything about your rate.</span></li>'+
+      textLine+
+    '</ol>';
   var body = call
-    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it\u2019s ready.')+'</p><p>Watch your email for the details.</p></div>'
-    : '<h1>You’re all set, '+name()+'.</h1><div class="prose"><p>We’ll email you as launch gets close.</p></div>';
-  if(PREVIEW) body += '<p class="testnote">We\u2019re testing this page. Nothing you entered was saved.</p>';
+    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it’s ready.')+'</p><p>Watch your email for the call details.</p>'+nextSteps+'</div>'
+    : '<h1>You’re all set, '+name()+'.</h1><div class="prose">'+nextSteps+'</div>';
+  body += '<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a>';
+  if(PREVIEW) body += '<p class="testnote">We’re testing this page. Nothing you entered was saved.</p>';
   stage.innerHTML='<section class="step enter">'+body+'</section>';
   window.scrollTo(0,0);
 }
