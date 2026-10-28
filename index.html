@@ -219,7 +219,12 @@ footer p{margin:0}
 .std-note{margin:20px 0 0;font-size:19px;color:var(--cream)}
 .std-note b{font-family:var(--display);font-weight:400;font-size:24px;margin:0 2px}
 /* FAQ (Oct 26): two layers. Why it works first, then the basics. Sits below the offer so the button stays close. */
-.faq-link{margin-top:18px;font-size:16px;color:var(--blush);text-underline-offset:4px}
+/* Option C (Oct 28): three short lines under the offer button, and a closing button after the FAQ. */
+.assure{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;text-align:left;font-size:16px;line-height:1.45;color:var(--cream)}
+.assure li{position:relative;padding-left:26px}
+.assure li::before{content:"\2713";position:absolute;left:0;top:0;color:var(--blush);font-weight:600}
+.faq-end{margin-top:40px;text-align:center}
+.faq-end .ready{font-family:var(--display);font-size:clamp(24px,4.6vw,30px);line-height:1.2;margin:0 0 18px}
 .faq{max-width:720px;margin:0 auto;padding-block:8px 64px;scroll-margin-top:16px}
 .faq-h{font-family:var(--display);font-weight:400;font-size:clamp(30px,5vw,40px);line-height:1.15;margin:0 0 8px;text-align:center}
 .faq-group{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);font-weight:500;margin:32px 0 6px}
@@ -369,8 +374,12 @@ footer p{margin:0}
       <p class="big ins">$27<span>a month</span></p>
       <p class="std">Selected Insiders</p>
       <a class="btn btn-lg" href="join/" data-join>Request my invitation</a>
+      <ul class="assure">
+        <li>Kaj is AI, and works alongside your doctor.</li>
+        <li>Your texts stay private.</li>
+        <li>Cancel anytime.</li>
+      </ul>
       <p class="std-note">Standard membership: <b>$47</b> a month</p>
-      <a class="faq-link" href="#faq">How Kaj works</a>
     </div>
   </section>
 
@@ -434,6 +443,10 @@ footer p{margin:0}
       <summary>How do I stop?</summary>
       <p>Reply STOP to stop texts anytime. To update your card or cancel, go to <a href="/billing/">mycoachkaj.com/billing</a>.</p>
     </details>
+    <div class="faq-end">
+      <p class="ready">Ready when you are.</p>
+      <a class="btn btn-lg" href="join/" data-join>Request my invitation</a>
+    </div>
   </section>
 </div>
 
