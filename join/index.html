@@ -220,7 +220,7 @@ var CONFIG = {
   metaLead: false,           // one generic Lead signal on finish; stays off until the lawyer approves
   launchDate: "November 30",
   version: "survey_v1_2026-10-25",
-  smsConsentVersion: "sms_consent_v1_2026-10-24",
+  smsConsentVersion: "sms_consent_v2_2026-10-29",
   researchConsentVersion: "research_consent_v1_2026-10-24",
   site: "https://mycoachkaj.com"
 };
@@ -580,11 +580,19 @@ R.consent = function(s, el){
     '<label class="check" for="c_res"><input type="checkbox" id="c_res"'+(A.research_consent?" checked":"")+'><span><span class="req">Required</span>'+
       esc(RESEARCH_TEXT.replace(" See our Privacy Policy.",""))+' See our <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
   var e=errEl(el);
-  cta("Join the Insider list", function(){
+  var sending=false;
+  var join=cta("Join the Insider list", function(){
+    if(sending) return;
     var sms=document.getElementById("c_sms").checked, res=document.getElementById("c_res").checked;
     A.sms_consent=sms; A.research_consent=res;
     if(!res){ e.textContent="Please check the research box to join."; return; }
-    history.push(current); finish();
+    e.textContent=""; sending=true; join.disabled=true;
+    history.push(current);
+    /* Oct 29: if the save fails she stays here, sees why, and can send again. */
+    finish(function(){
+      history.pop(); sending=false; join.disabled=false;
+      e.textContent="Something went wrong, and your answers did not send. Please try again.";
+    });
   });
 };
 
@@ -625,8 +633,9 @@ function sendChoice(choice){
     fetch(CONFIG.endpoint+"/survey/choice",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:token, choice:choice}),keepalive:true}).catch(function(){});
   });
 }
-function finish(){
-  leaveStep();
+var FINISHED = false;
+function finish(onFail){
+  if(!FINISHED){ leaveStep(); track("finished"); FINISHED=true; }
   var now=new Date().toISOString();
   LAST = {
     survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
@@ -636,15 +645,16 @@ function finish(){
       {type:"research", given:true, at:now, source:"survey", wording_version:CONFIG.researchConsentVersion, phone:A.phone}
     ]
   };
-  track("finished");
-  if(!PREVIEW){
-    SENT = fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(j){ return (j && j.choice_token) || null; })
-      .catch(function(){ track("submit_failed"); return null; });
+  function saved(){
+    if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
+    callScreen();
   }
-  if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
-  callScreen();
+  if(PREVIEW){ saved(); return; }
+  /* The success screen shows only once the server has saved her answers. */
+  SENT = fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json().catch(function(){ return null; }); })
+    .then(function(j){ return (j && j.choice_token) || null; });
+  SENT.then(saved, function(){ SENT=null; track("submit_failed"); onFail(); });
 }
 function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent" && k!=="research_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
