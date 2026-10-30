@@ -221,7 +221,6 @@ var CONFIG = {
   launchDate: "November 30",
   version: "survey_v1_2026-10-25",
   smsConsentVersion: "sms_consent_v2_2026-10-29",
-  researchConsentVersion: "research_consent_v1_2026-10-24",
   site: "https://mycoachkaj.com"
 };
 var PREVIEW = !CONFIG.endpoint;
@@ -249,7 +248,6 @@ var C = {
   heard:[["instagram","Instagram"],["facebook","Facebook"],["tiktok","TikTok"],["google","Google search"],["other","Something else"],["referral","Someone referred me"]]
 };
 var SMS_TEXT = "Yes, text me. I agree to receive coaching texts only from My Coach Kaj, a business name of Next 10 Capital LLC, at the mobile number above. Texts may be sent using automated technology. Message frequency varies. Message and data rates may apply. Reply HELP for help. Reply STOP to stop texts. Kaj coaches by text, so stopping texts ends your coaching. See our Texting Terms and Privacy Policy.";
-var RESEARCH_TEXT = "I understand that My Coach Kaj may use my survey answers and coaching conversations, with my name and number removed, for research. Findings are only ever shared as group results, never individual ones. See our Privacy Policy.";
 
 /* ===== State. Lives only in this page until she finishes. ===== */
 var A = {}, P = {};          // A: survey answers. P: optional company data, kept apart.
@@ -576,16 +574,13 @@ R.consent = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<p class="eyebrow">Last step</p><h1>Two quick boxes.</h1>'+
     '<label class="check" for="c_sms"><input type="checkbox" id="c_sms"'+(A.sms_consent?" checked":"")+'><span><span class="req">Optional</span><b>Yes, text me.</b> '+
-      esc(SMS_TEXT.replace("Yes, text me. ","").replace(" See our Texting Terms and Privacy Policy.",""))+' See our <a href="'+terms+'" target="_blank" rel="noopener">Texting Terms</a> and <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>'+
-    '<label class="check" for="c_res"><input type="checkbox" id="c_res"'+(A.research_consent?" checked":"")+'><span><span class="req">Required</span>'+
-      esc(RESEARCH_TEXT.replace(" See our Privacy Policy.",""))+' See our <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
+      esc(SMS_TEXT.replace("Yes, text me. ","").replace(" See our Texting Terms and Privacy Policy.",""))+' See our <a href="'+terms+'" target="_blank" rel="noopener">Texting Terms</a> and <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
   var e=errEl(el);
   var sending=false;
   var join=cta("Join the Insider list", function(){
     if(sending) return;
-    var sms=document.getElementById("c_sms").checked, res=document.getElementById("c_res").checked;
-    A.sms_consent=sms; A.research_consent=res;
-    if(!res){ e.textContent="Please check the research box to join."; return; }
+    var sms=document.getElementById("c_sms").checked;
+    A.sms_consent=sms;
     e.textContent=""; sending=true; join.disabled=true;
     history.push(current);
     /* Oct 29: if the save fails she stays here, sees why, and can send again. */
@@ -641,8 +636,7 @@ function finish(onFail){
     survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
     private_data: (P.weight_start||P.weight_start_unknown||P.weight_now||P.weight_goal||(P.background&&P.background.length)) ? JSON.parse(JSON.stringify(P)) : null,
     consents:[
-      {type:"sms", given:!!A.sms_consent, at:now, source:"survey", wording_version:CONFIG.smsConsentVersion, phone:A.phone},
-      {type:"research", given:true, at:now, source:"survey", wording_version:CONFIG.researchConsentVersion, phone:A.phone}
+      {type:"sms", given:!!A.sms_consent, at:now, source:"survey", wording_version:CONFIG.smsConsentVersion, phone:A.phone}
     ]
   };
   function saved(){
@@ -656,7 +650,7 @@ function finish(onFail){
     .then(function(j){ return (j && j.choice_token) || null; });
   SENT.then(saved, function(){ SENT=null; track("submit_failed"); onFail(); });
 }
-function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent" && k!=="research_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
+function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
 function callScreen(){
   current={id:"call"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
@@ -689,7 +683,7 @@ function doneScreen(call){
   var nextSteps =
     '<p class="next-h">What happens next</p><ol class="steps">'+
       '<li><span>Your answers are with us. When you join, <b>Kaj already knows your story</b>. You never start from zero.</span></li>'+
-      '<li><span>Watch your email. <b>Your invitation arrives before Kaj launches '+esc(CONFIG.launchDate)+'</b>, with everything about your rate.</span></li>'+
+      '<li><span>Watch your email. <b>Before Kaj launches '+esc(CONFIG.launchDate)+', we’ll email you with your next step.</b></span></li>'+
       textLine+
     '</ol>';
   var body = call
