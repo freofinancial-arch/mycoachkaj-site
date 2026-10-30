@@ -62,8 +62,6 @@ html.light{
 }
 html.light .opt{box-shadow:0 1px 2px rgba(74,35,64,.06)}
 html.light .mark span{color:#86587A}
-.sheet{--cream:#FBF6F3;--cream-soft:#EBDDE5;--blush:#F2C6CF;--blush-hi:#F7D4DB;--ink:#4A2340;--line:rgba(251,246,243,.32);--tint:rgba(251,246,243,.07);color:var(--cream)}
-html.light .tpill{background:#5E3350;color:#F2C6CF;border-color:#5E3350}
 *,*::before,*::after{box-sizing:border-box}
 html{background:var(--page);height:100%;transition:background .3s ease}
 body{margin:0;min-height:100%;background:var(--page);transition:background .3s ease,color .3s ease;color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-text-size-adjust:100%}
@@ -191,29 +189,6 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
 .big{font-family:var(--display);font-size:56px;line-height:1;color:var(--blush);margin:4px 0 0}
 .big span{font-family:var(--body);font-size:16px;color:var(--cream-soft);margin-left:8px}
 
-/* Preview test panel (only when no live endpoint is set) */
-.tpill{position:fixed;z-index:30;right:calc(10px + env(safe-area-inset-right, 0px));top:calc(64px + env(safe-area-inset-top, 0px));font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;
-  background:var(--plum-deep);color:var(--blush);border:1px solid var(--blush);border-radius:999px;padding:7px 11px;cursor:pointer}
-.panel{position:fixed;inset:0;z-index:40;background:rgba(30,10,25,.6);display:flex;align-items:flex-end;justify-content:center}
-.panel[hidden]{display:none!important}
-.sheet{width:100%;max-width:640px;max-height:88%;overflow:auto;background:var(--plum-deep);border-radius:22px 22px 0 0;
-  padding:18px var(--gr) calc(18px + env(safe-area-inset-bottom, 0px)) var(--gl);display:flex;flex-direction:column;gap:14px;font-size:15px}
-.sheet h3{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
-.sheet h4{margin:4px 0 0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush);font-weight:600}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.kpi{background:var(--tint);border-radius:12px;padding:10px}
-.kpi b{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums}
-.kpi span{font-size:12px;color:var(--cream-soft)}
-.tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-.tbl td{padding:5px 0;border-bottom:1px solid rgba(251,246,243,.12)}
-.tbl td+td{text-align:right;color:var(--cream-soft)}
-pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;overflow-x:auto;font-size:12px;line-height:1.45;color:var(--cream-soft);white-space:pre}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{font:inherit;font-size:14px;border:1px solid var(--line);background:transparent;color:var(--cream);border-radius:999px;padding:6px 12px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--blush);color:var(--ink);border-color:var(--blush)}
-.row{display:flex;gap:8px}.row .btn{font-size:15px;padding:11px 14px}
-.muted{color:var(--cream-soft);margin:0}
-.testnote{margin:8px 0 0;padding:12px 14px;border-radius:12px;background:var(--tint);border:1px dashed var(--line);font-size:14px;color:var(--cream-soft)}
 
 @media (prefers-reduced-motion:reduce){.step.enter{animation:none}.bar i{transition:none}}
 </style>
@@ -231,10 +206,6 @@ pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;ove
   <div class="dock" id="dock"><div class="col" id="dockin"></div></div>
 </div>
 
-<button class="tpill" id="tpill" hidden>Test panel</button>
-<div class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="ptitle">
-  <div class="sheet" id="sheet"></div>
-</div>
 
 <script>
 (function(){
@@ -242,14 +213,14 @@ pre.json{margin:0;background:rgba(0,0,0,.22);border-radius:12px;padding:12px;ove
 
 /* ===== Settings =====
    endpoint: the Caerus server address that receives a finished survey and the funnel counts.
-   While it is empty, the page runs as a preview: nothing leaves the phone, and the test panel shows what would be sent. */
+   While it is empty, the page runs as a preview: nothing leaves the phone. */
 var CONFIG = {
-  endpoint: "",
+  endpoint: "https://caerus-production.up.railway.app",
   bookingUrl: "",            // Zoom booking page for founder calls
   metaLead: false,           // one generic Lead signal on finish; stays off until the lawyer approves
   launchDate: "November 30",
   version: "survey_v1_2026-10-25",
-  smsConsentVersion: "sms_consent_v1_2026-10-24",
+  smsConsentVersion: "sms_consent_v2_2026-10-29",
   researchConsentVersion: "research_consent_v1_2026-10-24",
   site: "https://mycoachkaj.com"
 };
@@ -277,7 +248,7 @@ var C = {
   bg:[["black","Black or African American"],["hispanic","Hispanic or Latina"],["white","White"],["asian","Asian"],["native_american","Native American or Alaska Native"],["pacific_islander","Native Hawaiian or Pacific Islander"],["mena","Middle Eastern or North African"],["describe","Let me describe it"],["prefer_not","Prefer not to say"]],
   heard:[["instagram","Instagram"],["facebook","Facebook"],["tiktok","TikTok"],["google","Google search"],["other","Something else"],["referral","Someone referred me"]]
 };
-var SMS_TEXT = "Yes, text me. I agree to receive coaching texts from My Coach Kaj, including automated texts, at the mobile number above. Message frequency varies. Message and data rates may apply. Reply STOP to stop or HELP for help. Consent is not a condition of any purchase. See our Texting Terms and Privacy Policy.";
+var SMS_TEXT = "Yes, text me. I agree to receive coaching texts only from My Coach Kaj, a business name of Next 10 Capital LLC, at the mobile number above. Texts may be sent using automated technology. Message frequency varies. Message and data rates may apply. Reply HELP for help. Reply STOP to stop texts. Kaj coaches by text, so stopping texts ends your coaching. See our Texting Terms and Privacy Policy.";
 var RESEARCH_TEXT = "I understand that My Coach Kaj may use my survey answers and coaching conversations, with my name and number removed, for research. Findings are only ever shared as group results, never individual ones. See our Privacy Policy.";
 
 /* ===== State. Lives only in this page until she finishes. ===== */
@@ -327,16 +298,13 @@ function label(list, key){ for(var i=0;i<list.length;i++) if(list[i][0]===key) r
 /* ===== Funnel counts. No names, numbers, or answers. Ever. ===== */
 var SID = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
 var AD = (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); return m?m[1].toLowerCase():null; }catch(e){ return null; } })();
-var LOG = [];
 var shownAt = 0, current = null, started = false, farthest = 0;
 function track(ev, extra){
   var e = {sid:SID, ad:AD, event:ev, at:new Date().toISOString()};
   if(extra) for(var k in extra) e[k]=extra[k];
-  LOG.push(e);
   if(!PREVIEW){
-    try{ var body=JSON.stringify(e); if(!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.endpoint+"/funnel", new Blob([body],{type:"application/json"})))) fetch(CONFIG.endpoint+"/funnel",{method:"POST",headers:{"Content-Type":"application/json"},body:body,keepalive:true}); }catch(err){}
+    try{ var body=JSON.stringify(e); if(!(navigator.sendBeacon && navigator.sendBeacon(CONFIG.endpoint+"/funnel", new Blob([body],{type:"text/plain"})))) fetch(CONFIG.endpoint+"/funnel",{method:"POST",headers:{"Content-Type":"application/json"},body:body,keepalive:true}); }catch(err){}
   }
-  if(!panel.hidden) drawPanel();
 }
 function leaveStep(){
   if(current && current.id.indexOf("intro")<0 && shownAt) track("step_time",{step:current.id, ms:Math.round(performance.now()-shownAt)});
@@ -612,11 +580,19 @@ R.consent = function(s, el){
     '<label class="check" for="c_res"><input type="checkbox" id="c_res"'+(A.research_consent?" checked":"")+'><span><span class="req">Required</span>'+
       esc(RESEARCH_TEXT.replace(" See our Privacy Policy.",""))+' See our <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
   var e=errEl(el);
-  cta("Join the Insider list", function(){
+  var sending=false;
+  var join=cta("Join the Insider list", function(){
+    if(sending) return;
     var sms=document.getElementById("c_sms").checked, res=document.getElementById("c_res").checked;
     A.sms_consent=sms; A.research_consent=res;
     if(!res){ e.textContent="Please check the research box to join."; return; }
-    history.push(current); finish();
+    e.textContent=""; sending=true; join.disabled=true;
+    history.push(current);
+    /* Oct 29: if the save fails she stays here, sees why, and can send again. */
+    finish(function(){
+      history.pop(); sending=false; join.disabled=false;
+      e.textContent="Something went wrong, and your answers did not send. Please try again.";
+    });
   });
 };
 
@@ -648,8 +624,18 @@ function endKind(which){
 
 /* ===== Finish: the only moment anything is saved ===== */
 var LAST = null;
-function finish(){
-  leaveStep();
+var SENT = null;   // resolves to the choice token /survey returns, or null
+/* Her founder call choice goes to /survey/choice with that token, once it arrives. */
+function sendChoice(choice){
+  if(!SENT) return;
+  SENT.then(function(token){
+    if(!token) return;
+    fetch(CONFIG.endpoint+"/survey/choice",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:token, choice:choice}),keepalive:true}).catch(function(){});
+  });
+}
+var FINISHED = false;
+function finish(onFail){
+  if(!FINISHED){ leaveStep(); track("finished"); FINISHED=true; }
   var now=new Date().toISOString();
   LAST = {
     survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
@@ -659,14 +645,16 @@ function finish(){
       {type:"research", given:true, at:now, source:"survey", wording_version:CONFIG.researchConsentVersion, phone:A.phone}
     ]
   };
-  track("finished");
-  if(!PREVIEW){
-    fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); })
-      .catch(function(){ track("submit_failed"); });
+  function saved(){
+    if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
+    callScreen();
   }
-  if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
-  callScreen();
+  if(PREVIEW){ saved(); return; }
+  /* The success screen shows only once the server has saved her answers. */
+  SENT = fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json().catch(function(){ return null; }); })
+    .then(function(j){ return (j && j.choice_token) || null; });
+  SENT.then(saved, function(){ SENT=null; track("submit_failed"); onFail(); });
 }
 function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent" && k!=="research_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
@@ -683,9 +671,10 @@ function callScreen(){
     '<div class="alt"><h2>I’m ready to start.</h2><p>No call needed. We’ll email you as launch gets close.</p></div>'+
     '</section>';
   dockin.innerHTML=""; dock.hidden=false;
-  cta("I’m ready to start", function(){ track("chose_ready"); doneScreen(false); }, {ghost:true});
+  cta("I’m ready to start", function(){ track("chose_ready"); sendChoice("ready"); doneScreen(false); }, {ghost:true});
   document.getElementById("bookcall").addEventListener("click",function(){
     track("chose_call");
+    sendChoice("call");
     if(CONFIG.bookingUrl){ window.open(CONFIG.bookingUrl,"_blank","noopener"); }
     doneScreen(true);
   });
@@ -707,41 +696,8 @@ function doneScreen(call){
     ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it’s ready.')+'</p><p>Watch your email for the call details.</p>'+nextSteps+'</div>'
     : '<h1>You’re all set, '+name()+'.</h1><div class="prose">'+nextSteps+'</div>';
   body += '<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a>';
-  if(PREVIEW) body += '<p class="testnote">We’re testing this page. Nothing you entered was saved.</p>';
   stage.innerHTML='<section class="step enter">'+body+'</section>';
   window.scrollTo(0,0);
-}
-
-/* ===== Preview test panel ===== */
-var pill=document.getElementById("tpill"), panel=document.getElementById("panel"), sheet=document.getElementById("sheet");
-var ON_SITE = /(^|\.)mycoachkaj\.com$/i.test(location.hostname);
-if(PREVIEW && (!ON_SITE || location.hash==="#test")){ pill.hidden=false; }
-pill.addEventListener("click",function(){ drawPanel(); panel.hidden=false; });
-panel.addEventListener("click",function(e){ if(e.target===panel) panel.hidden=true; });
-document.addEventListener("keydown",function(e){ if(e.key==="Escape") panel.hidden=true; });
-function drawPanel(){
-  var n=function(ev){ return LOG.filter(function(e){return e.event===ev;}).length; };
-  var times={}; LOG.forEach(function(e){ if(e.event==="step_time"){ times[e.step]=(times[e.step]||0)+e.ms; } });
-  var last=null; LOG.forEach(function(e){ if(e.event==="step_view") last=e.step; });
-  var rows=Object.keys(times).map(function(k){ return '<tr><td>'+esc(k)+'</td><td>'+(times[k]/1000).toFixed(1)+' s</td></tr>'; }).join("") || '<tr><td colspan="2" class="muted">Answer a question to see times.</td></tr>';
-  sheet.innerHTML=
-    '<h3 id="ptitle">Test panel</h3>'+
-    '<p class="muted">Preview only. Nothing leaves this phone. Women never see this panel.</p>'+
-    '<h4>Ad tag for this visit</h4><div class="chips" id="adchips">'+
-      ["none","elena","simone","claire"].map(function(a){ var on=(AD||"none")===a; return '<button class="chip" type="button" data-ad="'+a+'" aria-pressed="'+on+'">'+a+'</button>'; }).join("")+'</div>'+
-    '<h4>Funnel counts, this visit</h4><div class="kpis">'+
-      '<div class="kpi"><b>'+n("started")+'</b><span>Started</span></div>'+
-      '<div class="kpi"><b>'+n("finished")+'</b><span>Finished</span></div>'+
-      '<div class="kpi"><b>'+(n("chose_call"))+'</b><span>Chose the call</span></div></div>'+
-    '<p class="muted">Last question reached: <b style="color:var(--cream)">'+esc(last||"none yet")+'</b></p>'+
-    '<h4>Time per question</h4><table class="tbl">'+rows+'</table>'+
-    '<h4>What our database would receive</h4>'+
-    (LAST?'<pre class="json">'+esc(JSON.stringify(LAST,null,2))+'</pre>':'<p class="muted">Finish the survey to see it. Kind end screens send nothing.</p>')+
-    '<h4>Funnel events sent ('+LOG.length+')</h4><pre class="json">'+esc(LOG.map(function(e){ return [e.event,e.step||"",e.ms!=null?e.ms+"ms":"",e.ad||""].join("  "); }).join("\n")||"none yet")+'</pre>'+
-    '<div class="row"><button class="btn ghost" type="button" id="restart">Start over</button><button class="btn" type="button" id="pclose">Close</button></div>';
-  [].forEach.call(sheet.querySelectorAll("[data-ad]"),function(b){ b.addEventListener("click",function(){ var a=b.getAttribute("data-ad"); AD = a==="none"?null:a; drawPanel(); }); });
-  document.getElementById("pclose").addEventListener("click",function(){ panel.hidden=true; });
-  document.getElementById("restart").addEventListener("click",function(){ blank(); history=[]; started=false; farthest=0; LAST=null; current=null; panel.hidden=true; show(STEPS[0]); track("survey_open"); });
 }
 
 /* ===== Go ===== */
