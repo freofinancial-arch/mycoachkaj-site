@@ -27,7 +27,7 @@
 </head>
 <body>
 <style>
-/* Layout: one slider at the top. Slide one is the welcome (photo, headline, button); slides two to four are daily moments with a text exchange. Scrolling down reaches the offer. */
+/* Layout (Oct 29, Barth): stacked, not a slider. The welcome comes first; Elena, Simone and Claire follow one after another as she scrolls, then the offer. A reader scrolling with her thumb missed the old sideways slider. */
 :root{
   --plum:#86587A;
   --plum-deep:#5E3350;
@@ -47,7 +47,8 @@
   --gutter-r:max(16px, env(safe-area-inset-right, 0px));
   color-scheme:light;
 }
-html{background:var(--plum)}
+html{background:var(--plum);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--plum);color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.6;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
 .wrap{max-width:1060px;margin:0 auto}
 .bleed{position:relative;margin-left:calc(-1 * var(--gutter-l));margin-right:calc(-1 * var(--gutter-r))}
@@ -113,9 +114,9 @@ header{padding-block:18px 12px;display:flex;flex-direction:column;align-items:fl
   .hero .foot{position:static;padding:0;gap:30px}
   .slide .panel{left:calc(6vw + 40px)}.slide.right .panel{right:calc(6vw + 40px)}
 }
-.track{position:relative;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;transition:height .35s ease;overscroll-behavior-x:contain}
+.track{position:relative;display:block}
 .track::-webkit-scrollbar{display:none}
-.slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative}
+.slide{position:relative}
 .slide .pic{position:relative;overflow:hidden;background:var(--plum-shade);aspect-ratio:4/5;max-width:100%}
 .slide .pic>img{display:block;width:100%;height:100%;object-fit:cover}
 .slide .pic .shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(40,15,35,.82) 0%,rgba(40,15,35,0) 46%)}
@@ -239,12 +240,9 @@ footer p{margin:0}
 .faq details a{color:var(--blush);text-underline-offset:3px}
 @media (max-width:859px){.faq{padding-bottom:96px}}
 @media (min-width:1200px){.hero .copy{max-width:none}.hero .line1,.hero .line2{white-space:nowrap}.hero .shade{background:linear-gradient(90deg,rgba(60,25,50,.8) 0%,rgba(60,25,50,.5) 42%,rgba(60,25,50,0) 66%)}}
-/* Swipe hint (Oct 25): Meet Kaj points sideways; one gentle nudge shows the next moment's edge. */
 .btn .go{display:inline-block;margin-left:6px;transition:transform .2s ease}
-.btn:hover .go{transform:translateX(3px)}
-@keyframes nudge{0%,100%{transform:none}35%,55%{transform:translateX(-64px)}}
-.track.nudge .slide{animation:nudge 1.3s ease-in-out 1}
-@media (prefers-reduced-motion:reduce){.track{transition:none;scroll-behavior:auto}.joinbar{transition:none}.track.nudge .slide{animation:none}}
+.btn:hover .go{transform:translateY(3px)}
+@media (prefers-reduced-motion:reduce){.joinbar{transition:none}}
 </style>
 
 <div class="wrap topwrap">
@@ -254,16 +252,8 @@ footer p{margin:0}
 </div>
 
 <div class="slider bleed" aria-label="My Coach Kaj in daily moments">
-<div class="dots" role="tablist" aria-label="Slides">
-  <button class="tab" role="tab" id="tab-0" aria-controls="slide-0" aria-selected="true" aria-label="Welcome"></button>
-  <button class="tab" role="tab" id="tab-1" aria-controls="slide-1" aria-selected="false" tabindex="-1" aria-label="Morning with Elena"></button>
-  <button class="tab" role="tab" id="tab-2" aria-controls="slide-2" aria-selected="false" tabindex="-1" aria-label="Midday with Simone"></button>
-  <button class="tab" role="tab" id="tab-3" aria-controls="slide-3" aria-selected="false" tabindex="-1" aria-label="Night with Claire"></button>
-</div>
-<button class="arrow prev" id="prev" aria-label="Previous moment">&#8592;</button>
-<button class="arrow next" id="next" aria-label="Next moment">&#8594;</button>
 <div class="track" id="track">
-<article class="slide hero" id="slide-0" role="tabpanel" aria-labelledby="tab-0">
+<article class="slide hero" id="slide-0">
   <img src="img/morning.jpg" alt="A woman leans against her kitchen counter in morning light, reading a text on her phone.">
   <div class="shade"></div>
   <div class="copy">
@@ -271,13 +261,13 @@ footer p{margin:0}
     <div class="foot">
       <p class="line2">Kaj helps you make it last.</p>
       <p class="what"><span>AI coach by text</span><span>No app</span><span>No food tracking</span></p>
-      <div class="cta-wrap"><a class="btn btn-lg" href="#slide-1" data-go="1">Meet Kaj <span class="go" aria-hidden="true">&#8594;</span></a></div>
+      <div class="cta-wrap"><a class="btn btn-lg" href="#slide-1">Meet Kaj <span class="go" aria-hidden="true">&#8595;</span></a></div>
     </div>
   </div>
 </article>
 
 
-  <article class="slide s-morning" id="slide-1" role="tabpanel" aria-labelledby="tab-1">
+  <article class="slide s-morning" id="slide-1">
     <div class="pic">
       <img src="img/elena.jpg" alt="A woman with silver hair sits on the edge of her bathtub in a robe, reading a text on her phone in morning light.">
       <div class="shade"></div>
@@ -304,7 +294,7 @@ footer p{margin:0}
     </div>
   </article>
 
-  <article class="slide s-midday right" id="slide-2" role="tabpanel" aria-labelledby="tab-2">
+  <article class="slide s-midday right" id="slide-2">
     <div class="pic">
       <img src="img/midday.jpg" alt="A woman at a restaurant table smiles as she looks over a menu, her phone beside her." loading="lazy">
       <div class="shade"></div>
@@ -320,7 +310,7 @@ footer p{margin:0}
           <div class="who her">Simone</div>
           <div class="b her">Work lunch. Everyone's getting the pasta. I want it so bad. Would that be cheating?</div>
           <div class="who kaj">Coach Kaj</div>
-          <div class="b kaj">Cheating on what, Simone? Guilt is not on the menu.</div>
+          <div class="b kaj">No guilt or judgment here, Simone. It's just lunch.</div>
           <div class="who her">Simone</div>
           <div class="b her">Ha. Okay. I'm getting the pasta.</div>
           <div class="who kaj">Coach Kaj</div>
@@ -330,7 +320,7 @@ footer p{margin:0}
     </div>
   </article>
 
-  <article class="slide s-night right" id="slide-3" role="tabpanel" aria-labelledby="tab-3">
+  <article class="slide s-night right" id="slide-3">
     <div class="pic">
       <img src="img/night.jpg" alt="Evening on the couch with a sleeping dog, reading the day's messages." loading="lazy">
       <div class="shade"></div>
@@ -378,7 +368,7 @@ footer p{margin:0}
         <li>Your texts stay private.</li>
         <li>Cancel anytime.</li>
       </ul>
-      <p class="std-note">Standard membership: <b>$47</b> a month</p>
+      <p class="std-note">Insiders keep this price for as long as they stay.</p>
     </div>
   </section>
 
@@ -427,7 +417,7 @@ footer p{margin:0}
     </details>
     <details>
       <summary>What does it cost?</summary>
-      <p>Insiders join by invitation at $27 a month. Standard membership is $47 a month. Joining the Insider list is free, and you pay nothing until you accept your invitation. Your invitation spells out exactly how your rate works before you pay anything.</p>
+      <p>Insiders join by invitation at $27 a month. You keep that price for as long as you stay a member. Joining the Insider list is free, and you pay nothing until you accept your invitation.</p>
     </details>
     <details>
       <summary>How do I update my card or cancel?</summary>
@@ -463,28 +453,21 @@ footer p{margin:0}
 
 <script>
 (function(){
+  // Stacked layout (Oct 29): no slider. Each conversation plays once, when she scrolls to it.
   var track=document.getElementById('track');
   var slides=[].slice.call(track.querySelectorAll('.slide'));
-  var tabs=[].slice.call(document.querySelectorAll('.tab'));
-  var prev=document.getElementById('prev'), next=document.getElementById('next');
-  var current=0;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function fit(){ track.style.height=slides[current].offsetHeight+'px'; }
-
-  // Conversation playback: each moment plays once, the first time it is shown.
-  var played={};
   function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
   function prime(card){ if(!reduce && card) card.classList.add('play'); }
   slides.forEach(function(sl){ prime(sl.querySelector('.card')); });
   // Oct 26 tester note: Kaj's replies felt slow and she almost scrolled away. Pacing tightened.
   function readMs(el){ var w=(el.textContent||'').trim().split(/\s+/).length; return Math.min(2600, Math.max(900, w*170)); }
   function typeMs(el){ var c=(el.textContent||'').length; return Math.min(1500, 650+c*9); }
-  function show(el){ el.classList.add('in'); void el.offsetWidth; el.classList.add('on'); fit(); }
+  function show(el){ el.classList.add('in'); void el.offsetWidth; el.classList.add('on'); }
   async function play(card){
     var items=[].slice.call(card.querySelectorAll('.who,.b'));
     var prevKaj=false;
-    fit();
     await sleep(350);
     for(var k=0;k<items.length;k++){
       var el=items[k];
@@ -492,7 +475,7 @@ footer p{margin:0}
       if(el.classList.contains('kaj')){
         var dots=document.createElement('span'); dots.className='tdots'; dots.innerHTML='<i></i><i></i><i></i>';
         var wait=typeMs(el);
-        el.classList.add('typing','in'); el.appendChild(dots); fit();
+        el.classList.add('typing','in'); el.appendChild(dots);
         await sleep(prevKaj?Math.round(wait*0.7):wait);
         el.removeChild(dots); el.classList.remove('typing'); show(el);
         prevKaj=true; await sleep(readMs(el));
@@ -500,68 +483,29 @@ footer p{margin:0}
         show(el); prevKaj=false; await sleep(readMs(el));
       }
     }
-    card.classList.remove('play'); fit();
+    card.classList.remove('play');
   }
-  function maybePlay(i){
-    var card=slides[i].querySelector('.card');
-    if(!card || played[i] || reduce) return;
-    played[i]=true;
-    if(!('IntersectionObserver' in window)){ play(card); return; }
+  slides.forEach(function(sl){
+    var card=sl.querySelector('.card');
+    if(!card || reduce) return;
+    if(!('IntersectionObserver' in window)){ card.classList.remove('play'); return; }
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting && e.intersectionRatio>=0.35){ io.disconnect(); play(card); } });
     },{threshold:[0.35]});
     io.observe(card);
-  }
-
-  function mark(i){
-    current=i;
-    maybePlay(i);
-    if(window.__joinbarUpdate) window.__joinbarUpdate();
-    tabs.forEach(function(t,k){ t.setAttribute('aria-selected',k===i?'true':'false'); t.tabIndex=k===i?0:-1; });
-    prev.disabled=i===0; next.disabled=i===slides.length-1;
-    fit();
-  }
-  function go(i){
-    i=Math.max(0,Math.min(slides.length-1,i));
-    track.scrollTo({left:slides[i].offsetLeft-slides[0].offsetLeft,behavior:reduce?'auto':'smooth'});
-    mark(i);
-  }
-  tabs.forEach(function(t,k){
-    t.addEventListener('click',function(){ go(k); });
-    t.addEventListener('keydown',function(e){
-      if(e.key==='ArrowRight'){ e.preventDefault(); go(k+1); tabs[current].focus(); }
-      if(e.key==='ArrowLeft'){ e.preventDefault(); go(k-1); tabs[current].focus(); }
-    });
   });
-  prev.addEventListener('click',function(){ go(current-1); });
-  [].forEach.call(document.querySelectorAll('[data-go]'),function(a){ a.addEventListener('click',function(e){ e.preventDefault(); go(+a.getAttribute('data-go')); }); });
-  next.addEventListener('click',function(){ go(current+1); });
-
-  var timer;
-  track.addEventListener('scroll',function(){
-    clearTimeout(timer);
-    timer=setTimeout(function(){
-      var x=track.scrollLeft, i=0, best=1e9;
-      slides.forEach(function(sl,k){ var d=Math.abs(sl.offsetLeft-slides[0].offsetLeft-x); if(d<best){best=d;i=k;} });
-      if(i!==current) mark(i);
-    },80);
-  },{passive:true});
-  window.addEventListener('resize',function(){
-    track.scrollLeft=slides[current].offsetLeft-slides[0].offsetLeft; fit();
-  });
-  slides.forEach(function(s){ var img=s.querySelector('img'); if(img && !img.complete) img.addEventListener('load',fit); });
 
   // Survey links carry the ad tag from the visit, so each ad is measured to the finish.
   (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); if(!m) return;
     [].forEach.call(document.querySelectorAll('[data-join]'),function(a){ a.href='join/?ad='+encodeURIComponent(m[1].toLowerCase()); }); }catch(e){} })();
 
-  // Pinned join bar: shows after the welcome slide, hides at the offer and footer.
+  // Pinned join bar: shows after the welcome, hides at the offer and footer.
   (function(){
     var bar=document.getElementById('joinbar'); if(!bar) return;
     var link=bar.querySelector('a'); var atEnd=false;
     var hero=document.querySelector('.slide.hero');
     function update(){
-      var pastHero=current>0 || (hero && window.scrollY > hero.offsetHeight*0.6);
+      var pastHero=hero && window.scrollY > hero.offsetHeight*0.6;
       var on=pastHero && !atEnd;
       bar.classList.toggle('show',on); bar.setAttribute('aria-hidden',on?'false':'true'); link.tabIndex=on?0:-1;
     }
@@ -572,28 +516,8 @@ footer p{margin:0}
       var f=document.querySelector('footer'); if(f) io.observe(f);
     }
     window.addEventListener('scroll',update,{passive:true});
-    track.addEventListener('scroll',function(){ setTimeout(update,120); },{passive:true});
-    window.__joinbarUpdate=update; update();
+    update();
   })();
-  // Swipe hint: once, on phones, if she has not moved past the welcome after a few seconds.
-  (function(){
-    if(reduce || window.matchMedia('(min-width:860px)').matches) return;
-    var touched=false, timer=null; function t(){ touched=true; }
-    track.addEventListener('touchstart',t,{passive:true});
-    document.addEventListener('click',t,true);
-    function arm(){
-      clearTimeout(timer); touched=false;
-      timer=setTimeout(function(){
-        if(touched || current!==0) return;
-        track.classList.remove('nudge'); void track.offsetWidth; track.classList.add('nudge');
-        setTimeout(function(){ track.classList.remove('nudge'); },1400);
-      },1700);
-    }
-    arm();
-    // Safari restores a page frozen when she comes back with a swipe; give the hint another chance.
-    window.addEventListener('pageshow',function(e){ if(e.persisted) arm(); });
-  })();
-  mark(0);
 })();
 </script>
 
