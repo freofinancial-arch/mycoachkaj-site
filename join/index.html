@@ -139,6 +139,14 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);l
 .welcome2{padding-top:28px}
 .welcome2 h1{font-size:clamp(28px,7.6vw,36px)}
 .welcome2 .lede2{margin:2px 0 6px;font-family:var(--display);font-style:italic;font-size:clamp(23px,6.2vw,28px);line-height:1.22;color:var(--blush);text-wrap:balance}
+/* Oct 30 first page: section text lighter and smaller than the headline; Start sits in the page, the bottom bar is hidden here. */
+.welcome2 .sect{display:flex;flex-direction:column;gap:12px}
+.welcome2 .sect h2{margin:0;font-family:var(--display);font-weight:400;font-size:21px;color:var(--cream)}
+.welcome2 .sect .list{font-size:16px;gap:10px}
+.welcome2 .nums{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:16px;color:var(--cream-soft);counter-reset:n}
+.welcome2 .nums li{display:flex;gap:12px;align-items:flex-start;counter-increment:n}
+.welcome2 .nums li::before{content:counter(n);flex:0 0 26px;height:26px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--blush);color:var(--cream);font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
+.welcome2 .join p{margin:0;font-size:16px;color:var(--cream-soft)}
 @media (min-width:560px){.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:8px}.hero .ov{left:22px;right:22px}}
 .count{font-size:14px;color:var(--blush);margin:-8px 0 0}
 
@@ -372,10 +380,19 @@ R.intro2 = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<h1>Every part of you deserves support through this.</h1>'+
     '<p class="lede2">You’re joining a select group of women who are shaping Kaj.</p>'+
+    '<div class="sect"><h2>What Kaj is</h2><ul class="list">'+
+      '<li>An AI coach who works by text. No app. No food tracking.</li>'+
+      '<li>She learns what your days look like and coaches you around them.</li>'+
+      '<li>She checks in at the moments that matter, and answers when you text.</li></ul></div>'+
+    '<button class="btn" type="button" id="start">Start</button>'+
+    '<div class="sect"><h2>What happens next</h2><ol class="nums">'+
+      '<li><span>Tell Kaj about yourself. About 4 minutes.</span></li>'+
+      '<li><span>Before Kaj launches '+esc(CONFIG.launchDate)+', we’ll email you with your next step.</span></li></ol></div>'+
     '<div class="join"><h2>Join the Insider list.</h2>'+
-    '<ul class="list"><li>Takes about 4 minutes.</li><li>Insider rate: $27 a month, by invitation.</li><li>Nothing to pay today.</li></ul></div>');
+      '<p>Insider rate: $27 a month, by invitation.</p><p>Nothing to pay today.</p></div>');
   el.classList.add("welcome2");
-  cta("Start", function(){ if(!started){ started=true; track("started"); } next(); });
+  dock.hidden = true;
+  document.getElementById("start").addEventListener("click", function(){ if(!started){ started=true; track("started"); } next(); });
 };
 R.text = function(s, el){
   head(el, s);
