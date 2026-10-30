@@ -572,7 +572,7 @@ R.heard = function(s, el){
 R.consent = function(s, el){
   var terms = CONFIG.site+"/texting-terms.html", priv = CONFIG.site+"/privacy.html";
   el.insertAdjacentHTML("beforeend",
-    '<p class="eyebrow">Last step</p><h1>Two quick boxes.</h1>'+
+    '<p class="eyebrow">Last step</p><h1>Can Kaj text you?</h1>'+
     '<label class="check" for="c_sms"><input type="checkbox" id="c_sms"'+(A.sms_consent?" checked":"")+'><span><span class="req">Optional</span><b>Yes, text me.</b> '+
       esc(SMS_TEXT.replace("Yes, text me. ","").replace(" See our Texting Terms and Privacy Policy.",""))+' See our <a href="'+terms+'" target="_blank" rel="noopener">Texting Terms</a> and <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
   var e=errEl(el);
