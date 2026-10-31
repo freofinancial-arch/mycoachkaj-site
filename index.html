@@ -495,6 +495,30 @@ footer p{margin:0}
     io.observe(card);
   });
 
+  // Arrival counts (Oct 31, Barth): the server's site_arrival funnel event, same rules as the survey.
+  // Visit code is random and lives only in this page: no cookies, no storage. Slide 0 on load,
+  // then 1 Elena, 2 Simone, 3 Claire the first time each story scrolls into view. Once each per visit.
+  (function(){
+    var ENDPOINT='https://caerus-production.up.railway.app/funnel';
+    var SID=Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+    var AD=(function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); return m?m[1].toLowerCase():null; }catch(e){ return null; } })();
+    var sent={};
+    function arrive(n){
+      if(sent[n]) return; sent[n]=true;
+      try{ if(navigator.sendBeacon) navigator.sendBeacon(ENDPOINT, new Blob([JSON.stringify({sid:SID, ad:AD, event:'site_arrival', at:new Date().toISOString(), slide:n})],{type:'text/plain'})); }catch(e){}
+    }
+    arrive(0);
+    if(!('IntersectionObserver' in window)) return;
+    var io=new IntersectionObserver(function(es){
+      // In view: a third of the story shows, or the story fills a third of the screen (a tall story on a phone).
+      es.forEach(function(e){
+        if(!e.isIntersecting || (e.intersectionRatio<0.35 && e.intersectionRect.height<window.innerHeight*0.35)) return;
+        io.unobserve(e.target); arrive(+e.target.id.slice(6));
+      });
+    },{threshold:[0,0.1,0.2,0.35,0.5]});
+    [1,2,3].forEach(function(n){ var sl=document.getElementById('slide-'+n); if(sl) io.observe(sl); });
+  })();
+
   // Survey links carry the ad tag from the visit, so each ad is measured to the finish.
   (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); if(!m) return;
     [].forEach.call(document.querySelectorAll('[data-join]'),function(a){ a.href='join/?ad='+encodeURIComponent(m[1].toLowerCase()); }); }catch(e){} })();
