@@ -240,7 +240,7 @@ var HERO = "/img/coffee.jpg";
 var C = {
   age:[["under_18","Under 18"],["18_39","18 to 39"],["40_49","40 to 49"],["50_59","50 to 59"],["60_69","60 to 69"],["70_plus","70 or older"]],
   tz:[["eastern","Eastern"],["central","Central"],["mountain","Mountain"],["arizona","Arizona"],["pacific","Pacific"],["alaska","Alaska"],["hawaii","Hawaii"]],
-  safety:[["pregnant","I am pregnant."],["eating_disorder","I am being treated for an eating disorder, or have been in the last year."],["none","None of these."]],
+  safety:[["eating_disorder","Yes."],["none","No."]],
   stage:[["not_started","Haven't started yet"],["taking","Taking it now"],["planning_stop","Planning to stop soon"],["stopped","Stopped taking it"]],
   months:(function(){var a=[["lt_1m","Less than a month"]];for(var i=1;i<=11;i++)a.push(["m"+i,i+(i===1?" month":" months")]);a.push(["y1","1 year"],["gt_1y","More than 1 year"],["gt_2y","More than 2 years"]);return a;})(),
   start:[["this_week","This week"],["two_weeks","Within two weeks"],["month","Within a month"],["not_sure","Not sure yet"]],
@@ -273,7 +273,7 @@ var STEPS = [
   {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"For your invitation and launch news.", key:"email"},
   {id:"age", part:"About you", kind:"single", q:"What's your age range?", key:"age_range", opts:C.age},
   {id:"tz", part:"About you", kind:"single", q:"What's your time zone?", key:"time_zone", opts:C.tz},
-  {id:"safety", part:"A quick check", kind:"multi", q:"Do any of these apply to you right now?", key:"safety", opts:C.safety, only:["none"], noun:"any that apply"},
+  {id:"safety", part:"A quick check", kind:"single", q:"Are you being treated for an eating disorder, or have you been in the last year?", key:"safety", opts:C.safety, asList:true},
   {id:"stage", part:"Where you are", kind:"single", q:"Where are you in your GLP‑1 journey?", key:"stage", opts:C.stage},
   {id:"duration", part:"Where you are", kind:"select", key:"duration",
     q:function(){ return stageIs("stopped") ? "How long ago did you stop?" : stageIs("not_started") ? "When do you expect to start?" : "How long have you been taking it?"; },
@@ -448,10 +448,11 @@ R.single = function(s, el){
   }
   list.forEach(function(o){
     var b=document.createElement("button"); b.type="button"; b.className="opt"; b.setAttribute("role","radio");
-    b.setAttribute("aria-checked", A[s.key]===o[0]?"true":"false"); b.textContent=o[1];
+    var was = s.asList && Array.isArray(A[s.key]) ? A[s.key][0] : A[s.key];
+    b.setAttribute("aria-checked", was===o[0]?"true":"false"); b.textContent=o[1];
     b.addEventListener("click",function(){
       [].forEach.call(box.children,function(c){ c.setAttribute("aria-checked","false"); });
-      b.setAttribute("aria-checked","true"); A[s.key]=o[0];
+      b.setAttribute("aria-checked","true"); A[s.key]= s.asList ? [o[0]] : o[0];   /* Nov 1: safety still sends as a list, so the server needs no change. */
       if(s.other && o[0]===s.other.k){ otherMode(true); oth.querySelector("input").focus(); return; }
       if(s.other) delete A[s.other.key];
       otherMode(false);
@@ -615,7 +616,6 @@ function route(s){
   if(s.id==="age" && A.age_range==="under_18") return endKind("under_18");
   if(s.id==="safety"){
     if(A.safety.indexOf("eating_disorder")>-1) return endKind("eating_disorder");
-    if(A.safety.indexOf("pregnant")>-1) return endKind("pregnant");
   }
   next();
 }
@@ -625,7 +625,6 @@ function endKind(which){
   track("ended_kind_screen", {step: current.id});   // no reason recorded
   blank(); history=[]; current={id:"end"}; shownAt=0;
   var html = {
-    pregnant:'<h1>Thank you for telling us, '+first+'.</h1><div class="prose"><p>Kaj isn’t built for pregnancy, and your prescriber is your best guide right now.</p><p>When this season passes, we would love to hear from you again.</p></div>',
     eating_disorder:'<h1>Thank you for trusting us with that, '+first+'.</h1><div class="prose"><p>Kaj coaches around food and daily habits. Right now, that focus could work against your recovery, and your recovery matters more than anything we offer.</p>'+
       '<p>If you would like support, the National Alliance for Eating Disorders has a free helpline staffed by licensed therapists:</p><p class="phone">(866) 662 1235</p><p>Weekdays, 9 a.m. to 7 p.m. Eastern.</p>'+
       '<p>If you are in danger right now, call or text <b class="phone" style="font-size:20px">988</b>.</p></div>',
