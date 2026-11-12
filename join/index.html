@@ -6,12 +6,12 @@
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-<meta property="og:title" content="Join the Insider list. My Coach Kaj">
+<meta property="og:title" content="Become an Insider. My Coach Kaj">
 <meta property="og:image" content="https://mycoachkaj.com/img/share.jpg">
 <style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 </head>
 <body>
-<title>Join the Insider list. My Coach Kaj</title>
+<title>Become an Insider. My Coach Kaj</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#86587A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -137,17 +137,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);l
 .join{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--tint)}
 .join h2{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
 .hero.full{height:calc(100svh - 160px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));max-height:820px;min-height:420px}
-.welcome2{padding-top:28px}
-.welcome2 h1{font-size:clamp(28px,7.6vw,36px)}
-.welcome2 .lede2{margin:2px 0 6px;font-family:var(--display);font-style:italic;font-size:clamp(23px,6.2vw,28px);line-height:1.22;color:var(--blush);text-wrap:balance}
 /* Oct 30 first page: section text lighter and smaller than the headline; Start sits in the page, the bottom bar is hidden here. */
-.welcome2 .sect{display:flex;flex-direction:column;gap:12px}
-.welcome2 .sect h2{margin:0;font-family:var(--display);font-weight:400;font-size:21px;color:var(--cream)}
-.welcome2 .sect .list{font-size:16px;gap:10px}
-.welcome2 .nums{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:16px;color:var(--cream-soft);counter-reset:n}
-.welcome2 .nums li{display:flex;gap:12px;align-items:flex-start;counter-increment:n}
-.welcome2 .nums li::before{content:counter(n);flex:0 0 26px;height:26px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--blush);color:var(--cream);font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
-.welcome2 .join p{margin:0;font-size:16px;color:var(--cream-soft)}
 @media (min-width:560px){.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:8px}.hero .ov{left:22px;right:22px}}
 .count{font-size:14px;color:var(--blush);margin:-8px 0 0}
 
@@ -189,14 +179,11 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
 .prose{display:flex;flex-direction:column;gap:14px;color:var(--cream-soft)}
 .prose p{margin:0}
 .prose .phone{font-family:var(--display);font-size:24px;color:var(--cream);letter-spacing:.01em}
-.founding{border:1.5px solid var(--blush);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
-.founding h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.15;margin:0;color:var(--cream);text-wrap:balance}
-.founding p{margin:0;color:var(--cream-soft)}
-.alt{display:flex;flex-direction:column;gap:6px;text-align:center;padding-top:6px}
-.alt h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
-.alt p{margin:0;color:var(--cream-soft);font-size:15px}
 .big{font-family:var(--display);font-size:56px;line-height:1;color:var(--blush);margin:4px 0 0}
-.big span{font-family:var(--body);font-size:16px;color:var(--cream-soft);margin-left:8px}
+.big span{font-family:var(--body);font-size:16px;color:var(--cream-soft);margin-left:4px}
+/* L11 pay step */
+.paystep{border:1.5px solid var(--blush);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
+.paystep .small{margin:0}
 
 
 @media (prefers-reduced-motion:reduce){.step.enter{animation:none}.bar i{transition:none}}
@@ -216,6 +203,7 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
 </div>
 
 
+<script src="/config.js"></script>
 <script>
 (function(){
 "use strict";
@@ -225,14 +213,15 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
    While it is empty, the page runs as a preview: nothing leaves the phone. */
 var CONFIG = {
   endpoint: "https://caerus-production.up.railway.app",
-  bookingUrl: "",            // Zoom booking page for founder calls
   metaLead: false,           // one generic Lead signal on finish; stays off until the lawyer approves
-  launchDate: "November 30",
   version: "survey_v1_2026-10-25",
   smsConsentVersion: "sms_consent_v2_2026-10-29",
   site: "https://mycoachkaj.com"
 };
 var PREVIEW = !CONFIG.endpoint;
+/* L11 launch switch. Set in /config.js, the one place. Off (or missing): the survey ends with the holding line and no pay step. */
+var SITE = window.KAJ_SITE || {};
+var PAY = SITE.payAndGo === true && /^https:\/\/buy\.stripe\.com\//.test(SITE.checkoutUrl || "");
 /* Welcome photo: coffee shop. Live site uses img/coffee.jpg. */
 var HERO = "/img/coffee.jpg";
 
@@ -267,10 +256,9 @@ var stageIs = function(){ var s=[].slice.call(arguments); return s.indexOf(A.sta
 /* ===== Steps, in screen order ===== */
 var STEPS = [
   {id:"intro", kind:"intro"},
-  {id:"intro2", kind:"intro2"},
   {id:"first_name", part:"About you", kind:"text", q:"What's your first name?", key:"first_name", ac:"given-name", req:true, max:40},
   {id:"phone", part:"About you", kind:"phone", q:"What's your mobile number?", hint:"Kaj coaches by text. US numbers only.", key:"phone"},
-  {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"For your invitation and launch news.", key:"email"},
+  {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"Use the email you’ll pay with.", key:"email"},
   {id:"age", part:"About you", kind:"single", q:"What's your age range?", key:"age_range", opts:C.age},
   {id:"tz", part:"About you", kind:"single", q:"What's your time zone?", key:"time_zone", opts:C.tz},
   {id:"safety", part:"A quick check", kind:"single", q:"Are you being treated for an eating disorder, or have you been in the last year?", key:"safety", opts:C.safety, asList:true},
@@ -329,7 +317,7 @@ function show(step, isBack){
   current = step;
   document.documentElement.classList.toggle("light", step.kind.indexOf("intro")<0);
   var vs = visible(), idx = vs.indexOf(step);
-  prog.style.width = idx<=1 ? "0%" : Math.round((idx-1)/(vs.length-2)*100)+"%";
+  prog.style.width = idx<=0 ? "0%" : Math.round(idx/(vs.length-1)*100)+"%";
   backBtn.hidden = history.length===0;
   stage.innerHTML = ""; dockin.innerHTML = ""; dock.hidden = false;
   var el = document.createElement("section"); el.className="step enter";
@@ -340,7 +328,7 @@ function show(step, isBack){
   shownAt = performance.now();
   if(step.id.indexOf("intro")<0){
     if(idx>farthest){ farthest=idx; }
-    track("step_view",{step:step.id, n:idx});
+    track("step_view",{step:step.id, n:idx+1});   // +1 keeps the Oct numbering, from before the second intro screen was removed (Nov 12)
   }
 }
 function next(){
@@ -373,28 +361,10 @@ var R = {};
 R.intro = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<div class="hero full"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
-    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p></div></div>');
+    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p><p class="sub">Kaj is ready to meet you.</p></div></div>');
   el.classList.add("welcome");
-  cta("Let’s begin", function(){ track("welcome_next"); next(); });
-};
-R.intro2 = function(s, el){
-  el.insertAdjacentHTML("beforeend",
-    '<h1>Every part of you deserves support through this.</h1>'+
-    '<p class="lede2">You’re joining a select group of women who are shaping Kaj.</p>'+
-    '<div class="sect"><h2>What Kaj is</h2><ul class="list">'+
-      '<li>An AI coach who works by text. No app. No food tracking.</li>'+
-      '<li>She learns what your days look like and coaches you around them.</li>'+
-      '<li>She checks in at the moments that matter, and answers when you text.</li>'+
-      '<li>She texts only to coach. No ads, no promotions.</li></ul></div>'+
-    '<button class="btn" type="button" id="start">Start</button>'+
-    '<div class="sect"><h2>What happens next</h2><ol class="nums">'+
-      '<li><span>Tell Kaj about yourself. About 4 minutes.</span></li>'+
-      '<li><span>Before Kaj launches '+esc(CONFIG.launchDate)+', we’ll email you with your next step.</span></li></ol></div>'+
-    '<div class="join"><h2>Join the Insider list.</h2>'+
-      '<p>Insider rate: $27 a month, by invitation.</p><p>Nothing to pay today.</p></div>');
-  el.classList.add("welcome2");
-  dock.hidden = true;
-  document.getElementById("start").addEventListener("click", function(){ if(!started){ started=true; track("started"); } next(); });
+  /* Nov 12 (Barth): the second intro screen is gone, so "Let’s begin" also counts as "started". */
+  cta("Let’s begin", function(){ track("welcome_next"); if(!started){ started=true; track("started"); } next(); });
 };
 R.text = function(s, el){
   head(el, s);
@@ -593,11 +563,11 @@ R.consent = function(s, el){
   var terms = CONFIG.site+"/texting-terms.html", priv = CONFIG.site+"/privacy.html";
   el.insertAdjacentHTML("beforeend",
     '<p class="eyebrow">Last step</p><h1>Can Kaj text you?</h1>'+
-    '<label class="check" for="c_sms"><input type="checkbox" id="c_sms"'+(A.sms_consent?" checked":"")+'><span><span class="req">Optional</span><b>Yes, text me.</b> '+
+    '<label class="check" for="c_sms"><input type="checkbox" id="c_sms"'+(A.sms_consent?" checked":"")+'><span><b>Yes, text me.</b> '+
       esc(SMS_TEXT.replace("Yes, text me. ","").replace(" See our Texting Terms and Privacy Policy.",""))+' See our <a href="'+terms+'" target="_blank" rel="noopener">Texting Terms</a> and <a href="'+priv+'" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>');
   var e=errEl(el);
   var sending=false;
-  var join=cta("Join the Insider list", function(){
+  var join=cta("Continue", function(){
     if(sending) return;
     var sms=document.getElementById("c_sms").checked;
     A.sms_consent=sms;
@@ -638,14 +608,6 @@ function endKind(which){
 /* ===== Finish: the only moment anything is saved ===== */
 var LAST = null;
 var SENT = null;   // resolves to the choice token /survey returns, or null
-/* Her founder call choice goes to /survey/choice with that token, once it arrives. */
-function sendChoice(choice){
-  if(!SENT) return;
-  SENT.then(function(token){
-    if(!token) return;
-    fetch(CONFIG.endpoint+"/survey/choice",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:token, choice:choice}),keepalive:true}).catch(function(){});
-  });
-}
 var FINISHED = false;
 function finish(onFail){
   if(!FINISHED){ leaveStep(); track("finished"); FINISHED=true; }
@@ -659,7 +621,7 @@ function finish(onFail){
   };
   function saved(){
     if(CONFIG.metaLead && window.fbq){ try{ window.fbq("track","Lead"); }catch(e){} }   // generic, no answers
-    callScreen();
+    endScreen();
   }
   if(PREVIEW){ saved(); return; }
   /* The success screen shows only once the server has saved her answers. */
@@ -670,45 +632,44 @@ function finish(onFail){
 }
 function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
-function callScreen(){
-  current={id:"call"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
-  stage.innerHTML='<section class="step enter">'+
-    '<p class="eyebrow">You’re in</p><h1>You’re on the Insider list, '+name()+'. Kaj launches '+esc(CONFIG.launchDate)+'.</h1>'+
-    '<p class="hint">One last choice.</p>'+
-    '<div class="founding"><h2>Help shape Kaj. Become a Founding Insider.</h2>'+
-      '<p>Thirty minutes with Kaj’s founder. Your story shapes what Kaj becomes for every woman after you.</p>'+
-      '<p style="color:var(--cream);font-weight:600">Founding Insiders get:</p>'+
-      '<ul class="list"><li>The first invites to join</li><li>A direct line to the founder for your ideas</li><li>A vote on new features</li><li>Invitations to Founding Insider gatherings</li></ul>'+
-      '<button class="btn" type="button" id="bookcall">Book my founder call</button></div>'+
-    '<div class="alt"><h2>I’m ready to start.</h2><p>No call needed. We’ll email you as launch gets close.</p></div>'+
-    '</section>';
-  dockin.innerHTML=""; dock.hidden=false;
-  cta("I’m ready to start", function(){ track("chose_ready"); sendChoice("ready"); doneScreen(false); }, {ghost:true});
-  document.getElementById("bookcall").addEventListener("click",function(){
-    track("chose_call");
-    sendChoice("call");
-    if(CONFIG.bookingUrl){ window.open(CONFIG.bookingUrl,"_blank","noopener"); }
-    doneScreen(true);
-  });
-  window.scrollTo(0,0);
-}
-function doneScreen(call){
-  current={id:"done"}; dock.hidden=true;
-  /* Oct 26: the confirmation tells her what happens next. Her first contact with Kaj is a text, not an email. */
-  var textLine = A.sms_consent
-    ? '<li><span>When you accept, <b>Kaj texts you first</b>, by name. Save the number to your contacts so Kaj never lands in filtered texts.</span></li>'
-    : '<li><span>Kaj coaches by text. Your invitation will ask you to say yes to texts, then <b>Kaj texts you first</b>, by name.</span></li>';
-  var nextSteps =
-    '<p class="next-h">What happens next</p><ol class="steps">'+
-      '<li><span>Your answers are with us. When you join, <b>Kaj already knows your story</b>. You never start from zero.</span></li>'+
-      '<li><span>Watch your email. <b>Before Kaj launches '+esc(CONFIG.launchDate)+', we’ll email you with your next step.</b></span></li>'+
-      textLine+
-    '</ol>';
-  var body = call
-    ? '<h1>Thank you, '+name()+'.</h1><div class="prose"><p>'+(CONFIG.bookingUrl?'The booking page opened in a new tab. Pick any time that works for you.':'The booking page opens here once it’s ready.')+'</p><p>Watch your email for the call details.</p>'+nextSteps+'</div>'
-    : '<h1>You’re all set, '+name()+'.</h1><div class="prose">'+nextSteps+'</div>';
-  body += '<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a>';
+/* L11 (Nov 12): the survey's last screen. Replaces the founder call choice and the old confirmation screen.
+   Switch on: the $27 checkout, her survey email filled in so payment matches her survey.
+   The founder call is offered on /welcome, after she pays.
+   Switch on and the text box left unchecked: no pay step. She is asked to go back and check it.
+   Sending the survey again is safe: the server keeps her as one member and reads her latest consent.
+   Switch off: the holding line only. */
+function endScreen(){
+  current={id:"done"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
+  dockin.innerHTML=""; dock.hidden=true;
+  var body;
+  if(PAY && !A.sms_consent){
+    body =
+      '<h1>One thing first.</h1>'+
+      '<p class="hint">Kaj coaches you by text, so she needs your OK to text you.</p>'+
+      '<button class="btn" type="button" id="toconsent">Go back and check the box</button>';
+  } else if(PAY){
+    var pay = SITE.checkoutUrl + (SITE.checkoutUrl.indexOf("?")>-1 ? "&" : "?") + "prefilled_email=" + encodeURIComponent(A.email||"");
+    body =
+      '<h1>Thank you.</h1>'+
+      '<p class="hint">Kaj has what she needs to get to know you.</p>'+
+      '<div class="paystep">'+
+        '<p class="big">$27<span> a month</span></p>'+
+        '<a class="btn" id="pay" href="'+esc(pay)+'">Become an Insider</a>'+
+        '<p class="small">30 day money back guarantee. Cancel anytime.</p>'+
+      '</div>';
+  } else {
+    body =
+      '<h1>Thank you.</h1>'+
+      '<div class="prose"><p>Kaj has what she needs to get to know you. She starts texting her first Insiders later this month, and we’ll let you know the moment she is ready for you.</p></div>'+
+      '<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a>';
+  }
   stage.innerHTML='<section class="step enter">'+body+'</section>';
+  var back=document.getElementById("toconsent");
+  if(back) back.addEventListener("click",function(){
+    var vs=visible(), c=vs.filter(function(x){ return x.id==="consent"; })[0];
+    history=vs.slice(0, vs.indexOf(c));
+    show(c, true);
+  });
   window.scrollTo(0,0);
 }
 
