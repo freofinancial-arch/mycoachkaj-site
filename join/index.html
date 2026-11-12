@@ -137,17 +137,7 @@ h1{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);l
 .join{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--tint)}
 .join h2{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
 .hero.full{height:calc(100svh - 160px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));max-height:820px;min-height:420px}
-.welcome2{padding-top:28px}
-.welcome2 h1{font-size:clamp(28px,7.6vw,36px)}
-.welcome2 .lede2{margin:2px 0 6px;font-family:var(--display);font-style:italic;font-size:clamp(23px,6.2vw,28px);line-height:1.22;color:var(--blush);text-wrap:balance}
 /* Oct 30 first page: section text lighter and smaller than the headline; Start sits in the page, the bottom bar is hidden here. */
-.welcome2 .sect{display:flex;flex-direction:column;gap:12px}
-.welcome2 .sect h2{margin:0;font-family:var(--display);font-weight:400;font-size:21px;color:var(--cream)}
-.welcome2 .sect .list{font-size:16px;gap:10px}
-.welcome2 .nums{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:16px;color:var(--cream-soft);counter-reset:n}
-.welcome2 .nums li{display:flex;gap:12px;align-items:flex-start;counter-increment:n}
-.welcome2 .nums li::before{content:counter(n);flex:0 0 26px;height:26px;box-sizing:border-box;border-radius:50%;border:1.5px solid var(--blush);color:var(--cream);font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center}
-.welcome2 .join p{margin:0;font-size:16px;color:var(--cream-soft)}
 @media (min-width:560px){.hero{margin-left:0;margin-right:0;border-radius:22px;margin-top:8px}.hero .ov{left:22px;right:22px}}
 .count{font-size:14px;color:var(--blush);margin:-8px 0 0}
 
@@ -189,19 +179,11 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
 .prose{display:flex;flex-direction:column;gap:14px;color:var(--cream-soft)}
 .prose p{margin:0}
 .prose .phone{font-family:var(--display);font-size:24px;color:var(--cream);letter-spacing:.01em}
-.founding{border:1.5px solid var(--blush);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
-.founding h2{font-family:var(--display);font-weight:400;font-size:26px;line-height:1.15;margin:0;color:var(--cream);text-wrap:balance}
-.founding p{margin:0;color:var(--cream-soft)}
-.alt{display:flex;flex-direction:column;gap:6px;text-align:center;padding-top:6px}
-.alt h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
-.alt p{margin:0;color:var(--cream-soft);font-size:15px}
 .big{font-family:var(--display);font-size:56px;line-height:1;color:var(--blush);margin:4px 0 0}
 .big span{font-family:var(--body);font-size:16px;color:var(--cream-soft);margin-left:4px}
 /* L11 pay step */
 .paystep{border:1.5px solid var(--blush);border-radius:20px;padding:20px 18px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
 .paystep .small{margin:0}
-.small.after{margin-top:-4px}
-.steplabel{text-transform:none;letter-spacing:.02em;font-size:15px;font-weight:600}
 
 
 @media (prefers-reduced-motion:reduce){.step.enter{animation:none}.bar i{transition:none}}
@@ -274,7 +256,6 @@ var stageIs = function(){ var s=[].slice.call(arguments); return s.indexOf(A.sta
 /* ===== Steps, in screen order ===== */
 var STEPS = [
   {id:"intro", kind:"intro"},
-  {id:"intro2", kind:"intro2"},
   {id:"first_name", part:"About you", kind:"text", q:"What's your first name?", key:"first_name", ac:"given-name", req:true, max:40},
   {id:"phone", part:"About you", kind:"phone", q:"What's your mobile number?", hint:"Kaj coaches by text. US numbers only.", key:"phone"},
   {id:"email", part:"About you", kind:"email", q:"What's your email?", hint:"Use the email you’ll pay with.", key:"email"},
@@ -336,7 +317,7 @@ function show(step, isBack){
   current = step;
   document.documentElement.classList.toggle("light", step.kind.indexOf("intro")<0);
   var vs = visible(), idx = vs.indexOf(step);
-  prog.style.width = idx<=1 ? "0%" : Math.round((idx-1)/(vs.length-2)*100)+"%";
+  prog.style.width = idx<=0 ? "0%" : Math.round(idx/(vs.length-1)*100)+"%";
   backBtn.hidden = history.length===0;
   stage.innerHTML = ""; dockin.innerHTML = ""; dock.hidden = false;
   var el = document.createElement("section"); el.className="step enter";
@@ -347,7 +328,7 @@ function show(step, isBack){
   shownAt = performance.now();
   if(step.id.indexOf("intro")<0){
     if(idx>farthest){ farthest=idx; }
-    track("step_view",{step:step.id, n:idx});
+    track("step_view",{step:step.id, n:idx+1});   // +1 keeps the Oct numbering, from before the second intro screen was removed (Nov 12)
   }
 }
 function next(){
@@ -380,29 +361,10 @@ var R = {};
 R.intro = function(s, el){
   el.insertAdjacentHTML("beforeend",
     '<div class="hero full"><img src="'+HERO+'" alt="A woman in a coffee shop smiles at her phone, a latte in her other hand.">'+
-    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p></div></div>');
+    '<div class="ov"><h1>Welcome.</h1><p class="sub">Introduce yourself to Kaj.</p><p class="sub">Kaj is ready to meet you.</p></div></div>');
   el.classList.add("welcome");
-  cta("Let’s begin", function(){ track("welcome_next"); next(); });
-};
-R.intro2 = function(s, el){
-  el.insertAdjacentHTML("beforeend",
-    '<h1>Every part of you deserves support through this.</h1>'+
-    '<p class="lede2">You’re joining a select group of women who are shaping Kaj.</p>'+
-    '<div class="sect"><h2>What Kaj is</h2><ul class="list">'+
-      '<li>An AI coach who works by text. No app. No food tracking.</li>'+
-      '<li>She learns what your days look like and coaches you around them.</li>'+
-      '<li>She checks in at the moments that matter, and answers when you text.</li>'+
-      '<li>She texts only to coach. No ads, no promotions.</li></ul></div>'+
-    '<button class="btn" type="button" id="start">Start</button>'+
-    '<div class="sect"><h2>What happens next</h2><ol class="nums">'+
-      '<li><span>Tell Kaj about yourself. About 4 minutes.</span></li>'+
-      (PAY
-        ? '<li><span>Become an Insider for $27 a month, and Kaj starts.</span></li>'
-        : '<li><span>Kaj starts texting her first Insiders later this month.</span></li>')+
-      '</ol></div>');
-  el.classList.add("welcome2");
-  dock.hidden = true;
-  document.getElementById("start").addEventListener("click", function(){ if(!started){ started=true; track("started"); } next(); });
+  /* Nov 12 (Barth): the second intro screen is gone, so "Let’s begin" also counts as "started". */
+  cta("Let’s begin", function(){ track("welcome_next"); if(!started){ started=true; track("started"); } next(); });
 };
 R.text = function(s, el){
   head(el, s);
@@ -671,29 +633,30 @@ function finish(onFail){
 function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
 /* L11 (Nov 12): the survey's last screen. Replaces the founder call choice and the old confirmation screen.
-   Switch on: Step 1 pays at the $27 checkout, her survey email filled in so payment matches her survey.
-   Step 2 books the founder call, from /welcome after she pays. Switch off: the holding line only. */
+   Switch on: the $27 checkout, her survey email filled in so payment matches her survey.
+   The founder call is offered on /welcome, after she pays.
+   Switch on and the text box left unchecked: no pay step. She is asked to go back and check it.
+   Sending the survey again is safe: the server keeps her as one member and reads her latest consent.
+   Switch off: the holding line only. */
 function endScreen(){
   current={id:"done"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
   dockin.innerHTML=""; dock.hidden=true;
   var body;
-  if(PAY){
+  if(PAY && !A.sms_consent){
+    body =
+      '<h1>One thing first.</h1>'+
+      '<p class="hint">Kaj coaches you by text, so she needs your OK to text you.</p>'+
+      '<button class="btn" type="button" id="toconsent">Go back and check the box</button>';
+  } else if(PAY){
     var pay = SITE.checkoutUrl + (SITE.checkoutUrl.indexOf("?")>-1 ? "&" : "?") + "prefilled_email=" + encodeURIComponent(A.email||"");
     body =
       '<h1>Thank you.</h1>'+
-      '<p class="hint">Kaj has what she needs to get to know you. One step left.</p>'+
+      '<p class="hint">Kaj has what she needs to get to know you.</p>'+
       '<div class="paystep">'+
-        '<p class="eyebrow steplabel">Step 1</p>'+
         '<p class="big">$27<span> a month</span></p>'+
         '<a class="btn" id="pay" href="'+esc(pay)+'">Become an Insider</a>'+
         '<p class="small">30 day money back guarantee. Cancel anytime.</p>'+
-      '</div>'+
-      '<p class="eyebrow steplabel">Step 2, after you join</p>'+
-      '<div class="founding"><h2>Book a call with Barth, the founder.</h2>'+
-        '<p>The first 100 Insiders who book their call also get:</p>'+
-        '<ul class="list"><li>A founding price on Momentum coaching, starting early 2027.</li><li>First access to what Kaj does next.</li></ul>'+
-      '</div>'+
-      '<p class="small after">You book your call on the next page, right after you join.</p>';
+      '</div>';
   } else {
     body =
       '<h1>Thank you.</h1>'+
@@ -701,6 +664,12 @@ function endScreen(){
       '<a class="btn ghost homebtn" href="/">Back to My Coach Kaj</a>';
   }
   stage.innerHTML='<section class="step enter">'+body+'</section>';
+  var back=document.getElementById("toconsent");
+  if(back) back.addEventListener("click",function(){
+    var vs=visible(), c=vs.filter(function(x){ return x.id==="consent"; })[0];
+    history=vs.slice(0, vs.indexOf(c));
+    show(c, true);
+  });
   window.scrollTo(0,0);
 }
 
