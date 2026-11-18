@@ -295,6 +295,8 @@ function label(list, key){ for(var i=0;i<list.length;i++) if(list[i][0]===key) r
 
 /* ===== Funnel counts. No names, numbers, or answers. Ever. ===== */
 var SID = Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+/* D14x, Text HI. /meet adds via=meet, and only text 3 links to /meet. She gets her own last screen (below). */
+var FROM_MEET = (function(){ try{ return /[?&]via=meet(?:&|$)/i.test(location.search); }catch(e){ return false; } })();
 var AD = (function(){ try{ var m=/[?&]ad=([a-z0-9_-]{1,32})/i.exec(location.search); return m?m[1].toLowerCase():null; }catch(e){ return null; } })();
 var shownAt = 0, current = null, started = false, farthest = 0;
 function track(ev, extra){
@@ -645,7 +647,12 @@ function endScreen(){
   current={id:"done"}; history=[]; backBtn.hidden=true; prog.style.width="100%";
   dockin.innerHTML=""; dock.hidden=true;
   var body;
-  if(PAY && !A.sms_consent){
+  if(FROM_MEET){
+    /* Text HI last screen, wording approved by Barth on Caerus PR 99, Nov 18, 2:53 p.m. Eastern. Wins over the holding line and the pay step. */
+    body =
+      '<h1>Thank you.</h1>'+
+      '<div class="prose"><p>Check your texts.</p><p>Kaj will text you to start your FREE session.</p></div>';
+  } else if(PAY && !A.sms_consent){
     body =
       '<h1>One thing first.</h1>'+
       '<p class="hint">Kaj coaches you by text, so she needs your OK to text you.</p>'+

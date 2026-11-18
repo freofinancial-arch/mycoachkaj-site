@@ -7,11 +7,16 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32">
 <!-- D14x, Text HI (Nov 18). Text 3 links here: mycoachkaj.com/meet opens the survey directly (Barth, Nov 18: the choice page is dropped).
-     No words of its own. Any query string, such as ?ad=fb3, is kept, so an ad tag still reaches the survey. Without JavaScript the meta refresh still opens the survey. -->
-<meta http-equiv="refresh" content="0;url=/join/">
+     No words of its own. Any query string, such as ?ad=fb3, is kept, so an ad tag still reaches the survey. Without JavaScript the meta refresh still opens the survey.
+     via=meet marks her arrival. Only text 3 uses this link, so /join gives her the Text HI last screen (Barth, PR 99, Nov 18, 2:53 p.m.). -->
+<meta http-equiv="refresh" content="0;url=/join/?via=meet">
 <style>html,body{margin:0;background:#FBF6F3}</style>
 <script>
-try { location.replace("/join/" + (location.search || "") + (location.hash || "")); } catch (e) {}
+try {
+  var q = location.search || "";
+  if (!/[?&]via=meet(?:&|$)/.test(q)) q = q ? q + "&via=meet" : "?via=meet";
+  location.replace("/join/" + q + (location.hash || ""));
+} catch (e) {}
 </script>
 </head>
 <body></body>
