@@ -616,7 +616,7 @@ function finish(onFail){
   if(!FINISHED){ leaveStep(); track("finished"); FINISHED=true; }
   var now=new Date().toISOString();
   LAST = {
-    survey:{ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() },
+    survey:(function(){ var s={ version:CONFIG.version, submitted_at:now, ad:AD, answers:copyAnswers() }; if(SITE.sendVisitCode===true && /^[a-z0-9]{8,24}$/.test(SID)) s.visit=SID; return s; })(),
     private_data: (P.weight_start||P.weight_start_unknown||P.weight_now||P.weight_goal||(P.background&&P.background.length)) ? JSON.parse(JSON.stringify(P)) : null,
     consents:[
       {type:"sms", given:!!A.sms_consent, at:now, source:"survey", wording_version:CONFIG.smsConsentVersion, phone:A.phone}

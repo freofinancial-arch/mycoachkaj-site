@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My Coach Kaj</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32">
+<!-- D14x, Text HI (Nov 18). Her join link after the free session is mycoachkaj.com/pay?k=<code>. The texting campaign allows links on
+     mycoachkaj.com only, so the link lands here and forwards to the Caerus server, which adds her survey email and her code and sends
+     her on to the $27 checkout in config.js. A missing or malformed code goes straight to that checkout, so she is never stranded.
+     No words of its own. -->
+<noscript><meta http-equiv="refresh" content="0;url=https://buy.stripe.com/cNi5kCbeVdSs0YVas8cIE00"></noscript>
+<style>html,body{margin:0;background:#FBF6F3}</style>
+<script src="/config.js"></script>
+<script>
+(function () {
+  var SITE = window.KAJ_SITE || {};
+  var checkout = /^https:\/\/buy\.stripe\.com\//.test(SITE.checkoutUrl || "") ? SITE.checkoutUrl : "https://buy.stripe.com/cNi5kCbeVdSs0YVas8cIE00";
+  var endpoint = /^https:\/\//.test(SITE.endpoint || "") ? SITE.endpoint.replace(/\/+$/, "") : "";
+  var m = /[?&]k=([a-hjkmnp-z2-9]{8})(?:&|$)/i.exec(location.search || "");
+  try {
+    location.replace(m && endpoint ? endpoint + "/pay/" + m[1].toLowerCase() : checkout);
+  } catch (e) {
+    location.href = checkout;
+  }
+})();
+</script>
+</head>
+<body></body>
+</html>
