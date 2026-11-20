@@ -178,7 +178,7 @@ select.in{appearance:none;-webkit-appearance:none;background-image:linear-gradie
 #stage h1[tabindex="-1"]:focus,#stage h1[tabindex="-1"]:focus-visible{outline:none}
 .small{font-size:14px;color:var(--cream-soft);text-align:center;margin:10px 0 0}
 
-/* End and call screens */
+/* End screens */
 .prose{display:flex;flex-direction:column;gap:14px;color:var(--cream-soft)}
 .prose p{margin:0}
 .prose .phone{font-family:var(--display);font-size:24px;color:var(--cream);letter-spacing:.01em}
@@ -344,7 +344,7 @@ function next(){
 backBtn.addEventListener("click",function(){ if(history.length) show(history.pop(), true); });
 /* Oct 26 tester note: no way back to the site. The brand mark goes home; it asks first only if she has answers in progress. */
 document.getElementById("home").addEventListener("click",function(ev){
-  var done = current && ["end","call","done"].indexOf(current.id)>-1;
+  var done = current && ["end","done"].indexOf(current.id)>-1;
   if(!done && Object.keys(A).length && !window.confirm("Leave the survey? Your answers so far won’t be saved.")) ev.preventDefault();
 });
 
@@ -612,7 +612,6 @@ function endKind(which){
 
 /* ===== Finish: the only moment anything is saved ===== */
 var LAST = null;
-var SENT = null;   // resolves to the choice token /survey returns, or null
 var FINISHED = false;
 function finish(onFail){
   if(!FINISHED){ leaveStep(); track("finished"); FINISHED=true; }
@@ -630,16 +629,17 @@ function finish(onFail){
   }
   if(PREVIEW){ saved(); return; }
   /* The success screen shows only once the server has saved her answers. */
-  SENT = fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
-    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json().catch(function(){ return null; }); })
-    .then(function(j){ return (j && j.choice_token) || null; });
-  SENT.then(saved, function(){ SENT=null; track("submit_failed"); onFail(); });
+  /* Nov 20: the founder call choice is gone from the survey, so the choice token the server returns is not read. */
+  fetch(CONFIG.endpoint+"/survey",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(LAST)})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); })
+    .then(saved, function(){ track("submit_failed"); onFail(); });
 }
 function copyAnswers(){ var o={}; for(var k in A){ if(k!=="sms_consent") o[k]=Array.isArray(A[k])?A[k].slice():A[k]; } return o; }
 
-/* L11 (Nov 12): the survey's last screen. Replaces the founder call choice and the old confirmation screen.
-   Switch on: the $27 checkout, her survey email filled in so payment matches her survey.
-   The founder call is offered on /welcome, after she pays.
+/* The survey's last screen (L11 Nov 12; Insider offer Nov 20, Barth).
+   Switch on: "Thank you.", the price, the button and the guarantee. Nothing else.
+   The button opens the $27 checkout, her survey email filled in so payment matches her survey.
+   What an Insider gets is told on /welcome, after she pays. Nothing about it appears here.
    Switch on and the text box left unchecked: no pay step. She is asked to go back and check it.
    Sending the survey again is safe: the server keeps her as one member and reads her latest consent.
    Switch off: the holding line only. */
@@ -661,7 +661,7 @@ function endScreen(){
     var pay = SITE.checkoutUrl + (SITE.checkoutUrl.indexOf("?")>-1 ? "&" : "?") + "prefilled_email=" + encodeURIComponent(A.email||"");
     body =
       '<h1>Thank you.</h1>'+
-      '<p class="hint">Kaj has what she needs to get to know you.</p>'+
+      '<p class="hint">Kaj has what she needs to get to know you. One step left.</p>'+
       '<div class="paystep">'+
         '<p class="big">$27<span> a month</span></p>'+
         '<a class="btn" id="pay" href="'+esc(pay)+'">Become an Insider</a>'+

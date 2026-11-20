@@ -32,16 +32,20 @@ p{margin:0 0 14px}
 .learn{margin:36px 0 0}
 .learn b{color:var(--plum-deep)}
 a{color:var(--plum-deep)}
-/* Founder call block (L11, Nov 12). Button has the same look as the Billing page button. The block is hidden until bookingUrl is set in /config.js. */
+/* Insider block (Nov 20, Barth). Told here, after she pays, not before. The Insider line always shows.
+   The founder call line and button are optional, never a step, and stay hidden until bookingUrl is set in /config.js.
+   The button is an outline, so it reads as an option rather than a next step. */
 .btn{display:inline-block;background:var(--plum-deep);color:var(--cream);font-family:var(--body);font-weight:600;font-size:18px;
   padding:16px 38px;border-radius:999px;text-decoration:none;transition:transform .15s ease, background .15s ease}
 .btn:hover{background:var(--plum)}
 .btn:active{transform:scale(.98)}
 .btn:focus-visible{outline:3px solid var(--plum);outline-offset:3px}
 .book{margin:6px 0 22px;padding:20px;border:1.5px solid var(--blush);border-radius:16px;background:#fff}
-.book[hidden]{display:none}
-.book h3{font-family:var(--body);font-weight:700;font-size:20px;line-height:1.3;margin:0 0 8px;color:var(--plum-deep)}
-.book .starts{margin:0 0 18px;background:#f3e7ee}
+.book p:last-child{margin-bottom:0}
+.book .call{margin-top:16px;padding-top:16px;border-top:1px solid var(--cream-soft)}
+.call[hidden]{display:none}
+.btn.ghost{background:transparent;color:var(--plum-deep);border:1.5px solid var(--plum-deep);padding:14px 30px;font-size:17px}
+.btn.ghost:hover{background:#f3e7ee}
 .book .go{margin:0}
 footer{background:var(--plum-deep);color:var(--cream-soft);margin:0 -16px;padding:24px 16px;font-size:13px}
 footer .in{max-width:720px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between}
@@ -56,11 +60,12 @@ footer a{color:var(--cream)}
 
 <h2>What happens next</h2>
 <p>Kaj's first text is on its way. It comes from (512) 866 9006. Save that number so you know it's her.</p>
-<div class="book" id="book" hidden>
-<h3>Book a call with Barth, the founder.</h3>
-<p>The first 100 Insiders who book their call also get:</p>
-<ul class="starts"><li>A founding price on Momentum coaching, starting early 2027.</li><li>First access to what Kaj does next.</li></ul>
-<p class="go"><a class="btn" id="booklink" href="#" target="_blank" rel="noopener">Book my founder call</a></p>
+<div class="book">
+<p>As an Insider, you get first access to Momentum coaching in 2027, and to what we build next.</p>
+<div class="call" id="book" hidden>
+<p>Want to talk with Barth, the founder? Book a call anytime.</p>
+<p class="go"><a class="btn ghost" id="booklink" href="#" target="_blank" rel="noopener">Book my founder call</a></p>
+</div>
 </div>
 <p>Kaj is AI. She already has your survey answers, so she won't ask you to repeat them. No app, no logging. Just text.</p>
 
@@ -83,7 +88,7 @@ footer a{color:var(--cream)}
 </main>
 <script src="/config.js"></script>
 <script>
-/* Shows the founder call block only once bookingUrl is set in /config.js. */
+/* Shows the founder call line and button only once bookingUrl is set in /config.js. */
 (function(){ try{ var u=window.KAJ_SITE&&window.KAJ_SITE.bookingUrl; if(!u||!/^https:\/\//.test(u)) return;
   document.getElementById("booklink").href=u; document.getElementById("book").hidden=false; }catch(e){} })();
 </script>
