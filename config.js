@@ -15,5 +15,5 @@ window.KAJ_SITE = {
   checkoutUrl: "https://buy.stripe.com/cNi5kCbeVdSs0YVas8cIE00",
   bookingUrl: "",
   endpoint: "https://caerus-production.up.railway.app",
-  sendVisitCode: false
+  sendVisitCode: true
 };
